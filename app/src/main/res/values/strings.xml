@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">TDAH</string>
+    <string name="btn_usuario">Usuario</string>
+    <string name="btn_psicologo">Psicologo</string>
+    <string name="tvw_tdah">TDAH</string>
+    <string name="btn_registrarse">Registrarse</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="tvw_usuario">Usuario</string>
+    <string name="tvw_yatengo">Ya tengo una cuenta</string>
+    <string name="etx_nombre_usuario">Nombre de usuario</string>
+    <string name="etx_nombres">Nombre(s)</string>
+    <string name="etx_apaterno">Apellido Paterno</string>
+    <string name="etx_amaterno">Apellido Materno</string>
+    <string name="etx_curp">Curp</string>
+    <string name="etx_correo">Correo electronico</string>
+    <string name="etx_contrasena">Contraseña</string>
+    <string name="etx_nip">Nip (4 digitos)</string>
+    <string name="tvw_ingresar">Ingresar</string>
+    <string name="etx_ingresar_correo">Correo electronico</string>
+    <string name="etx_ingresar_contrasena">Contraseña</string>
+    <string name="btn_iniciar_sesion">Ingresar</string>
+    <string name="btn_ingresar_cancelar">Cancelar</string>
+    <string name="tvw_solicitar_registrarse">Quiero registrarme</string>
+
+</resources>
