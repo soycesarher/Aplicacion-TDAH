@@ -3,41 +3,40 @@ package com.example.tdah.usuarios;
 import java.io.Serializable;
 
 public class UsuarioPsicologo extends Usuario implements Serializable {
-    private int int_usuarioPsicologo_cedula;
-    private double double_usuarioPsicologo_pago;
-    private String string_usuarioPsicologo_especialidad;
-    private String string_usuarioPsicologo_perfilProfesional;
+    private int int_cedula;
+    private double double_pago;
+    private String string_especialidad;
+    private String string_perfilProfesional;
 
-
-    public int getInt_usuarioPsicologo_cedula() {
-        return int_usuarioPsicologo_cedula;
+    public int getInt_cedula() {
+        return int_cedula;
     }
 
-    public void setInt_usuarioPsicologo_cedula(int int_usuarioPsicologo_cedula) {
-        this.int_usuarioPsicologo_cedula = int_usuarioPsicologo_cedula;
+    public void setInt_cedula(int int_cedula) {
+        this.int_cedula = int_cedula;
     }
 
-    public double getDouble_usuarioPsicologo_pago() {
-        return double_usuarioPsicologo_pago;
+    public double getDouble_pago() {
+        return double_pago;
     }
 
-    public void setDouble_usuarioPsicologo_pago(double double_usuarioPsicologo_pago) {
-        this.double_usuarioPsicologo_pago = double_usuarioPsicologo_pago;
+    public void setDouble_pago(double double_pago) {
+        this.double_pago = double_pago;
     }
 
-    public String getString_usuarioPsicologo_especialidad() {
-        return string_usuarioPsicologo_especialidad;
+    public String getString_especialidad() {
+        return string_especialidad;
     }
 
-    public void setString_usuarioPsicologo_especialidad(String string_usuarioPsicologo_especialidad) {
-        this.string_usuarioPsicologo_especialidad = string_usuarioPsicologo_especialidad;
+    public void setString_especialidad(String string_especialidad) {
+        this.string_especialidad = string_especialidad;
     }
 
-    public String getString_usuarioPsicologo_perfilProfesional() {
-        return string_usuarioPsicologo_perfilProfesional;
+    public String getString_perfilProfesional() {
+        return string_perfilProfesional;
     }
 
-    public void setString_usuarioPsicologo_perfilProfesional(String string_usuarioPsicologo_perfilProfesional) {
-        this.string_usuarioPsicologo_perfilProfesional = string_usuarioPsicologo_perfilProfesional;
+    public void setString_perfilProfesional(String string_perfilProfesional) {
+        this.string_perfilProfesional = string_perfilProfesional;
     }
 }

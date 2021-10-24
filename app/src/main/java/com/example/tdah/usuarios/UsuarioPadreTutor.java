@@ -3,42 +3,40 @@ package com.example.tdah.usuarios;
 import java.io.Serializable;
 
 public class UsuarioPadreTutor extends Usuario implements Serializable {
-    String string_usuarioPadreTutor_curp;
-    double double_usuarioPadreTutor_pago;
-    int int_usuarioPadreTutor_nip;
+    private String string_curp;
+    private double double_pago;
+    private int int_nip;
+    private String string_tipoCuenta;
 
-    public String getString_usuarioPadreTutor_curp() {
-        return string_usuarioPadreTutor_curp;
+    public String getString_curp() {
+        return string_curp;
     }
 
-    public void setString_usuarioPadreTutor_curp(String string_usuarioPadreTutor_curp) {
-        this.string_usuarioPadreTutor_curp = string_usuarioPadreTutor_curp;
+    public void setString_curp(String string_curp) {
+        this.string_curp = string_curp;
     }
 
-    public double getDouble_usuarioPadreTutor_pago() {
-        return double_usuarioPadreTutor_pago;
+    public double getDouble_pago() {
+        return double_pago;
     }
 
-    public void setDouble_usuarioPadreTutor_pago(double double_usuarioPadreTutor_pago) {
-        this.double_usuarioPadreTutor_pago = double_usuarioPadreTutor_pago;
+    public void setDouble_pago(double double_pago) {
+        this.double_pago = double_pago;
     }
 
-    public int getInt_usuarioPadreTutor_nip() {
-        return int_usuarioPadreTutor_nip;
+    public int getInt_nip() {
+        return int_nip;
     }
 
-    public void setInt_usuarioPadreTutor_nip(int int_usuarioPadreTutor_nip) {
-        this.int_usuarioPadreTutor_nip = int_usuarioPadreTutor_nip;
+    public void setInt_nip(int int_nip) {
+        this.int_nip = int_nip;
     }
 
-    public String getString_usuarioPadreTutor_tipoCuenta() {
-        return string_usuarioPadreTutor_tipoCuenta;
+    public String getString_tipoCuenta() {
+        return string_tipoCuenta;
     }
 
-    public void setString_usuarioPadreTutor_tipoCuenta(String string_usuarioPadreTutor_tipoCuenta) {
-        this.string_usuarioPadreTutor_tipoCuenta = string_usuarioPadreTutor_tipoCuenta;
+    public void setString_tipoCuenta(String string_tipoCuenta) {
+        this.string_tipoCuenta = string_tipoCuenta;
     }
-
-    String string_usuarioPadreTutor_tipoCuenta;
-
 }
