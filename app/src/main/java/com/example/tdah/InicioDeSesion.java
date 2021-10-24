@@ -22,4 +22,6 @@ public class InicioDeSesion extends AppCompatActivity {
         Intent ir = new Intent(this,MainActivity.class);
         startActivity(ir);
     }
+
+
 }
