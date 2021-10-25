@@ -72,7 +72,6 @@ public class RegistroUsuario extends AppCompatActivity {
                 !TextUtils.isEmpty(correo)||!TextUtils.isEmpty(nombre_paciente)||
                 !TextUtils.isEmpty(nip)||!TextUtils.isEmpty(contrasena))
         {
-//            Toast.makeText(this,"Aquí si llega x2",Toast.LENGTH_LONG).show();
             u.setString_id(UUID.randomUUID().toString());
             u.setString_nombre(nombre);
             u.setInt_nip(Integer.parseInt(nip));
@@ -86,10 +85,8 @@ public class RegistroUsuario extends AppCompatActivity {
             p.setString_nombre_paciente(nombre_paciente);
             p.setInt_progreso(0);
             p.setInt_puntuacion(0);
-//            Toast.makeText(this,"Aquí si llega x3",Toast.LENGTH_LONG).show();
             usuario.child("Usuario").child(u.getString_id()).setValue(u);
             usuario.child("Usuario").child(u.getString_id()).child("Paciente").setValue(p);
-//            Toast.makeText(this,"Aquí si llega x4",Toast.LENGTH_LONG).show();
             Toast.makeText(this,"Usuario registrado",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,"Debe ingresar todos los parametros",Toast.LENGTH_LONG).show();
