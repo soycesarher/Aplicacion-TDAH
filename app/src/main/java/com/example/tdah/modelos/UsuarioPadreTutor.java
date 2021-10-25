@@ -1,4 +1,4 @@
-package com.example.tdah.usuarios;
+package com.example.tdah.modelos;
 
 import java.io.Serializable;
 

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "446125471931",
+    "firebase_url": "https://aplicacion-tdah-default-rtdb.firebaseio.com",
+    "project_id": "aplicacion-tdah",
+    "storage_bucket": "aplicacion-tdah.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446125471931:android:d3e75c7887a32f1ca8119e",
+        "android_client_info": {
+          "package_name": "com.example.tdah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446125471931-b6g13knpooplh7rmbl18jodopho55vqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyd7qdeu1_mbNUY6ENaIpnaLt_PrR4Pw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446125471931-b6g13knpooplh7rmbl18jodopho55vqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
