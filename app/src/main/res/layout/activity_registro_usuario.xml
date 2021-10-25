@@ -92,6 +92,7 @@
         android:layout_marginTop="36dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:onClick="ingresa_base_datos"
         android:text="@string/etx_nombre_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"

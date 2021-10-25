@@ -11,46 +11,85 @@ import android.widget.Toast;
 
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.UUID;
 
 public class RegistroUsuario extends AppCompatActivity {
-    private DatabaseReference usuario;
+    DatabaseReference usuario;
     Button btn_registrar, btn_cancelar;
-    EditText txt_nombre_padre_tutor, txt_nombre_paciente, txt_apellido_materno,
-    txt_apellido_paterno, txt_correo, txt_curp, txt_nip, txt_contrasena;
+    EditText txt_nombre_padre_tutor;
+    EditText txt_nombre_paciente;
+    EditText txt_apellido_materno;
+    EditText txt_apellido_paterno;
+    EditText txt_correo;
+    EditText txt_curp;
+    EditText txt_nip;
+    EditText txt_contrasena;
+    FirebaseDatabase firebase_database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_usuario);
-        usuario = FirebaseDatabase.getInstance().getReference();
-        btn_registrar.setOnClickListener(v -> ingresaBaseDatos());
+        inicializa_firebase();
+//        usuario = FirebaseDatabase.getInstance().getReference();
+//        btn_registrar = (Button) findViewById(R.id.btn_registrar);
+//        btn_registrar.setOnClickListener(v -> ingresa_base_datos());
+
     }
-    public void ingresaBaseDatos(){
+
+    private void inicializa_firebase() {
+        FirebaseApp.initializeApp(this);
+        firebase_database = FirebaseDatabase.getInstance();
+        usuario = firebase_database.getReference();
+    }
+
+    public void ingresa_base_datos(View view){
         UsuarioPadreTutor u = new UsuarioPadreTutor();
         UsuarioPaciente p = new UsuarioPaciente();
-        if(!TextUtils.isEmpty(txt_nombre_padre_tutor.getText().toString())||!TextUtils.isEmpty(txt_nombre_paciente.getText().toString())||
-                !TextUtils.isEmpty(txt_apellido_materno.getText().toString())||!TextUtils.isEmpty(txt_apellido_paterno.getText().toString())||
-                !TextUtils.isEmpty(txt_correo.getText().toString())||!TextUtils.isEmpty(txt_curp.getText().toString())||
-                !TextUtils.isEmpty(txt_contrasena.getText().toString())||!TextUtils.isEmpty(txt_nip.getText().toString()))
+        txt_curp=findViewById(R.id.txt_curp);
+        txt_apellido_paterno=findViewById(R.id.txt_apellido_paterno);
+        txt_nip=findViewById(R.id.txt_nip);
+        txt_contrasena=findViewById(R.id.txt_contrasena);
+        txt_correo=findViewById(R.id.txt_correo);
+        txt_apellido_materno=findViewById(R.id.txt_apellido_materno);
+        txt_nombre_paciente=findViewById(R.id.txt_nombre_paciente);
+        txt_nombre_padre_tutor=findViewById(R.id.txt_nombre_padre_tutor);
+        Toast.makeText(this,"Aquí si llega",Toast.LENGTH_LONG).show();
+        String curp = txt_curp.getText().toString();
+        String nombre = txt_nombre_padre_tutor.getText().toString();
+        String apellido_paterno=txt_apellido_paterno.getText().toString();
+        String apellido_materno=txt_apellido_materno.getText().toString();
+        String correo=txt_correo.getText().toString();
+        String nombre_paciente=txt_nombre_paciente.getText().toString();
+        String contrasena=txt_contrasena.getText().toString();
+        String nip=txt_nip.getText().toString();
+
+        if(!TextUtils.isEmpty(nombre)||!TextUtils.isEmpty(curp)||
+                !TextUtils.isEmpty(apellido_materno)||!TextUtils.isEmpty(apellido_paterno)||
+                !TextUtils.isEmpty(correo)||!TextUtils.isEmpty(nombre_paciente)||
+                !TextUtils.isEmpty(nip)||!TextUtils.isEmpty(contrasena))
         {
+//            Toast.makeText(this,"Aquí si llega x2",Toast.LENGTH_LONG).show();
             u.setString_id(UUID.randomUUID().toString());
-            u.setString_nombre(txt_nombre_padre_tutor.getText().toString());
-            u.setInt_nip(Integer.parseInt(txt_nombre_padre_tutor.getText().toString()));
-            u.setString_curp(txt_curp.getText().toString());
+            u.setString_nombre(nombre);
+            u.setInt_nip(Integer.parseInt(nip));
+            u.setString_curp(curp);
             u.setString_tipo_cuenta("Libre");
-            u.setString_apellido_materno(txt_apellido_materno.getText().toString());
-            u.setString_apellido_paterno(txt_apellido_paterno.getText().toString());
-            u.setString_contrasena(txt_nombre_padre_tutor.getText().toString());
+            u.setString_apellido_materno(apellido_materno);
+            u.setString_apellido_paterno(apellido_paterno);
+            u.setString_contrasena(contrasena);
             u.setString_fecha_nacimiento("0/0/2021");
             u.setDouble_pago(30.5);
-            p.setString_nombre_paciente(txt_nombre_paciente.getText().toString());
+            p.setString_nombre_paciente(nombre_paciente);
             p.setInt_progreso(0);
             p.setInt_puntuacion(0);
+//            Toast.makeText(this,"Aquí si llega x3",Toast.LENGTH_LONG).show();
             usuario.child("Usuario").child(u.getString_id()).setValue(u);
             usuario.child("Usuario").child(u.getString_id()).child("Paciente").setValue(p);
+//            Toast.makeText(this,"Aquí si llega x4",Toast.LENGTH_LONG).show();
             Toast.makeText(this,"Usuario registrado",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,"Debe ingresar todos los parametros",Toast.LENGTH_LONG).show();
