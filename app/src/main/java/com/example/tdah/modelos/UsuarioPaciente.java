@@ -2,7 +2,7 @@ package com.example.tdah.modelos;
 
 import java.io.Serializable;
 
-public class UsuarioPaciente extends UsuarioPadreTutor implements Serializable {
+public class UsuarioPaciente implements Serializable {
     private String string_nombre_paciente;
     private int int_puntuacion,int_progreso;
 

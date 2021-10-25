@@ -19,7 +19,6 @@ import java.util.UUID;
 
 public class RegistroUsuario extends AppCompatActivity {
     DatabaseReference usuario;
-    Button btn_registrar, btn_cancelar;
     EditText txt_nombre_padre_tutor;
     EditText txt_nombre_paciente;
     EditText txt_apellido_materno;
@@ -34,10 +33,6 @@ public class RegistroUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_usuario);
         inicializa_firebase();
-//        usuario = FirebaseDatabase.getInstance().getReference();
-//        btn_registrar = (Button) findViewById(R.id.btn_registrar);
-//        btn_registrar.setOnClickListener(v -> ingresa_base_datos());
-
     }
 
     private void inicializa_firebase() {
@@ -57,7 +52,6 @@ public class RegistroUsuario extends AppCompatActivity {
         txt_apellido_materno=findViewById(R.id.txt_apellido_materno);
         txt_nombre_paciente=findViewById(R.id.txt_nombre_paciente);
         txt_nombre_padre_tutor=findViewById(R.id.txt_nombre_padre_tutor);
-        Toast.makeText(this,"Aquí si llega",Toast.LENGTH_LONG).show();
         String curp = txt_curp.getText().toString();
         String nombre = txt_nombre_padre_tutor.getText().toString();
         String apellido_paterno=txt_apellido_paterno.getText().toString();
