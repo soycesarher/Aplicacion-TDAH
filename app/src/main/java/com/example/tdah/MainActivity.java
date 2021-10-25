@@ -17,4 +17,8 @@ public class MainActivity extends AppCompatActivity {
         Intent ir = new Intent(this,InicioDeSesion.class);
         startActivity(ir);
     }
+    public void ir_a_registro(View view){
+        Intent ir = new Intent(this,RegistroUsuario.class);
+        startActivity(ir);
+    }
 }

@@ -3,10 +3,13 @@ package com.example.tdah.modelos;
 import java.io.Serializable;
 
 public class UsuarioPadreTutor extends Usuario implements Serializable {
-    private String string_curp;
+
+    private String string_curp,string_tipo_cuenta;
     private double double_pago;
     private int int_nip;
-    private String string_tipoCuenta;
+
+    public UsuarioPadreTutor() {
+    }
 
     public String getString_curp() {
         return string_curp;
@@ -14,6 +17,14 @@ public class UsuarioPadreTutor extends Usuario implements Serializable {
 
     public void setString_curp(String string_curp) {
         this.string_curp = string_curp;
+    }
+
+    public String getString_tipo_cuenta() {
+        return string_tipo_cuenta;
+    }
+
+    public void setString_tipo_cuenta(String string_tipo_cuenta) {
+        this.string_tipo_cuenta = string_tipo_cuenta;
     }
 
     public double getDouble_pago() {
@@ -32,11 +43,4 @@ public class UsuarioPadreTutor extends Usuario implements Serializable {
         this.int_nip = int_nip;
     }
 
-    public String getString_tipoCuenta() {
-        return string_tipoCuenta;
-    }
-
-    public void setString_tipoCuenta(String string_tipoCuenta) {
-        this.string_tipoCuenta = string_tipoCuenta;
-    }
 }

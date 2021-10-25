@@ -4,14 +4,17 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable{
     private String string_nombre;
-    private String string_apellidoPaterno;
-    private String string_apellidoMaterno;
-    private String string_fechaDeNacimiento;
+    private String string_apellido_paterno;
+    private String string_apellido_materno;
+    private String string_fecha_nacimiento;
     private String string_direccion;
     private String string_contrasena;
     private String string_correo;
     private String string_id;
 
+    public Usuario() {
+
+    }
 
     public String getString_nombre() {
         return string_nombre;
@@ -21,28 +24,28 @@ public class Usuario implements Serializable{
         this.string_nombre = string_nombre;
     }
 
-    public String getString_apellidoPaterno() {
-        return string_apellidoPaterno;
+    public String getString_apellido_paterno() {
+        return string_apellido_paterno;
     }
 
-    public void setString_apellidoPaterno(String string_apellidoPaterno) {
-        this.string_apellidoPaterno = string_apellidoPaterno;
+    public void setString_apellido_paterno(String string_apellido_paterno) {
+        this.string_apellido_paterno = string_apellido_paterno;
     }
 
-    public String getString_apellidoMaterno() {
-        return string_apellidoMaterno;
+    public String getString_apellido_materno() {
+        return string_apellido_materno;
     }
 
-    public void setString_apellidoMaterno(String string_apellidoMaterno) {
-        this.string_apellidoMaterno = string_apellidoMaterno;
+    public void setString_apellido_materno(String string_apellido_materno) {
+        this.string_apellido_materno = string_apellido_materno;
     }
 
-    public String getString_fechaDeNacimiento() {
-        return string_fechaDeNacimiento;
+    public String getString_fecha_nacimiento() {
+        return string_fecha_nacimiento;
     }
 
-    public void setString_fechaDeNacimiento(String string_fechaDeNacimiento) {
-        this.string_fechaDeNacimiento = string_fechaDeNacimiento;
+    public void setString_fecha_nacimiento(String string_fecha_nacimiento) {
+        this.string_fecha_nacimiento = string_fecha_nacimiento;
     }
 
     public String getString_direccion() {
