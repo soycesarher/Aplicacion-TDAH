@@ -9,11 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.example.tdah.validaciones.DatosDeCurp;
 
 import java.util.UUID;
 
@@ -28,11 +35,14 @@ public class RegistroUsuario extends AppCompatActivity {
     EditText txt_nip;
     EditText txt_contrasena;
     FirebaseDatabase firebase_database;
+    RequestQueue rq;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_usuario);
         inicializa_firebase();
+        txt_curp=findViewById(R.id.txt_curp);
+        rq = Volley.newRequestQueue(this);
     }
 
     private void inicializa_firebase() {
@@ -95,5 +105,41 @@ public class RegistroUsuario extends AppCompatActivity {
     public void ir_inicio_de_sesion(View view){
         Intent ir = new Intent(this,InicioDeSesion.class);
         startActivity(ir);
+    }
+
+    public void valida_datos_curp(String renapo){
+
+        DatosDeCurp validar = new DatosDeCurp(renapo);
+        String nombre = validar.getString_nombre();
+        String apellido_paterno = validar.getString_apellido_paterno();
+        String apellido_materno = validar.getString_apellido_materno();
+        String fecha_nacimiento = validar.getString_fecha_nacimiento();
+        txt_nombre_padre_tutor=findViewById(R.id.txt_nombre_padre_tutor);
+        txt_nombre_padre_tutor.setText(nombre);
+        txt_apellido_paterno=findViewById(R.id.txt_apellido_paterno);
+        txt_apellido_paterno.setText(apellido_paterno);
+        txt_apellido_materno=findViewById(R.id.txt_apellido_materno);
+        txt_apellido_materno.setText(apellido_materno);
+        /*boolean datos_correctos = false;
+        if(datos_correctos)
+            ir_inicio_de_sesion();*/
+    }
+    public void recuperar(View v){
+        txt_curp = findViewById(R.id.txt_curp);
+        StringRequest requerimiento = new StringRequest(Request.Method.GET,
+                "https://us-west4-arsus-production.cloudfunctions.net/curp?curp="+txt_curp.getText().toString()+"&apiKey=WgrtpPpMT6gCrKmawXDipiEzQQv2",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        valida_datos_curp(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(RegistroUsuario.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+        rq.add(requerimiento);
     }
 }
