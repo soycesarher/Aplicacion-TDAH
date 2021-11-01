@@ -21,5 +21,6 @@
     <string name="btn_iniciar_sesion">Ingresar</string>
     <string name="btn_ingresar_cancelar">Cancelar</string>
     <string name="tvw_solicitar_registrarse">Quiero registrarme</string>
+    <string name="logo">Logo</string>
 
 </resources>

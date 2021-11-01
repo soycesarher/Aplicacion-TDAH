@@ -43,7 +43,6 @@
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
-
             <EditText
                 android:id="@+id/txt_nombre_padre_tutor"
                 android:layout_width="match_parent"
@@ -54,6 +53,7 @@
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
+
             <EditText
                 android:id="@+id/txt_apellido_paterno"
                 android:layout_width="match_parent"
@@ -61,8 +61,11 @@
                 android:ems="10"
                 android:hint="@string/etx_apaterno"
                 android:inputType="textPersonName"
+
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
+
+
 
             <EditText
                 android:id="@+id/txt_apellido_materno"
@@ -71,8 +74,11 @@
                 android:ems="10"
                 android:hint="@string/etx_amaterno"
                 android:inputType="textPersonName"
+
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
+
+
 
             <EditText
                 android:id="@+id/txt_curp"
@@ -131,20 +137,24 @@
                 android:id="@+id/btn_cancelar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="Cancelar"
                 android:onClick="ir_main"
-                android:text="@string/btn_cancelar"
                 android:textAlignment="center" />
+
 
             <TextView
                 android:id="@+id/lbl_tengo_cuenta"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:onClick="ir_inicio_de_sesion"
                 android:text="@string/tvw_yatengo"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
+
+
         </LinearLayout>
     </ScrollView>
 

@@ -9,6 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,9 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
+import com.example.tdah.validaciones.DatosDeCurp;
 
-
-import java.util.UUID;
 
 public class RegistroUsuario extends AppCompatActivity {
     DatabaseReference usuario;
@@ -34,12 +39,17 @@ public class RegistroUsuario extends AppCompatActivity {
     EditText txt_nip;
     EditText txt_contrasena;
     FirebaseDatabase firebase_database;
+
     private FirebaseAuth mAuth;
+   RequestQueue rq;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_usuario);
         inicializa_firebase();
+        txt_curp=findViewById(R.id.txt_curp);
+        rq = Volley.newRequestQueue(this);
     }
 
     private void inicializa_firebase() {
@@ -77,26 +87,27 @@ public class RegistroUsuario extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(correo,contrasena).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-
-                    UsuarioPadreTutor u = new UsuarioPadreTutor();
-                    UsuarioPaciente p = new UsuarioPaciente();
+                    UsuarioPadreTutor usuarioPadreTutor = new UsuarioPadreTutor();
+                    UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
+                    DatosDeCurp datosDeCurp = new DatosDeCurp(curp);
                if(task.isSuccessful()){
+
                    FirebaseUser usuario_actual = mAuth.getCurrentUser();
-                   u.setString_id(usuario_actual.getUid());
-                   u.setString_nombre(nombre);
-                   u.setInt_nip(Integer.parseInt(nip));
-                   u.setString_curp(curp);
-                   u.setString_tipo_cuenta("Libre");
-                   u.setString_apellido_materno(apellido_materno);
-                   u.setString_apellido_paterno(apellido_paterno);
-                   u.setString_contrasena(contrasena);
-                   u.setString_fecha_nacimiento("0/0/2021");
-                   u.setDouble_pago(30.5);
-                   p.setString_nombre_paciente(nombre_paciente);
-                   p.setInt_progreso(0);
-                   p.setInt_puntuacion(0);
-                   usuario.child("Usuario").child(u.getString_id()).setValue(u);
-                   usuario.child("Usuario").child(u.getString_id()).child("Paciente").setValue(p);
+                   usuarioPadreTutor.setString_id(usuario_actual.getUid());
+                   usuarioPadreTutor.setString_nombre(datosDeCurp.getString_nombre());
+                   usuarioPadreTutor.setInt_nip(Integer.parseInt(nip));
+                   usuarioPadreTutor.setString_curp(curp);
+                   usuarioPadreTutor.setString_tipo_cuenta("Libre");
+                   usuarioPadreTutor.setString_apellido_materno(datosDeCurp.getString_apellido_materno());
+                   usuarioPadreTutor.setString_apellido_paterno(datosDeCurp.getString_apellido_paterno());
+                   usuarioPadreTutor.setString_contrasena(contrasena);
+                   usuarioPadreTutor.setString_fecha_nacimiento(datosDeCurp.getString_fecha_nacimiento());
+                   usuarioPadreTutor.setDouble_pago(30.5);
+                   usuarioPaciente.setString_nombre_paciente(nombre_paciente);
+                   usuarioPaciente.setInt_progreso(0);
+                   usuarioPaciente.setInt_puntuacion(0);
+                   usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor);
+                   usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente);
                    Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_SHORT).show();
                }else {
                    Toast.makeText(RegistroUsuario.this, "Fallo de autenticación", Toast.LENGTH_SHORT).show();
@@ -118,4 +129,41 @@ public class RegistroUsuario extends AppCompatActivity {
         Intent ir = new Intent(this,InicioDeSesion.class);
         startActivity(ir);
     }
+
+    public void valida_datos_curp(String renapo){
+
+        DatosDeCurp validar = new DatosDeCurp(renapo);
+        String nombre = validar.getString_nombre();
+        String apellido_paterno = validar.getString_apellido_paterno();
+        String apellido_materno = validar.getString_apellido_materno();
+        String fecha_nacimiento = validar.getString_fecha_nacimiento();
+        txt_nombre_padre_tutor=findViewById(R.id.txt_nombre_padre_tutor);
+        txt_nombre_padre_tutor.setText(nombre);
+        txt_apellido_paterno=findViewById(R.id.txt_apellido_paterno);
+        txt_apellido_paterno.setText(apellido_paterno);
+        txt_apellido_materno=findViewById(R.id.txt_apellido_materno);
+        txt_apellido_materno.setText(apellido_materno);
+        /*boolean datos_correctos = false;
+        if(datos_correctos)
+            ir_inicio_de_sesion();*/
+    }
+    public void recuperar(View v){
+        txt_curp = findViewById(R.id.txt_curp);
+        StringRequest requerimiento = new StringRequest(Request.Method.GET,
+                "https://us-west4-arsus-production.cloudfunctions.net/curp?curp="+txt_curp.getText().toString()+"&apiKey=WgrtpPpMT6gCrKmawXDipiEzQQv2",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        valida_datos_curp(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(RegistroUsuario.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+        rq.add(requerimiento);
+    }
+
 }

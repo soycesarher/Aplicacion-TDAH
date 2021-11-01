@@ -21,7 +21,7 @@ private FirebaseAuth mAuth;
             recarga();
         }
     }
-//  Este método recarga al menú principal si es que el usuario ya inició sesión
+// Este método recarga al menú principal si es que el usuario ya inició sesión
     private void recarga() {
     }
 
