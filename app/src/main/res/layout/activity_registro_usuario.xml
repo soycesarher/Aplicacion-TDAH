@@ -18,6 +18,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp"
+            android:paddingTop="30dp"
             android:orientation="vertical" >
 
             <TextView
@@ -86,20 +90,23 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/etx_correo"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
-
-            <EditText
-                android:id="@+id/txt_contrasena"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:hint="@string/etx_contrasena"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/txt_contrasena"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/etx_contrasena"
+                    android:inputType="textPassword"
+                    android:textAlignment="center"
+                    tools:ignore="TouchTargetSizeCheck" />
 
+            </RelativeLayout>
             <EditText
                 android:id="@+id/txt_nip"
                 android:layout_width="match_parent"

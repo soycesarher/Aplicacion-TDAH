@@ -18,6 +18,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp"
+            android:paddingTop="30dp"
             android:orientation="vertical" >
 
             <ImageView
@@ -44,7 +48,7 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="@string/etx_ingresar_correo"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:textAlignment="center" />
 
             <EditText
@@ -53,7 +57,7 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/etx_ingresar_contrasena"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:textAlignment="center" />
 
             <Button
