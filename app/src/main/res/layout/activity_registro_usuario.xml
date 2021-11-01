@@ -114,6 +114,7 @@
                 android:id="@+id/btn_registrarse"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="20dp"
                 android:onClick="ingresa_base_datos"
                 android:text="@string/btn_registrarse"
