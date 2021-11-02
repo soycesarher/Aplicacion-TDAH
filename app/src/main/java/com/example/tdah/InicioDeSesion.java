@@ -16,10 +16,10 @@ private FirebaseAuth mAuth;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_de_sesion);
 //        Este método es por si el usuario ya accedió a su cuenta
-        FirebaseUser usuarioActual = mAuth.getCurrentUser();
-        if(usuarioActual!= null){
-            recarga();
-        }
+//        FirebaseUser usuarioActual = mAuth.getCurrentUser();
+//        if(usuarioActual!= null){
+//            recarga();
+//        }
     }
 // Este método recarga al menú principal si es que el usuario ya inició sesión
     private void recarga() {

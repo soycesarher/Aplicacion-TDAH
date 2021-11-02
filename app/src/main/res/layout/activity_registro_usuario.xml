@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="@string/etx_nombre_usuario"
+                android:hint="@string/nombre_paciente"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -51,6 +51,7 @@
                 android:hint="@string/etx_nombres"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
+                android:enabled="false"
                 tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -61,7 +62,7 @@
                 android:ems="10"
                 android:hint="@string/etx_apaterno"
                 android:inputType="textPersonName"
-
+                android:enabled="false"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -74,7 +75,7 @@
                 android:ems="10"
                 android:hint="@string/etx_amaterno"
                 android:inputType="textPersonName"
-
+                android:enabled="false"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -89,6 +90,13 @@
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
+            <Button
+                android:id="@+id/txt_verifica_curp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Verifica curp"
+                android:onClick="recuperar"
+                android:textAlignment="center" />
 
             <EditText
                 android:id="@+id/txt_correo"

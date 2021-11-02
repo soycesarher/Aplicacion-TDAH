@@ -39,7 +39,6 @@ public class RegistroUsuario extends AppCompatActivity {
     EditText txt_nip;
     EditText txt_contrasena;
     FirebaseDatabase firebase_database;
-
     private FirebaseAuth mAuth;
    RequestQueue rq;
 
@@ -60,8 +59,6 @@ public class RegistroUsuario extends AppCompatActivity {
     }
 
     public void ingresa_base_datos(View view){
-
-
         txt_curp=findViewById(R.id.txt_curp);
         txt_apellido_paterno=findViewById(R.id.txt_apellido_paterno);
         txt_nip=findViewById(R.id.txt_nip);
@@ -84,20 +81,20 @@ public class RegistroUsuario extends AppCompatActivity {
                 !TextUtils.isEmpty(correo)||!TextUtils.isEmpty(nombre_paciente)||
                 !TextUtils.isEmpty(nip)||!TextUtils.isEmpty(contrasena))
         {
-            mAuth.createUserWithEmailAndPassword(correo,contrasena).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.createUserWithEmailAndPassword(correo,contrasena).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     UsuarioPadreTutor usuarioPadreTutor = new UsuarioPadreTutor();
                     UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
-                    DatosDeCurp datosDeCurp = new DatosDeCurp(curp);
+                    DatosDeCurp datosDeCurp = null;
                if(task.isSuccessful()){
 
                    FirebaseUser usuario_actual = mAuth.getCurrentUser();
                    usuarioPadreTutor.setString_id(usuario_actual.getUid());
-                   usuarioPadreTutor.setString_nombre(datosDeCurp.getString_nombre());
                    usuarioPadreTutor.setInt_nip(Integer.parseInt(nip));
                    usuarioPadreTutor.setString_curp(curp);
                    usuarioPadreTutor.setString_tipo_cuenta("Libre");
+                   usuarioPadreTutor.setString_nombre(datosDeCurp.getString_nombre());
                    usuarioPadreTutor.setString_apellido_materno(datosDeCurp.getString_apellido_materno());
                    usuarioPadreTutor.setString_apellido_paterno(datosDeCurp.getString_apellido_paterno());
                    usuarioPadreTutor.setString_contrasena(contrasena);
@@ -109,7 +106,9 @@ public class RegistroUsuario extends AppCompatActivity {
                    usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor);
                    usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente);
                    Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_SHORT).show();
+                   actualiza_Interfaz(usuario_actual);
                }else {
+                   actualiza_Interfaz(null);
                    Toast.makeText(RegistroUsuario.this, "Fallo de autenticación", Toast.LENGTH_SHORT).show();
                }
                 }
@@ -118,6 +117,9 @@ public class RegistroUsuario extends AppCompatActivity {
         }else {
             Toast.makeText(this,"Debe ingresar todos los parametros",Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void actualiza_Interfaz(FirebaseUser usuario_actual) {
     }
 
     //conexion de activities
@@ -147,7 +149,7 @@ public class RegistroUsuario extends AppCompatActivity {
         if(datos_correctos)
             ir_inicio_de_sesion();*/
     }
-    public void recuperar(View v){
+    public void recuperar(View view){
         txt_curp = findViewById(R.id.txt_curp);
         StringRequest requerimiento = new StringRequest(Request.Method.GET,
                 "https://us-west4-arsus-production.cloudfunctions.net/curp?curp="+txt_curp.getText().toString()+"&apiKey=WgrtpPpMT6gCrKmawXDipiEzQQv2",

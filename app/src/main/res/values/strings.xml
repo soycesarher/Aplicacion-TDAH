@@ -22,5 +22,6 @@
     <string name="btn_ingresar_cancelar">Cancelar</string>
     <string name="tvw_solicitar_registrarse">Quiero registrarme</string>
     <string name="logo">Logo</string>
+    <string name="nombre_paciente">Nombre paciente</string>
 
 </resources>
