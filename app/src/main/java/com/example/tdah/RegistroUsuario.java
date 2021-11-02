@@ -20,7 +20,6 @@ import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,6 +37,7 @@ public class RegistroUsuario extends AppCompatActivity {
     EditText txt_curp;
     EditText txt_nip;
     EditText txt_contrasena;
+    String fecha_nacimiento;
     FirebaseDatabase firebase_database;
     private FirebaseAuth mAuth;
    RequestQueue rq;
@@ -56,6 +56,19 @@ public class RegistroUsuario extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
         firebase_database = FirebaseDatabase.getInstance();
         usuario = firebase_database.getReference();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser usuarioActual = mAuth.getCurrentUser();
+        if(usuarioActual!= null){
+            ir_a_menu_usuario();
+        }
+    }
+    public void ir_a_menu_usuario(){
+        Intent ir = new Intent(this,MenuUsuario.class);
+        startActivity(ir);
     }
 
     public void ingresa_base_datos(View view){
@@ -81,37 +94,43 @@ public class RegistroUsuario extends AppCompatActivity {
                 !TextUtils.isEmpty(correo)||!TextUtils.isEmpty(nombre_paciente)||
                 !TextUtils.isEmpty(nip)||!TextUtils.isEmpty(contrasena))
         {
-            mAuth.createUserWithEmailAndPassword(correo,contrasena).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    UsuarioPadreTutor usuarioPadreTutor = new UsuarioPadreTutor();
-                    UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
-                    DatosDeCurp datosDeCurp = null;
-               if(task.isSuccessful()){
+            mAuth.createUserWithEmailAndPassword(correo,contrasena).addOnCompleteListener(task -> {
+                UsuarioPadreTutor usuarioPadreTutor = new UsuarioPadreTutor();
+                UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
+                DatosDeCurp datosDeCurp = null;
+           if(task.isSuccessful()){
 
-                   FirebaseUser usuario_actual = mAuth.getCurrentUser();
-                   usuarioPadreTutor.setString_id(usuario_actual.getUid());
-                   usuarioPadreTutor.setInt_nip(Integer.parseInt(nip));
-                   usuarioPadreTutor.setString_curp(curp);
-                   usuarioPadreTutor.setString_tipo_cuenta("Libre");
-                   usuarioPadreTutor.setString_nombre(datosDeCurp.getString_nombre());
-                   usuarioPadreTutor.setString_apellido_materno(datosDeCurp.getString_apellido_materno());
-                   usuarioPadreTutor.setString_apellido_paterno(datosDeCurp.getString_apellido_paterno());
-                   usuarioPadreTutor.setString_contrasena(contrasena);
-                   usuarioPadreTutor.setString_fecha_nacimiento(datosDeCurp.getString_fecha_nacimiento());
-                   usuarioPadreTutor.setDouble_pago(30.5);
-                   usuarioPaciente.setString_nombre_paciente(nombre_paciente);
-                   usuarioPaciente.setInt_progreso(0);
-                   usuarioPaciente.setInt_puntuacion(0);
-                   usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor);
-                   usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente);
-                   Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_SHORT).show();
-                   actualiza_Interfaz(usuario_actual);
-               }else {
-                   actualiza_Interfaz(null);
-                   Toast.makeText(RegistroUsuario.this, "Fallo de autenticación", Toast.LENGTH_SHORT).show();
-               }
-                }
+               FirebaseUser usuario_actual = mAuth.getCurrentUser();
+               usuarioPadreTutor.setString_id(usuario_actual.getUid());
+               usuarioPadreTutor.setInt_nip(Integer.parseInt(nip));
+               usuarioPadreTutor.setString_curp(curp);
+               usuarioPadreTutor.setString_tipo_cuenta("Libre");
+               usuarioPadreTutor.setString_nombre(nombre);
+               usuarioPadreTutor.setString_apellido_materno(apellido_materno);
+               usuarioPadreTutor.setString_apellido_paterno(apellido_paterno);
+               usuarioPadreTutor.setString_contrasena(contrasena);
+               usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
+               usuarioPadreTutor.setDouble_pago(30.5);
+               usuarioPaciente.setString_nombre_paciente(nombre_paciente);
+               usuarioPaciente.setInt_progreso(0);
+               usuarioPaciente.setInt_puntuacion(0);
+               usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor).addOnCompleteListener(task1 -> {
+                   if (task1.isSuccessful()){
+                       usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente);
+                       Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_LONG).show();
+                       actualiza_interfaz(usuario_actual);
+                       finish();
+                   }else{
+                       Toast.makeText(RegistroUsuario.this,"No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+                       actualiza_interfaz(null);
+                   }
+               });
+
+
+           }else {
+               actualiza_interfaz(null);
+               Toast.makeText(RegistroUsuario.this, "Fallo de autenticación", Toast.LENGTH_LONG).show();
+           }
             });
 
         }else {
@@ -119,7 +138,8 @@ public class RegistroUsuario extends AppCompatActivity {
         }
     }
 
-    private void actualiza_Interfaz(FirebaseUser usuario_actual) {
+    private void actualiza_interfaz(FirebaseUser usuario_actual) {
+        startActivity(new Intent(RegistroUsuario.this,MenuUsuario.class));
     }
 
     //conexion de activities
@@ -145,6 +165,7 @@ public class RegistroUsuario extends AppCompatActivity {
         txt_apellido_paterno.setText(apellido_paterno);
         txt_apellido_materno=findViewById(R.id.txt_apellido_materno);
         txt_apellido_materno.setText(apellido_materno);
+        fecha_nacimiento= validar.getString_fecha_nacimiento();
         /*boolean datos_correctos = false;
         if(datos_correctos)
             ir_inicio_de_sesion();*/

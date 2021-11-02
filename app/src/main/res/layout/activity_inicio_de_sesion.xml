@@ -23,8 +23,6 @@
             android:paddingBottom="30dp"
             android:paddingTop="30dp"
             android:orientation="vertical">
-
-
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
@@ -43,7 +41,7 @@
                 android:textSize="34sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName8"
+                android:id="@+id/txt_correo_inicia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
@@ -53,7 +51,7 @@
                 android:textAlignment="center" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName9"
+                android:id="@+id/txt_contrasena_inicia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
@@ -62,7 +60,7 @@
                 android:textAlignment="center" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/btn_ingresar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
@@ -71,7 +69,7 @@
                 android:textAlignment="center" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/btn_cancelar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="ir_a_main"
@@ -87,6 +85,8 @@
                 android:onClick="ir_a_registro"
                 android:text="@string/tvw_solicitar_registrarse"
                 android:textAlignment="center" />
+
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
