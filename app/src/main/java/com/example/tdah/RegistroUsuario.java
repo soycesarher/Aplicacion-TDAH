@@ -1,6 +1,6 @@
 package com.example.tdah;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +36,7 @@ public class RegistroUsuario extends AppCompatActivity {
     EditText txt_nip;
     EditText txt_contrasena;
     String fecha_nacimiento;
+    String direccion;
     FirebaseDatabase firebase_database;
     private FirebaseAuth mAuth;
    RequestQueue rq;
@@ -61,15 +60,14 @@ public class RegistroUsuario extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser usuarioActual = mAuth.getCurrentUser();
-        if(usuarioActual!= null){
-            ir_a_menu_usuario();
+        if(mAuth.getCurrentUser()!= null){
+            startActivity(new Intent(RegistroUsuario.this,MenuUsuario.class));
+            finish();
         }
     }
-    public void ir_a_menu_usuario(){
-        Intent ir = new Intent(this,MenuUsuario.class);
-        startActivity(ir);
-    }
+
+
+
 
     public void ingresa_base_datos(View view){
         txt_curp=findViewById(R.id.txt_curp);
@@ -109,6 +107,8 @@ public class RegistroUsuario extends AppCompatActivity {
                usuarioPadreTutor.setString_apellido_materno(apellido_materno);
                usuarioPadreTutor.setString_apellido_paterno(apellido_paterno);
                usuarioPadreTutor.setString_contrasena(contrasena);
+               usuarioPadreTutor.setString_correo(correo);
+               usuarioPadreTutor.setString_direccion(direccion);
                usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
                usuarioPadreTutor.setDouble_pago(30.5);
                usuarioPaciente.setString_nombre_paciente(nombre_paciente);
@@ -118,17 +118,17 @@ public class RegistroUsuario extends AppCompatActivity {
                    if (task1.isSuccessful()){
                        usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente);
                        Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_LONG).show();
-                       actualiza_interfaz(usuario_actual);
+                       startActivity(new Intent(RegistroUsuario.this,MenuUsuario.class));
                        finish();
                    }else{
                        Toast.makeText(RegistroUsuario.this,"No se pudo realizar el registro", Toast.LENGTH_LONG).show();
-                       actualiza_interfaz(null);
+
                    }
                });
 
 
            }else {
-               actualiza_interfaz(null);
+
                Toast.makeText(RegistroUsuario.this, "Fallo de autenticación", Toast.LENGTH_LONG).show();
            }
             });
@@ -138,9 +138,7 @@ public class RegistroUsuario extends AppCompatActivity {
         }
     }
 
-    private void actualiza_interfaz(FirebaseUser usuario_actual) {
-        startActivity(new Intent(RegistroUsuario.this,MenuUsuario.class));
-    }
+
 
     //conexion de activities
     public void ir_main(View view){
@@ -158,7 +156,9 @@ public class RegistroUsuario extends AppCompatActivity {
         String nombre = validar.getString_nombre();
         String apellido_paterno = validar.getString_apellido_paterno();
         String apellido_materno = validar.getString_apellido_materno();
-        String fecha_nacimiento = validar.getString_fecha_nacimiento();
+         fecha_nacimiento = validar.getString_fecha_nacimiento();
+         direccion = validar.getString_estado_nacimiento();
+
         txt_nombre_padre_tutor=findViewById(R.id.txt_nombre_padre_tutor);
         txt_nombre_padre_tutor.setText(nombre);
         txt_apellido_paterno=findViewById(R.id.txt_apellido_paterno);

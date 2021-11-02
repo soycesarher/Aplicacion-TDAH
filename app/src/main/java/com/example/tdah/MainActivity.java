@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
+private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        mAuth= FirebaseAuth.getInstance();
     }
     //conexion de activities
     public void ir_iniciar_sesion(View view){
@@ -22,5 +26,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(ir);
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+            if(mAuth.getCurrentUser()!= null){
+                startActivity(new Intent(MainActivity.this,MenuUsuario.class));
+                finish();
+            }
+    }
 }
