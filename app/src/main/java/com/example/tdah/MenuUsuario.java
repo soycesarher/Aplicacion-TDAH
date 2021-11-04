@@ -53,6 +53,9 @@ public class MenuUsuario extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * @deprecated Este metodo regresa datos del usuario, solo es de prueba
+     */
     private void datosUsuario() {
         UsuarioPadreTutor u = new UsuarioPadreTutor();
         UsuarioPaciente p = new UsuarioPaciente();

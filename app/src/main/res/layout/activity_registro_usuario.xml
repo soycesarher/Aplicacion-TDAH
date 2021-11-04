@@ -139,7 +139,8 @@
                 android:layout_marginTop="20dp"
                 android:onClick="ingresa_base_datos"
                 android:text="@string/btn_registrarse"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                tools:ignore="UsingOnClickInXml" />
 
             <Button
                 android:id="@+id/btn_cancelar"

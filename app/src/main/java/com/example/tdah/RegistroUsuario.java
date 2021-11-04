@@ -50,6 +50,10 @@ public class RegistroUsuario extends AppCompatActivity {
         rq = Volley.newRequestQueue(this);
     }
 
+    /**
+     * Crea he inicializa las instancias de Firebase Authentication y obtiene la referencia de
+     * Firebase Database
+     */
     private void inicializa_firebase() {
         FirebaseApp.initializeApp(this);
         mAuth= FirebaseAuth.getInstance();
@@ -66,9 +70,11 @@ public class RegistroUsuario extends AppCompatActivity {
         }
     }
 
-
-
-
+    /**
+     * Recupera los valores obtenidos de los botones, autentica el correo y contrasenia he ingresa
+     * la información a la base de datos.
+     * @param view
+     */
     public void ingresa_base_datos(View view){
         txt_curp=findViewById(R.id.txt_curp);
         txt_apellido_paterno=findViewById(R.id.txt_apellido_paterno);
@@ -95,14 +101,13 @@ public class RegistroUsuario extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(correo,contrasena).addOnCompleteListener(task -> {
                 UsuarioPadreTutor usuarioPadreTutor = new UsuarioPadreTutor();
                 UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
-                DatosDeCurp datosDeCurp = null;
            if(task.isSuccessful()){
 
                FirebaseUser usuario_actual = mAuth.getCurrentUser();
                usuarioPadreTutor.setString_id(usuario_actual.getUid());
                usuarioPadreTutor.setInt_nip(Integer.parseInt(nip));
                usuarioPadreTutor.setString_curp(curp);
-               usuarioPadreTutor.setString_tipo_cuenta("Libre");
+               usuarioPadreTutor.setString_tipo_cuenta(cuenta());
                usuarioPadreTutor.setString_nombre(nombre);
                usuarioPadreTutor.setString_apellido_materno(apellido_materno);
                usuarioPadreTutor.setString_apellido_paterno(apellido_paterno);
@@ -110,7 +115,7 @@ public class RegistroUsuario extends AppCompatActivity {
                usuarioPadreTutor.setString_correo(correo);
                usuarioPadreTutor.setString_direccion(direccion);
                usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
-               usuarioPadreTutor.setDouble_pago(30.5);
+               usuarioPadreTutor.setBoolean_pago(pago());
                usuarioPaciente.setString_nombre_paciente(nombre_paciente);
                usuarioPaciente.setInt_progreso(0);
                usuarioPaciente.setInt_puntuacion(0);
@@ -125,8 +130,6 @@ public class RegistroUsuario extends AppCompatActivity {
 
                    }
                });
-
-
            }else {
 
                Toast.makeText(RegistroUsuario.this, "Fallo de autenticación", Toast.LENGTH_LONG).show();
@@ -138,18 +141,53 @@ public class RegistroUsuario extends AppCompatActivity {
         }
     }
 
+    /**
+     * Regresa el tipo de cuenta
+     * @return string_cuenta
+     */
+    private String cuenta() {
+        String string_cuenta="Gratuita";
+        if (pago()){
+            string_cuenta="Pago procesado";
+        }else{
+
+            Toast.makeText(RegistroUsuario.this, "Cuenta gratuita", Toast.LENGTH_SHORT).show();
+        }
+        return string_cuenta;
+    }
+
+    /**
+     * Regresa si el pago se aplico correctamente
+     * @return boolean_pago
+     */
+    private Boolean pago() {
+        Boolean boolean_pago=false;
+        return boolean_pago;
+    }
 
 
-    //conexion de activities
+    /**
+     * Abre main_activity
+     * @param view
+     */
     public void ir_main(View view){
         Intent ir = new Intent(this,MainActivity.class);
         startActivity(ir);
     }
+
+    /**
+     * Abre activity_inicio_de_sesion
+     * @param view
+     */
     public void ir_inicio_de_sesion(View view){
         Intent ir = new Intent(this,InicioDeSesion.class);
         startActivity(ir);
     }
 
+    /**
+     *
+     * @param renapo
+     */
     public void valida_datos_curp(String renapo){
 
         DatosDeCurp validar = new DatosDeCurp(renapo);
@@ -170,6 +208,11 @@ public class RegistroUsuario extends AppCompatActivity {
         if(datos_correctos)
             ir_inicio_de_sesion();*/
     }
+
+    /**
+     *
+     * @param view
+     */
     public void recuperar(View view){
         txt_curp = findViewById(R.id.txt_curp);
         StringRequest requerimiento = new StringRequest(Request.Method.GET,

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class UsuarioPadreTutor extends Usuario implements Serializable {
 
     private String string_curp,string_tipo_cuenta;
-    private double double_pago;
+    private boolean boolean_pago;
     private int int_nip;
 
     public UsuarioPadreTutor() {
@@ -27,14 +27,6 @@ public class UsuarioPadreTutor extends Usuario implements Serializable {
         this.string_tipo_cuenta = string_tipo_cuenta;
     }
 
-    public double getDouble_pago() {
-        return double_pago;
-    }
-
-    public void setDouble_pago(double double_pago) {
-        this.double_pago = double_pago;
-    }
-
     public int getInt_nip() {
         return int_nip;
     }
@@ -43,4 +35,11 @@ public class UsuarioPadreTutor extends Usuario implements Serializable {
         this.int_nip = int_nip;
     }
 
+    public boolean isBoolean_pago() {
+        return boolean_pago;
+    }
+
+    public void setBoolean_pago(boolean boolean_pago) {
+        this.boolean_pago = boolean_pago;
+    }
 }

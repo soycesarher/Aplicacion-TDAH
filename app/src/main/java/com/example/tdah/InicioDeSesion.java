@@ -28,6 +28,7 @@ private EditText txt_contrasena;
         txt_contrasena = (EditText) findViewById(R.id.txt_contrasena_inicia);
 
         btn_iniciar_sesion = (Button) findViewById(R.id.btn_ingresar);
+
         btn_iniciar_sesion.setOnClickListener(v -> {
             correo = txt_correo.getText().toString();
             contrasena = txt_contrasena.getText().toString();
