@@ -32,5 +32,16 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">TDAH Móvil</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_actividad1">Actividad1</string>
+    <string name="menu_actividad2">Actividad2</string>
+    <string name="menu_actividad3">Actividad3</string>
+    <string name="menu_audios">Audios</string>
 
 </resources>
