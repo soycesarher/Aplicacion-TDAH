@@ -5,59 +5,211 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 
-public class InicioDeSesion extends AppCompatActivity {
-private FirebaseAuth mAuth;
+import java.util.regex.Pattern;
 
-private Button btn_iniciar_sesion;
-private EditText txt_correo;
-private EditText txt_contrasena;
+public class InicioDeSesion extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+
+    private boolean boolean_correo = false, boolean_contrasena = false;
+
+    private Button btn_iniciar_sesion;
+
+    private EditText txt_correo;
+    private EditText txt_contrasena;
+
     private String correo="";
     private String contrasena="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_de_sesion);
-        mAuth = FirebaseAuth.getInstance();
-        txt_correo = (EditText) findViewById(R.id.txt_correo_inicia);
-        txt_contrasena = (EditText) findViewById(R.id.txt_contrasena_inicia);
 
-        btn_iniciar_sesion = (Button) findViewById(R.id.btn_ingresar);
+        mAuth = FirebaseAuth.getInstance();
+
+        txt_correo =  findViewById(R.id.txt_correo_inicia);
+        txt_contrasena =  findViewById(R.id.txt_contrasena_inicia);
+
+        btn_iniciar_sesion =  findViewById(R.id.btn_ingresar);
+
+        txt_correo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_correo = correoValido(txt_correo);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        txt_contrasena.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+               boolean_contrasena = contrasenaValida(txt_contrasena);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         btn_iniciar_sesion.setOnClickListener(v -> {
             correo = txt_correo.getText().toString();
             contrasena = txt_contrasena.getText().toString();
-            if(!correo.isEmpty()&&!contrasena.isEmpty()){
-                signIn();
+            if(boolean_correo&&boolean_contrasena){
+                Toast.makeText(InicioDeSesion.this,"Datos incorrectos",Toast.LENGTH_LONG).show();
             }else{
-                Toast.makeText(InicioDeSesion.this,"Llene todos los campos: correo: "+correo+" contraseña: "+contrasena,Toast.LENGTH_LONG).show();
+                inicioSesion();
+
             }
         });
 
+    }
+
+    /**
+     * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
+     * @param editText_contrasena EditText contrasena
+     * @return boolean_error
+     */
+    private boolean contrasenaValida(EditText editText_contrasena) {
+
+        editText_contrasena.setError(null);
+
+        String Password = editText_contrasena.getText().toString().trim();
+
+        boolean boolean_error = false;
+
+        View focusView = null;
+
+        if (TextUtils.isEmpty(Password)){
+            editText_contrasena.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_contrasena;
+            boolean_error = true;
+        }
+
+        if (!Password.matches(".*[!@#$%^&*+=?-].*")){
+            editText_contrasena.setError(getString(R.string.error_caracter_especial_requerido));
+            focusView = editText_contrasena;
+            boolean_error = true;
+        }
+
+        if (!Password.matches(".*\\d.*")){
+            editText_contrasena.setError(getString(R.string.error_numero_requerido));
+            focusView = editText_contrasena;
+            boolean_error = true;
+        }
+
+        if (!Password.matches(".*[a-z].*")){
+            editText_contrasena.setError(getString(R.string.error_no_se_encontraron_minusculas));
+            focusView = editText_contrasena;
+            boolean_error = true;
+        }
+
+        if (!Password.matches(".*[A-Z].*")){
+            editText_contrasena.setError(getString(R.string.error_no_se_encontraron_mayusculas));
+            focusView = editText_contrasena;
+            boolean_error = true;
+        }
+
+        if (!Password.matches(".{8,15}")){
+            editText_contrasena.setError(getString(R.string.error_contrasena_muy_corta));
+            focusView = editText_contrasena;
+            boolean_error = true;
+        }
+
+        if (Password.matches(".*\\s.*")){
+            editText_contrasena.setError(getString(R.string.error_sin_espacios));
+
+            focusView = editText_contrasena;
+            boolean_error = true;
+        }
+
+        if (boolean_error) {
+
+            focusView.requestFocus();
+
+        } else {
+
+            boolean_error=false;
+
+        }
+        return boolean_error;
+    }
+
+    /**
+     * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
+     * @param editText_correo EditText correo
+     * @return boolean_error
+     */
+    private boolean correoValido(EditText editText_correo) {
+
+        editText_correo.setError(null);
+
+        boolean boolean_error = false;
+
+        View focusView = null;
+
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+
+        String Email = editText_correo.getText().toString().trim();
+
+        if (TextUtils.isEmpty(Email)) {
+            editText_correo.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_correo;
+            boolean_error = true;
+        } else if (!pattern.matcher(correo).matches()) {
+            editText_correo.setError(getString(R.string.error_correo_no_valido));
+            focusView = editText_correo;
+            boolean_error = true;
+        }
+        if (boolean_error) {
+
+            focusView.requestFocus();
+
+        } else {
+
+            boolean_error=false;
+
+        }
+        return boolean_error;
 
     }
 
-    private void signIn() {
-        // [START sign_in_with_email]
+    /**
+     * Valida si el correo y contraseña existen en la base de datos
+     */
+    private void inicioSesion() {
+
         mAuth.signInWithEmailAndPassword(correo, contrasena)
                 .addOnCompleteListener( task -> {
                     if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
+
                         startActivity(new Intent(InicioDeSesion.this,MenuUsuario.class));
                        finish();
                     } else {
-                        // If sign in fails, display a message to the user.
+
                         Toast.makeText(InicioDeSesion.this, "Error de autentificación",
                                 Toast.LENGTH_SHORT).show();
 
                     }
                 });
-        // [END sign_in_with_email]
+
     }
 
     @Override
