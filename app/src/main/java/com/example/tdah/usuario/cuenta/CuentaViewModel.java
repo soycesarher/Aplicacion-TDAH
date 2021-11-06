@@ -1,16 +1,16 @@
-package com.example.tdah.ui.home;
+package com.example.tdah.usuario.cuenta;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class CuentaViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public CuentaViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is gallery fragment");
     }
 
     public LiveData<String> getText() {

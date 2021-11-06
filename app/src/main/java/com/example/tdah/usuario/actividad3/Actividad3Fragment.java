@@ -1,4 +1,4 @@
-package com.example.tdah.ui.slideshow;
+package com.example.tdah.usuario.actividad3;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tdah.R;
 
-public class SlideshowFragment extends Fragment {
+public class Actividad3Fragment extends Fragment{
 
-    private SlideshowViewModel slideshowViewModel;
+    private Actividad3ViewModel Actividad3ViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        Actividad3ViewModel =
+                new ViewModelProvider(this).get(Actividad3ViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_actividad2, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        Actividad3ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
@@ -32,4 +32,5 @@ public class SlideshowFragment extends Fragment {
         });
         return root;
     }
+
 }

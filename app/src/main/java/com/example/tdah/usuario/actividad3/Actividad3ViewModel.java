@@ -1,14 +1,16 @@
-package com.example.tdah.ui.slideshow;
+package com.example.tdah.usuario.actividad3;
+
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+
+public class Actividad3ViewModel extends ViewModel{
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public Actividad3ViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is slideshow fragment");
     }

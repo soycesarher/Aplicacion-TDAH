@@ -1,16 +1,16 @@
-package com.example.tdah.ui.gallery;
+package com.example.tdah.usuario.actividad1;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class Actividad1ViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public Actividad1ViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is home fragment");
     }
 
     public LiveData<String> getText() {

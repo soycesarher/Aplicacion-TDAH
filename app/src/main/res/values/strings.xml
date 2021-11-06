@@ -42,6 +42,9 @@
     <string name="menu_actividad1">Actividad1</string>
     <string name="menu_actividad2">Actividad2</string>
     <string name="menu_actividad3">Actividad3</string>
-    <string name="menu_audios">Audios</string>
+    <string name="menu_libros">Audio-Libros</string>
+    <string name="menu_padres">Apartado Padres</string>
+    <string name="menu_cuenta">Cuenta</string>
+    <string name="menu_configuracion">Ajustes</string>
 
 </resources>

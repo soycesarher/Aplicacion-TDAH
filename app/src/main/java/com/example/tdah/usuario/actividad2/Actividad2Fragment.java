@@ -1,4 +1,4 @@
-package com.example.tdah.ui.home;
+package com.example.tdah.usuario.actividad2;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tdah.R;
 
-public class HomeFragment extends Fragment {
+public class Actividad2Fragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private Actividad2ViewModel Actividad2ViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        Actividad2ViewModel =
+                new ViewModelProvider(this).get(Actividad2ViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_actividad2, container, false);
+        final TextView textView = root.findViewById(R.id.text_slideshow);
+        Actividad2ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
