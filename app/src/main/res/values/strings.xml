@@ -38,7 +38,10 @@
     <string name="error_numero_requerido">Se requiere un numero</string>
     <string name="error_no_se_encontraron_minusculas">Requiere minusculas</string>
     <string name="error_no_se_encontraron_mayusculas">Requiere mayusculas</string>
-    <string name="error_contrasena_muy_corta">Contraseña muy corta</string>
+    <string name="error_contrasena_muy_corta">Requiere entre 8 y 15 caracteres</string>
     <string name="error_sin_espacios">No se aceptan espacios</string>
+    <string name="error_formato_no_valido">Formato invalido</string>
+    <string name="error_sin_espacios_inicio">No puede iniciar con espacio</string>
+    <string name="error_cuatro_digitos">Debe contener solo 4 digitos</string>
 
 </resources>

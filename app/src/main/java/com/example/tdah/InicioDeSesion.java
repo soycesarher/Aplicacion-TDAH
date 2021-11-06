@@ -29,8 +29,8 @@ public class InicioDeSesion extends AppCompatActivity {
     private EditText txt_correo;
     private EditText txt_contrasena;
 
-    private String correo="";
-    private String contrasena="";
+    private String correo = "";
+    private String contrasena = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,44 +39,52 @@ public class InicioDeSesion extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        txt_correo =  findViewById(R.id.txt_correo_inicia);
-        txt_contrasena =  findViewById(R.id.txt_contrasena_inicia);
+        txt_correo = findViewById(R.id.txt_correo_inicia);
+        txt_contrasena = findViewById(R.id.txt_contrasena_inicia);
 
-        btn_iniciar_sesion =  findViewById(R.id.btn_ingresar);
+        btn_iniciar_sesion = findViewById(R.id.btn_ingresar);
 
         txt_correo.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_correo = correoValido(txt_correo);
+                boolean_correo = valida_correo(txt_correo);
 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         txt_contrasena.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-               boolean_contrasena = contrasenaValida(txt_contrasena);
+                boolean_contrasena = contrasenaValida(txt_contrasena);
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         btn_iniciar_sesion.setOnClickListener(v -> {
-            correo = txt_correo.getText().toString();
-            contrasena = txt_contrasena.getText().toString();
-            if(boolean_correo&&boolean_contrasena){
-                Toast.makeText(InicioDeSesion.this,"Datos incorrectos",Toast.LENGTH_LONG).show();
-            }else{
-                inicioSesion();
+            if(TextUtils.isEmpty(correo)||TextUtils.isEmpty(contrasena)){
+                Toast.makeText(InicioDeSesion.this, "No se pudo iniciar sesión", Toast.LENGTH_SHORT).show();
+            }else {
+                if (boolean_correo && boolean_contrasena) {
+                    Toast.makeText(InicioDeSesion.this, "Datos incorrectos", Toast.LENGTH_LONG).show();
+                } else {
+                    inicio_sesion_firebase();
 
+                }
             }
         });
 
@@ -84,6 +92,7 @@ public class InicioDeSesion extends AppCompatActivity {
 
     /**
      * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
+     *
      * @param editText_contrasena EditText contrasena
      * @return boolean_error
      */
@@ -97,43 +106,43 @@ public class InicioDeSesion extends AppCompatActivity {
 
         View focusView = null;
 
-        if (TextUtils.isEmpty(Password)){
+        if (TextUtils.isEmpty(Password)) {
             editText_contrasena.setError(getString(R.string.error_campo_requerido));
             focusView = editText_contrasena;
             boolean_error = true;
         }
 
-        if (!Password.matches(".*[!@#$%^&*+=?-].*")){
+        if (!Password.matches(".*[!@#$%^&*+=?-].*")) {
             editText_contrasena.setError(getString(R.string.error_caracter_especial_requerido));
             focusView = editText_contrasena;
             boolean_error = true;
         }
 
-        if (!Password.matches(".*\\d.*")){
+        if (!Password.matches(".*\\d.*")) {
             editText_contrasena.setError(getString(R.string.error_numero_requerido));
             focusView = editText_contrasena;
             boolean_error = true;
         }
 
-        if (!Password.matches(".*[a-z].*")){
+        if (!Password.matches(".*[a-z].*")) {
             editText_contrasena.setError(getString(R.string.error_no_se_encontraron_minusculas));
             focusView = editText_contrasena;
             boolean_error = true;
         }
 
-        if (!Password.matches(".*[A-Z].*")){
+        if (!Password.matches(".*[A-Z].*")) {
             editText_contrasena.setError(getString(R.string.error_no_se_encontraron_mayusculas));
             focusView = editText_contrasena;
             boolean_error = true;
         }
 
-        if (!Password.matches(".{8,15}")){
+        if (!Password.matches(".{8,15}")) {
             editText_contrasena.setError(getString(R.string.error_contrasena_muy_corta));
             focusView = editText_contrasena;
             boolean_error = true;
         }
 
-        if (Password.matches(".*\\s.*")){
+        if (Password.matches(".*\\s.*")) {
             editText_contrasena.setError(getString(R.string.error_sin_espacios));
 
             focusView = editText_contrasena;
@@ -146,7 +155,7 @@ public class InicioDeSesion extends AppCompatActivity {
 
         } else {
 
-            boolean_error=false;
+            boolean_error = false;
 
         }
         return boolean_error;
@@ -154,12 +163,15 @@ public class InicioDeSesion extends AppCompatActivity {
 
     /**
      * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
+     *
      * @param editText_correo EditText correo
      * @return boolean_error
      */
-    private boolean correoValido(EditText editText_correo) {
+    private boolean valida_correo(EditText editText_correo) {
 
         editText_correo.setError(null);
+
+        String correo = editText_correo.getText().toString().trim();
 
         boolean boolean_error = false;
 
@@ -167,13 +179,12 @@ public class InicioDeSesion extends AppCompatActivity {
 
         Pattern pattern = Patterns.EMAIL_ADDRESS;
 
-        String Email = editText_correo.getText().toString().trim();
-
-        if (TextUtils.isEmpty(Email)) {
+        if (TextUtils.isEmpty(correo)) {
             editText_correo.setError(getString(R.string.error_campo_requerido));
             focusView = editText_correo;
             boolean_error = true;
-        } else if (!pattern.matcher(correo).matches()) {
+        }
+        if (!pattern.matcher(correo).matches()) {
             editText_correo.setError(getString(R.string.error_correo_no_valido));
             focusView = editText_correo;
             boolean_error = true;
@@ -182,26 +193,21 @@ public class InicioDeSesion extends AppCompatActivity {
 
             focusView.requestFocus();
 
-        } else {
-
-            boolean_error=false;
-
         }
         return boolean_error;
-
     }
 
     /**
      * Valida si el correo y contraseña existen en la base de datos
      */
-    private void inicioSesion() {
+    private void inicio_sesion_firebase() {
 
         mAuth.signInWithEmailAndPassword(correo, contrasena)
-                .addOnCompleteListener( task -> {
+                .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
 
-                        startActivity(new Intent(InicioDeSesion.this,MenuUsuario.class));
-                       finish();
+                        startActivity(new Intent(InicioDeSesion.this, MenuUsuario.class));
+                        finish();
                     } else {
 
                         Toast.makeText(InicioDeSesion.this, "Error de autentificación",
@@ -216,22 +222,22 @@ public class InicioDeSesion extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if(mAuth.getCurrentUser()!= null){
-            startActivity(new Intent(InicioDeSesion.this,MenuUsuario.class));
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(InicioDeSesion.this, MenuUsuario.class));
             finish();
         }
     }
 
     //conexion de activities
-    public void ir_a_registro(View view){
+    public void ir_a_registro(View view) {
 
-        startActivity( new Intent(this,RegistroUsuario.class));
+        startActivity(new Intent(this, RegistroUsuario.class));
     }
     // Este método recarga al menú principal si es que el usuario ya inició sesión
 
 
-    public void ir_a_main(View view){
-       startActivity( new Intent(this,MainActivity.class));
+    public void ir_a_main(View view) {
+        startActivity(new Intent(this, MainActivity.class));
 
     }
 

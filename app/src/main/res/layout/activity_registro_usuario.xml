@@ -91,11 +91,10 @@
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
             <Button
-                android:id="@+id/txt_verifica_curp"
+                android:id="@+id/btn_verifica_curp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Verifica curp"
-                android:onClick="recuperar"
                 android:textAlignment="center" />
 
             <EditText
@@ -137,10 +136,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="20dp"
-                android:onClick="ingresa_base_datos"
                 android:text="@string/btn_registrarse"
-                android:textAlignment="center"
-                tools:ignore="UsingOnClickInXml" />
+                android:textAlignment="center" />
 
             <Button
                 android:id="@+id/btn_cancelar"
