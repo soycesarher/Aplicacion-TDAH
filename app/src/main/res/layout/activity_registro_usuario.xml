@@ -129,13 +129,7 @@
                 android:inputType="numberSigned"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Suscipción mensual por 99 pesos Mexicanos"
-                android:textColor="#000"
-                android:textSize="22sp"
-                android:textAlignment="center"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

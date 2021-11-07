@@ -59,11 +59,12 @@ public class RegistroUsuario extends AppCompatActivity {
     private String fecha_nacimiento;
     private String direccion;
 
-    private int Paypal_codigo = 12;
+    public static final String Id_client_Paypal = "AUV2kPXlL2kPxu9Y_PZUWfJTE9s67qAboJiGdxVvLutdOMuRAYVnLWVNkFJKCIvt-JbsUqPPPY5FJ_XJ";
+    private int Paypal_codigo = 1717;
 
     private PayPalConfiguration paypalConfig = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_PRODUCTION)
-            .clientId(IdPaypalConfig.Id_client_Paypal);
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(Id_client_Paypal);
 
     private boolean boolean_contrasena;
     private boolean boolean_nombre_paciente;
@@ -557,12 +558,13 @@ public class RegistroUsuario extends AppCompatActivity {
      *
      * @return boolean_pago
 
+    */
     private Boolean pago() {
         Boolean boolean_pago = false;
 
         return boolean_pago;
     }
-     */
+
     /**
      * Abre main_activity
      *
