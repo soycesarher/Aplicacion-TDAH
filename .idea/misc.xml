@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ALAI RS/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_inicio_de_sesion.xml" value="0.15896739130434784" />
+        <entry key="..\:/Users/ALAI RS/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_menu_usuario.xml" value="0.15896739130434784" />
+        <entry key="..\:/Users/ALAI RS/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_metodo_de_pago.xml" value="0.15896739130434784" />
+        <entry key="..\:/Users/ALAI RS/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_registro_usuario.xml" value="0.12708333333333333" />
+        <entry key="..\:/Users/ALAI RS/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/main_activity.xml" value="0.15896739130434784" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/activity_inicio_de_sesion.xml" value="0.33" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/activity_menu_usuario.xml" value="0.1289198606271777" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/activity_registro_usuario.xml" value="0.26875" />

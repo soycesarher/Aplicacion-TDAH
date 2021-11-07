@@ -1,15 +1,16 @@
 package com.example.tdah;
 
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -18,14 +19,10 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,8 +30,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.tdah.validaciones.DatosDeCurp;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
 
-import java.util.Locale;
+import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 
@@ -53,9 +54,16 @@ public class RegistroUsuario extends AppCompatActivity {
 
     private Button btn_registrarse;
     private Button btn_verifica_curp;
+    private Button btn_Paypal;
 
     private String fecha_nacimiento;
     private String direccion;
+
+    private int Paypal_codigo = 12;
+
+    private PayPalConfiguration paypalConfig = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_PRODUCTION)
+            .clientId(IdPaypalConfig.Id_client_Paypal);
 
     private boolean boolean_contrasena;
     private boolean boolean_nombre_paciente;
@@ -74,6 +82,13 @@ public class RegistroUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_registro_usuario);
+
+        //Paypal
+        btn_Paypal = findViewById(R.id.btn_pagar);
+
+        Intent intento = new Intent(this, PayPalService.class);
+        intento.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+        startService(intento);
 
         inicializa_firebase();
 
@@ -182,6 +197,40 @@ public class RegistroUsuario extends AppCompatActivity {
                 ingresa_base_datos();
             }
         });
+        btn_Paypal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Metodo_Paypal();
+            }
+        });
+    }
+    private void Metodo_Paypal(){
+        PayPalPayment Payment = new PayPalPayment(new BigDecimal('5'),  "USD", "Test pago"
+    ,PayPalPayment.PAYMENT_INTENT_SALE);
+
+        Intent intento = new Intent(this, PaymentActivity.class);
+        intento.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+        intento.putExtra(PaymentActivity.EXTRA_PAYMENT, Payment);
+
+        startActivityForResult(intento, Paypal_codigo);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Paypal_codigo){
+            if (resultCode == Activity.RESULT_OK){
+                Toast.makeText(this, "Pago procesado", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this, "Pago no procesado", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private boolean valida_nombre_paciente(EditText editText_nombre_paciente) {
@@ -507,14 +556,13 @@ public class RegistroUsuario extends AppCompatActivity {
      * Regresa si el pago se aplico correctamente
      *
      * @return boolean_pago
-     */
+
     private Boolean pago() {
         Boolean boolean_pago = false;
 
         return boolean_pago;
     }
-
-
+     */
     /**
      * Abre main_activity
      *
