@@ -90,6 +90,7 @@ public class RegistroUsuario extends AppCompatActivity {
         Intent intento = new Intent(this, PayPalService.class);
         intento.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
         startService(intento);
+        // Fin PayPal
 
         inicializa_firebase();
 
@@ -205,6 +206,10 @@ public class RegistroUsuario extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Hola
+     */
     private void Metodo_Paypal(){
         PayPalPayment Payment = new PayPalPayment(new BigDecimal('5'),  "USD", "Test pago"
     ,PayPalPayment.PAYMENT_INTENT_SALE);
