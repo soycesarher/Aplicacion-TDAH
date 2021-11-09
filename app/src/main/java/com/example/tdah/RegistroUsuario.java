@@ -98,7 +98,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_nombre_paciente=valida_nombre_paciente(txt_nombre_paciente);
+                boolean_nombre_paciente = valida_nombre_paciente(txt_nombre_paciente);
             }
 
             @Override
@@ -113,7 +113,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_curp=valida_curp(txt_curp);
+                boolean_curp = valida_curp(txt_curp);
             }
 
             @Override
@@ -128,7 +128,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_nip=valida_nip(txt_nip);
+                boolean_nip = valida_nip(txt_nip);
             }
 
             @Override
@@ -143,7 +143,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena=valida_contrasena(txt_contrasena);
+                boolean_contrasena = valida_contrasena(txt_contrasena);
             }
 
             @Override
@@ -159,7 +159,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_correo=valida_correo(txt_correo);
+                boolean_correo = valida_correo(txt_correo);
             }
 
             @Override
@@ -171,14 +171,14 @@ public class RegistroUsuario extends AppCompatActivity {
             try {
                 recuperar(txt_curp);
                 btn_registrarse.setEnabled(true);
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 Toast.makeText(RegistroUsuario.this, "La CURP no fue encontrada", Toast.LENGTH_LONG).show();
             }
         });
         btn_registrarse.setOnClickListener(v -> {
-            if (boolean_contrasena||!boolean_correo||!boolean_curp||!boolean_nip||!boolean_nombre_paciente){
+            if (boolean_contrasena || !boolean_correo || !boolean_curp || !boolean_nip || !boolean_nombre_paciente) {
                 Toast.makeText(RegistroUsuario.this, "Faltan datos", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 ingresa_base_datos();
             }
         });
@@ -221,7 +221,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
         String curp = editText_curp.getText().toString().trim();
 
-        boolean boolean_curp_v=true;
+        boolean boolean_curp_v = true;
 
         View focusView = null;
 
@@ -358,7 +358,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
         editText_correo.setError(null);
 
-        boolean boolean_correo_v=true;
+        boolean boolean_correo_v = true;
 
         View focusView = null;
 
@@ -428,14 +428,11 @@ public class RegistroUsuario extends AppCompatActivity {
         String contrasena = txt_contrasena.getText().toString();
         String nip = txt_nip.getText().toString();
 
-
         mAuth.createUserWithEmailAndPassword(correo, contrasena).addOnCompleteListener(task -> {
             UsuarioPadreTutor usuarioPadreTutor = new UsuarioPadreTutor();
             UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
             if (task.isSuccessful()) {
-
                 FirebaseUser usuario_actual = mAuth.getCurrentUser();
-
                 usuarioPadreTutor.setString_id(usuario_actual.getUid());
                 usuarioPadreTutor.setInt_nip(Integer.parseInt(nip));
                 usuarioPadreTutor.setString_curp(curp);
@@ -443,7 +440,7 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuarioPadreTutor.setString_nombre(nombre);
                 usuarioPadreTutor.setString_apellido_materno(apellido_materno);
                 usuarioPadreTutor.setString_apellido_paterno(apellido_paterno);
-                usuarioPadreTutor.setString_contrasena(contrasena);
+
                 usuarioPadreTutor.setString_correo(correo);
                 usuarioPadreTutor.setString_direccion(direccion);
                 usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
@@ -453,30 +450,32 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuarioPaciente.setInt_progreso(0);
                 usuarioPaciente.setInt_puntuacion(0);
 
-                String url = "http://aplicacion-tdah.web.app/verify?uid=" + usuario_actual.getUid();
-                ActionCodeSettings actionCodeSettings = ActionCodeSettings.newBuilder()
-                        .setUrl(url)
-                        .setAndroidPackageName("com.example.tdah", false, null)
-                        .build();
-                mAuth.useAppLanguage();
-                usuario_actual.sendEmailVerification().addOnCompleteListener(task2 -> {
-                    if(task2.isSuccessful()){
+                usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
                         Toast.makeText(RegistroUsuario.this, "Mensaje enviado", Toast.LENGTH_SHORT).show();
-                            usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor).addOnCompleteListener(task1 -> {
-                                if (task1.isSuccessful()) {
-                                    usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente);
-                                    Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(RegistroUsuario.this, MenuUsuario.class));
-                                    finish();
-                                } else {
-                                    Toast.makeText(RegistroUsuario.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
-                                }
+                        usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor).addOnCompleteListener(task2 -> {
+                            if (task2.isSuccessful()) {
 
-                            });
+                                usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente).addOnCompleteListener(task3 -> {
+                                    if (task3.isSuccessful()) {
+                                        Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_LONG).show();
 
-                    }else{
-                        Toast.makeText(RegistroUsuario.this, "El correo no existe", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(RegistroUsuario.this, MenuUsuario.class));
+                                        finish();
+
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(RegistroUsuario.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+                            }
+
+                        });
+                    } else {
+                        Toast.makeText(RegistroUsuario.this, "Mensaje no recibido", Toast.LENGTH_SHORT).show();
                     }
+
+
                 });
 
             } else {
@@ -554,9 +553,7 @@ public class RegistroUsuario extends AppCompatActivity {
         txt_apellido_materno = findViewById(R.id.txt_apellido_materno);
         txt_apellido_materno.setText(apellido_materno);
         fecha_nacimiento = validar.getString_fecha_nacimiento();
-        /*boolean datos_correctos = false;
-        if(datos_correctos)
-            ir_inicio_de_sesion();*/
+
     }
 
     /**
@@ -567,7 +564,7 @@ public class RegistroUsuario extends AppCompatActivity {
         StringRequest requerimiento = new StringRequest(Request.Method.GET,
                 "https://us-west4-arsus-production.cloudfunctions.net/curp?curp=" + txt_curp.getText().toString() + "&apiKey=WgrtpPpMT6gCrKmawXDipiEzQQv2",
                 response -> valida_datos_curp(response),
-                error -> Toast.makeText(RegistroUsuario.this,"ERROR: "+error.getMessage()+" INTENTE DE NUEVO.", Toast.LENGTH_SHORT).show());
+                error -> Toast.makeText(RegistroUsuario.this, "ERROR: " + error.getMessage() + " INTENTE DE NUEVO.", Toast.LENGTH_SHORT).show());
         rq.add(requerimiento);
     }
 

@@ -8,7 +8,6 @@ public class Usuario implements Serializable{
     private String string_apellido_materno;
     private String string_fecha_nacimiento;
     private String string_direccion;
-    private String string_contrasena;
     private String string_correo;
     private String string_id;
 
@@ -57,13 +56,7 @@ public class Usuario implements Serializable{
         this.string_direccion = string_direccion;
     }
 
-    public String getString_contrasena() {
-        return string_contrasena;
-    }
 
-    public void setString_contrasena(String string_contrasena) {
-        this.string_contrasena = string_contrasena;
-    }
 
     public String getString_correo() {
         return string_correo;
