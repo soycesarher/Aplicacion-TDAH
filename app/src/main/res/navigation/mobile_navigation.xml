@@ -6,7 +6,7 @@
     app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/nav_activdad1"
+        android:id="@+id/nav_actividad1"
         android:name="com.example.tdah.usuario.actividad1.Actividad1Fragment"
         android:label="@string/menu_actividad1"
         tools:layout="@layout/fragment_actividad1" />
@@ -32,4 +32,14 @@
         android:name="com.example.tdah.usuario.ajustes.AjustesFragment"
         android:label="@string/menu_configuracion"
         tools:layout="@layout/fragment_ajustes" />
+    <fragment
+        android:id="@+id/nav_libros"
+        android:name="com.example.tdah.usuario.libros.LibrosFragment"
+        android:label="@string/menu_libros"
+        tools:layout="@layout/fragment_libros" />
+    <fragment
+        android:id="@+id/nav_padres"
+        android:name="com.example.tdah.usuario.padres.PadresFragment"
+        android:label="@string/menu_padres"
+        tools:layout="@layout/fragment_padres" />
 </navigation>
