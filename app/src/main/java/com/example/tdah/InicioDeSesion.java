@@ -34,6 +34,8 @@ private EditText txt_contrasena;
             contrasena = txt_contrasena.getText().toString();
             if(!correo.isEmpty()&&!contrasena.isEmpty()){
                 signIn();
+                Intent intent= new Intent(v.getContext(), UsuarioPrincipal.class);
+                startActivity(intent);
             }else{
                 Toast.makeText(InicioDeSesion.this,"Llene todos los campos: correo: "+correo+" contraseña: "+contrasena,Toast.LENGTH_LONG).show();
             }

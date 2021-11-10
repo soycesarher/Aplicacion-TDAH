@@ -16,15 +16,15 @@ import com.example.tdah.R;
 
 public class CuentaFragment extends Fragment {
 
-    private CuentaViewModel galleryViewModel;
+    private CuentaViewModel cuentaViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
+        cuentaViewModel =
                 new ViewModelProvider(this).get(CuentaViewModel.class);
         View root = inflater.inflate(R.layout.fragment_cuenta, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = root.findViewById(R.id.text_cuenta);
+        cuentaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

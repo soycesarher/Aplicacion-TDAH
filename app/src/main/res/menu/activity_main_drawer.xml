@@ -9,7 +9,7 @@
             android:icon="@drawable/cuenta"
             android:title="@string/menu_cuenta" />
         <item
-            android:id="@+id/nav_activdad1"
+            android:id="@+id/nav_actividad1"
             android:icon="@drawable/actividad"
             android:title="@string/menu_actividad1" />
         <item
