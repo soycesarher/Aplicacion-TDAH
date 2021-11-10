@@ -59,7 +59,7 @@ public class RegistroUsuario extends AppCompatActivity {
     private String fecha_nacimiento;
     private String direccion;
 
-    public static final String Id_client_Paypal = "AUV2kPXlL2kPxu9Y_PZUWfJTE9s67qAboJiGdxVvLutdOMuRAYVnLWVNkFJKCIvt-JbsUqPPPY5FJ_XJ";
+    private static final String Id_client_Paypal = "AUV2kPXlL2kPxu9Y_PZUWfJTE9s67qAboJiGdxVvLutdOMuRAYVnLWVNkFJKCIvt-JbsUqPPPY5FJ_XJ";
     private int Paypal_codigo = 1717;
 
     private PayPalConfiguration paypalConfig = new PayPalConfiguration()
@@ -199,16 +199,11 @@ public class RegistroUsuario extends AppCompatActivity {
                 ingresa_base_datos();
             }
         });
-        btn_Paypal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Metodo_Paypal();
-            }
-        });
+        btn_Paypal.setOnClickListener(v -> Metodo_Paypal());
     }
 
     /**
-     * Hola
+     * Este método asigna el monto a pagar por la suscripción
      */
     private void Metodo_Paypal(){
         PayPalPayment Payment = new PayPalPayment(new BigDecimal('5'),  "USD", "Test pago"
@@ -221,12 +216,21 @@ public class RegistroUsuario extends AppCompatActivity {
         startActivityForResult(intento, Paypal_codigo);
     }
 
+    /**
+     *
+     */
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
         super.onDestroy();
     }
 
+    /**
+     * Si requestCode y resultCode son correctos realiza el pago y se muestra en pantalla
+     * @param requestCode codigo para que se acepte el pago
+     * @param resultCode codigo para pagar
+     * @param data Intent para abrir la actividad de PayPal
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
