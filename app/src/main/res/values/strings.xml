@@ -48,5 +48,8 @@
     <string name="menu_configuracion">Ajustes</string>
     <string name="nip">Ingresa tu Nip a 4 digitos</string>
     <string name="nip2">****</string>
+    <string name="editar">Editar</string>
+    <string name="guardar">Guardar Cambios</string>
+    <string name="regresar">Regresar</string>
 
 </resources>
