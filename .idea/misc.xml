@@ -3,8 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_inicio_de_sesion.xml" value="0.12681159420289856" />
-        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/content_psicologo_principal.xml" value="0.12681159420289856" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_inicio_de_sesion.xml" value="0.25" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_menu_usuario.xml" value="0.22" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_psicologo_principal.xml" value="0.25" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/activity_registro_usuario.xml" value="0.25" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/app_bar_psicologo_principal.xml" value="0.25" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/content_psicologo_principal.xml" value="0.25" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_ayudaPsicologo.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_ayuda_psicologo.xml" value="0.33" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_configuracionPsicologo.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_configuracion_psicologo.xml" value="0.4083333333333333" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_configuracionsicologo.xml" value="0.1" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_cuenta.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_cuentaPsicologo.xml" value="0.1" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_cuenta_psicologo.xml" value="0.25" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_gallery.xml" value="0.22" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/fragment_slideshow.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/main_activity.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/layout/nav_header_psicologo_principal.xml" value="0.22" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
+        <entry key="..\:/Users/karen/AndroidStudioProjects/Aplicacion-TDAH/app/src/main/res/menu/psicologo_principal.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/activity_inicio_de_sesion.xml" value="0.33" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/activity_menu_usuario.xml" value="0.1289198606271777" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/activity_registro_usuario.xml" value="0.26875" />

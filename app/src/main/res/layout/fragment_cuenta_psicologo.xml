@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".psicologo.cuentaPsicologo.cuentaPsicologoFragment"
+    android:background="#72BEC3">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lbl_psicologo"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="@string/lbl_psicologo"
+                android:textSize="34sp" />
+
+            <ImageView
+                android:id="@+id/im_foto_Psicologo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:src="@tools:sample/avatars" />
+
+            <EditText
+                android:id="@+id/txt_NombrePsicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="@string/txt_NombrePsicologo"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/txt_ApellidoP_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="@string/txt_ApellidoP_Psicologo"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/txt_ApellidoM_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/txt_ApellidoM_Psicologo"
+                android:gravity="center"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/txt_Direccion_Consultorio"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPostalAddress"
+                android:text="@string/txt_Direccion_Consultorio"
+                android:gravity="center"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/txt_CorreoContacto_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:text="@string/txt_CorreoContacto_Psicologo"
+                android:gravity="center"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/txt_Telefono_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="phone"
+                android:text="@string/txt_Telefono_Psicologo"
+                android:gravity="center"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/txt_Cedula"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/txt_Cedula"
+                android:gravity="center"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_Verificar_Cedula"
+                android:text="@string/btn_Verificar_Cedula"
+                android:layout_gravity="center"
+                />
+
+            <EditText
+                android:id="@+id/txt_descripcion"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/txt_descripcion"
+                android:gravity="center"
+                android:textColor="#5E5D5D"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btn_Editar_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_Editar_Psicologo"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btn_Guardar_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_Guardar_Psicologo"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,13 +35,38 @@
     <string name="title_activity_psicologo_principal">PsicologoPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">TDAH Móvil</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="nav_menu_cuenta">Menu Cuenta</string>
+    <string name="nav_menu_ayuda">Menu Ayuda</string>
+    <string name="nav_menu_configuracion">Menu Configuración</string>
+
+    <string name="cuenta_menu_psicologo">Cuenta</string>
+    <string name="configuracion_nenu_psicologo">Configuración</string>
+    <string name="ayuda_menu_psicologo">Ayuda</string>
+
+    <string name="title_menu_psicologo">TDAH Móvil</string>
+
+    <string name="lbl_psicologo">Psicólogo</string>
+    <string name="txt_NombrePsicologo">Nombre</string>
+    <string name="txt_ApellidoP_Psicologo">Apellido Paterno</string>
+    <string name="txt_ApellidoM_Psicologo">Apellido Materno</string>
+    <string name="txt_Direccion_Consultorio">Dirección del Consultorio</string>
+    <string name="txt_CorreoContacto_Psicologo">Correo de Contacto</string>
+    <string name="txt_Telefono_Psicologo">Teléfono</string>
+    <string name="txt_Cedula">Cédula Profesional</string>
+    <string name="btn_Verificar_Cedula">Verificar Cédula</string>
+    <string name="txt_descripcion">Descripción</string>
+    <string name="btn_Editar_Psicologo">Editar</string>
+    <string name="btn_Guardar_Psicologo">Guardar</string>
+
+    <string name="txt_reportar_problema">Reportar Problema</string>
+    <string name="txt_terminos_condiciones_psicologo">Términos y Condiciones</string>
+    <string name="txt_aviso_privacidad">Aviso de Privacidad</string>
+
+
 
 </resources>

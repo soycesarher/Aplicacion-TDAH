@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".psicologo.ayudaPsicologo.ayudaPsicologoFragment"
+    android:background="#72BEC3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_reportar_problema"
+            android:layout_width="350dp"
+            android:layout_height="62dp"
+            android:text="@string/txt_reportar_problema"
+            android:gravity="center"
+            android:layout_gravity="center"
+
+            />
+
+        <TextView
+            android:id="@+id/txt_terminos_condiciones_psicologo"
+            android:layout_width="350dp"
+            android:layout_height="62dp"
+            android:gravity="center"
+            android:text="@string/txt_terminos_condiciones_psicologo"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/txt_aviso_privacidad"
+            android:layout_width="350dp"
+            android:layout_height="62dp"
+            android:text="@string/txt_aviso_privacidad"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

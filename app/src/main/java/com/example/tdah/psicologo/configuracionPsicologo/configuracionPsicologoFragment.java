@@ -1,4 +1,4 @@
-package com.example.tdah.psicologo.slideshow;
+package com.example.tdah.psicologo.configuracionPsicologo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,23 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tdah.databinding.FragmentSlideshowBinding;
+import com.example.tdah.databinding.FragmentConfiguracionPsicologoBinding;
 
-public class SlideshowFragment extends Fragment {
+public class configuracionPsicologoFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
-    private FragmentSlideshowBinding binding;
+    private configuracionPsicologoViewModel configuracionPsicologoViewModel;
+    private FragmentConfiguracionPsicologoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        configuracionPsicologoViewModel =
+                new ViewModelProvider(this).get(configuracionPsicologoViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentConfiguracionPsicologoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textView4;
+        configuracionPsicologoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
