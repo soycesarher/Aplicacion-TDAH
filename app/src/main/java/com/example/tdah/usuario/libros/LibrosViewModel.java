@@ -1,4 +1,19 @@
 package com.example.tdah.usuario.libros;
 
-public class LibrosViewModel {
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+public class LibrosViewModel extends ViewModel{
+
+    private MutableLiveData<String> mText;
+
+    public LibrosViewModel() {
+        mText = new MutableLiveData<>();
+        mText.setValue("This is gallery fragment");
+    }
+
+    public LiveData<String> getText() {
+        return mText;
+    }
 }

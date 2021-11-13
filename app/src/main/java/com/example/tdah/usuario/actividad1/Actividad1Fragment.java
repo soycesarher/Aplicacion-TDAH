@@ -23,10 +23,11 @@ public class Actividad1Fragment extends Fragment {
         Actividad1ViewModel =
                 new ViewModelProvider(this).get(Actividad1ViewModel.class);
         View root = inflater.inflate(R.layout.fragment_actividad1, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+        final TextView textView = root.findViewById(R.id.text_actividad1);
         Actividad1ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+
                 textView.setText(s);
             }
         });

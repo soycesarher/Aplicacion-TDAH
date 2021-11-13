@@ -22,8 +22,8 @@ public class Actividad3Fragment extends Fragment{
                              ViewGroup container, Bundle savedInstanceState) {
         Actividad3ViewModel =
                 new ViewModelProvider(this).get(Actividad3ViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_actividad2, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
+        View root = inflater.inflate(R.layout.fragment_actividad3, container, false);
+        final TextView textView = root.findViewById(R.id.text_actividad3);
         Actividad3ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

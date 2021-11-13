@@ -32,6 +32,17 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="error_campo_requerido">Campo requerido</string>
+    <string name="error_correo_no_valido">Correo no valido</string>
+    <string name="error_caracter_especial_requerido">Caracter especial requerido</string>
+    <string name="error_numero_requerido">Se requiere un numero</string>
+    <string name="error_no_se_encontraron_minusculas">Requiere minusculas</string>
+    <string name="error_no_se_encontraron_mayusculas">Requiere mayusculas</string>
+    <string name="error_contrasena_muy_corta">Requiere entre 8 y 15 caracteres</string>
+    <string name="error_sin_espacios">No se aceptan espacios</string>
+    <string name="error_formato_no_valido">Formato invalido</string>
+    <string name="error_sin_espacios_inicio">No puede iniciar con espacio</string>
+    <string name="error_cuatro_digitos">Debe contener solo 4 digitos</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">TDAH Móvil</string>
@@ -46,5 +57,10 @@
     <string name="menu_padres">Apartado Padres</string>
     <string name="menu_cuenta">Cuenta</string>
     <string name="menu_configuracion">Ajustes</string>
+    <string name="nip">Ingresa tu Nip a 4 digitos</string>
+    <string name="nip2">****</string>
+    <string name="editar">Editar</string>
+    <string name="guardar">Guardar Cambios</string>
+    <string name="regresar">Regresar</string>
 
 </resources>
