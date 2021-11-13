@@ -15,9 +15,9 @@
         <activity
             android:name=".UsuarioPrincipal"
             android:label="@string/title_activity_menu_usuario"
-            android:theme="@style/Theme.TDAH.NoActionBar"></activity>
+            android:theme="@style/Theme.TDAH.NoActionBar" />
         <activity
-            android:name=".MenuUsuario"
+            android:name=".DatosUsuario"
             android:exported="false" />
         <activity
             android:name=".InicioDeSesion"

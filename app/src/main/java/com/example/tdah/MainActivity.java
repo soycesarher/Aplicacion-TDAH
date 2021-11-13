@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -30,7 +29,7 @@ private FirebaseAuth mAuth;
     protected void onStart() {
         super.onStart();
             if(mAuth.getCurrentUser()!= null){
-                startActivity(new Intent(MainActivity.this,MenuUsuario.class));
+                startActivity(new Intent(MainActivity.this, DatosUsuario.class));
                 finish();
             }
     }

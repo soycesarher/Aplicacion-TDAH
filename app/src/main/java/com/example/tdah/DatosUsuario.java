@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MenuUsuario extends AppCompatActivity {
+public class DatosUsuario extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button btn_cerrar_sesion;
     private TextView txt_nombre_paciente;
@@ -31,14 +31,14 @@ public class MenuUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_menu_usuario);
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        txt_nombre_paciente=(TextView) findViewById(R.id.txt_v_datos_usuario);
-        txt_puntuacion_paciente=(TextView) findViewById(R.id.txt_v_puntuacion);
-        btn_cerrar_sesion = (Button) findViewById(R.id.btn_cerrar_sesion);
+//        txt_nombre_paciente=(TextView) findViewById(R.id.txt_v_datos_usuario);
+//        txt_puntuacion_paciente=(TextView) findViewById(R.id.txt_v_puntuacion);
+////        btn_cerrar_sesion = (Button) findViewById(R.id.btn_cerrar_sesion);
         btn_cerrar_sesion.setOnClickListener(v -> {
             mAuth.signOut();
             ir_a_main();
         });
-        datosUsuario();
+//        datosUsuario();
     }
 
     @Override
@@ -55,9 +55,8 @@ public class MenuUsuario extends AppCompatActivity {
 
     /**
      * @deprecated Este metodo regresa datos del usuario, solo es de prueba
-     */
     private void datosUsuario() {
-        UsuarioPadreTutor u = new UsuarioPadreTutor();
+  /*      UsuarioPadreTutor u = new UsuarioPadreTutor();
         UsuarioPaciente p = new UsuarioPaciente();
          u.setString_id( mAuth.getCurrentUser().getUid());
         databaseReference.child("Usuario").child(u.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
@@ -69,7 +68,7 @@ public class MenuUsuario extends AppCompatActivity {
                     txt_nombre_paciente.setText(p.getString_nombre_paciente());
                     txt_puntuacion_paciente.setText(String.valueOf(p.getInt_puntuacion()));
                 }else{
-                    Toast.makeText(MenuUsuario.this,"Los datos no existen ",Toast.LENGTH_LONG).show();
+                    Toast.makeText(DatosUsuario.this,"Los datos no existen ",Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -77,8 +76,9 @@ public class MenuUsuario extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
-    }
+
+
 
 }

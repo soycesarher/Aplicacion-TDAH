@@ -1,7 +1,6 @@
 package com.example.tdah;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -18,23 +16,17 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.tdah.validaciones.DatosDeCurp;
 
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 
@@ -399,7 +391,7 @@ public class RegistroUsuario extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(RegistroUsuario.this, MenuUsuario.class));
+            startActivity(new Intent(RegistroUsuario.this, UsuarioPrincipal.class));
             finish();
         }
     }
@@ -460,7 +452,7 @@ public class RegistroUsuario extends AppCompatActivity {
                                     if (task3.isSuccessful()) {
                                         Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_LONG).show();
 
-                                        startActivity(new Intent(RegistroUsuario.this, MenuUsuario.class));
+                                        startActivity(new Intent(RegistroUsuario.this, UsuarioPrincipal.class));
                                         finish();
 
                                     }
