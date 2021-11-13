@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_cuenta"
+            android:icon="@drawable/cuenta"
+            android:title="@string/menu_cuenta" />
+        <item
+            android:id="@+id/nav_activdad1"
+            android:icon="@drawable/actividad"
+            android:title="@string/menu_actividad1" />
+        <item
+            android:id="@+id/nav_actividad2"
+            android:icon="@drawable/actividad"
+            android:title="@string/menu_actividad2" />
+        <item
+            android:id="@+id/nav_actividad3"
+            android:icon="@drawable/actividad"
+            android:title="@string/menu_actividad3" />
+        <item
+            android:id="@+id/nav_libros"
+            android:icon="@drawable/libros"
+            android:title="@string/menu_libros" />
+        <item
+            android:id="@+id/nav_padres"
+            android:icon="@drawable/padre"
+            android:title="@string/menu_padres" />
+        <item
+            android:id="@+id/nav_ajustes"
+            android:icon="@drawable/ajustes"
+            android:title="@string/menu_configuracion" />
+    </group>
+</menu>
