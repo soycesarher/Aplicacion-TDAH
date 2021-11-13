@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_actividad1"
+        android:name="com.example.tdah.usuario.actividad1.Actividad1Fragment"
+        android:label="@string/menu_actividad1"
+        tools:layout="@layout/fragment_actividad1" />
+
+    <fragment
+        android:id="@+id/nav_cuenta"
+        android:name="com.example.tdah.usuario.cuenta.CuentaFragment"
+        android:label="@string/menu_cuenta"
+        tools:layout="@layout/fragment_cuenta" />
+
+    <fragment
+        android:id="@+id/nav_actividad2"
+        android:name="com.example.tdah.usuario.actividad2.Actividad2Fragment"
+        android:label="@string/menu_actividad2"
+        tools:layout="@layout/fragment_actividad2" />
+    <fragment
+        android:id="@+id/nav_actividad3"
+        android:name="com.example.tdah.usuario.actividad3.Actividad3Fragment"
+        android:label="@string/menu_actividad3"
+        tools:layout="@layout/fragment_actividad3" />
+    <fragment
+        android:id="@+id/nav_ajustes"
+        android:name="com.example.tdah.usuario.ajustes.AjustesFragment"
+        android:label="@string/menu_configuracion"
+        tools:layout="@layout/fragment_ajustes" />
+    <fragment
+        android:id="@+id/nav_libros"
+        android:name="com.example.tdah.usuario.libros.LibrosFragment"
+        android:label="@string/menu_libros"
+        tools:layout="@layout/fragment_libros" />
+    <fragment
+        android:id="@+id/nav_padres"
+        android:name="com.example.tdah.usuario.padres.PadresFragment"
+        android:label="@string/menu_padres"
+        tools:layout="@layout/fragment_padres" />
+</navigation>
