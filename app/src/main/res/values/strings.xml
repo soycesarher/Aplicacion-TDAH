@@ -57,10 +57,17 @@
     <string name="menu_padres">Apartado Padres</string>
     <string name="menu_cuenta">Cuenta</string>
     <string name="menu_configuracion">Ajustes</string>
+    <string name="menu_inicio">Inicio</string>
     <string name="nip">Ingresa tu Nip a 4 digitos</string>
     <string name="nip2">****</string>
     <string name="editar">Editar</string>
     <string name="guardar">Guardar Cambios</string>
     <string name="regresar">Regresar</string>
 
+
+    <string name="puntuacion_alta">Puntuación más alta</string>
+    <string name="puntuacion">Puntuación actual</string>
+    <string name="pregunta">¿Qué animal es?</string>
+    <string name="animal">Imagen de animal</string>
+    <string name="aceptar">Aceptar</string>
 </resources>

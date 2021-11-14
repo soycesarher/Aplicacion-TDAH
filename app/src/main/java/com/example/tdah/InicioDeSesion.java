@@ -206,7 +206,7 @@ public class InicioDeSesion extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
 
-                        startActivity(new Intent(InicioDeSesion.this, MenuUsuario.class));
+                        startActivity(new Intent(InicioDeSesion.this, UsuarioPrincipal.class));
                         finish();
                     } else {
 
@@ -223,7 +223,7 @@ public class InicioDeSesion extends AppCompatActivity {
         super.onStart();
 
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(InicioDeSesion.this, MenuUsuario.class));
+            startActivity(new Intent(InicioDeSesion.this, UsuarioPrincipal.class));
             finish();
         }
     }
