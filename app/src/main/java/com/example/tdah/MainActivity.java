@@ -29,7 +29,7 @@ private FirebaseAuth mAuth;
     protected void onStart() {
         super.onStart();
             if(mAuth.getCurrentUser()!= null){
-                startActivity(new Intent(MainActivity.this, DatosUsuario.class));
+                startActivity(new Intent(MainActivity.this, UsuarioPrincipal.class));
                 finish();
             }
     }

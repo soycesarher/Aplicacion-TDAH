@@ -33,7 +33,7 @@ public class DatosUsuario extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 //        txt_nombre_paciente=(TextView) findViewById(R.id.txt_v_datos_usuario);
 //        txt_puntuacion_paciente=(TextView) findViewById(R.id.txt_v_puntuacion);
-////        btn_cerrar_sesion = (Button) findViewById(R.id.btn_cerrar_sesion);
+        btn_cerrar_sesion = (Button) findViewById(R.id.btn_cerrar_sesion);
         btn_cerrar_sesion.setOnClickListener(v -> {
             mAuth.signOut();
             ir_a_main();
@@ -55,8 +55,9 @@ public class DatosUsuario extends AppCompatActivity {
 
     /**
      * @deprecated Este metodo regresa datos del usuario, solo es de prueba
+     */
     private void datosUsuario() {
-  /*      UsuarioPadreTutor u = new UsuarioPadreTutor();
+        UsuarioPadreTutor u = new UsuarioPadreTutor();
         UsuarioPaciente p = new UsuarioPaciente();
          u.setString_id( mAuth.getCurrentUser().getUid());
         databaseReference.child("Usuario").child(u.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
@@ -76,7 +77,7 @@ public class DatosUsuario extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });*/
+        });}
 
 
 
