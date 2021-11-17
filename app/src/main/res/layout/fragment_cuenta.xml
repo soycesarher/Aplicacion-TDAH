@@ -26,7 +26,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/txt_cuenta_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -34,10 +34,11 @@
                 android:layout_marginLeft="25dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:enabled="false"
                 android:hint="@string/etx_nombres"/>
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/txt_cuenta_apellido_paterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -45,10 +46,11 @@
                 android:layout_marginLeft="25dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:enabled="false"
                 android:hint="@string/etx_apaterno" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/txt_cuenta_apellido_materno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -59,18 +61,19 @@
                 android:hint="@string/etx_amaterno"/>
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/txt_cuenta_curp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginLeft="25dp"
                 android:ems="10"
+                android:enabled="false"
                 android:inputType="textPersonName"
                 android:hint="@string/etx_curp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName5"
+                android:id="@+id/txt_cuenta_correo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -81,7 +84,7 @@
                 android:hint="@string/etx_correo" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btn_cuenta_editar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -90,7 +93,7 @@
                 android:text="@string/editar" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/btn_cuenta_guardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -99,7 +102,7 @@
                 android:text="@string/guardar" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/btn_cuenta_regresar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"

@@ -28,9 +28,9 @@ public class InicioDeSesion extends AppCompatActivity {
 
     private EditText txt_correo;
     private EditText txt_contrasena;
-
-    private String correo = "";
-    private String contrasena = "";
+//
+//    private String correo = "";
+//    private String contrasena = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +76,13 @@ public class InicioDeSesion extends AppCompatActivity {
         });
 
         btn_iniciar_sesion.setOnClickListener(v -> {
-            if(TextUtils.isEmpty(correo)||TextUtils.isEmpty(contrasena)){
-                Toast.makeText(InicioDeSesion.this, "No se pudo iniciar sesión", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(txt_correo.getText())||TextUtils.isEmpty(txt_contrasena.getText())){
+                Toast.makeText(InicioDeSesion.this, "No se pudo iniciar sesión" , Toast.LENGTH_SHORT).show();
             }else {
                 if (boolean_correo && boolean_contrasena) {
                     Toast.makeText(InicioDeSesion.this, "Datos incorrectos", Toast.LENGTH_LONG).show();
                 } else {
-                    inicio_sesion_firebase();
+                    inicio_sesion_firebase(txt_correo.getText().toString(),txt_contrasena.getText().toString());
 
                 }
             }
@@ -200,7 +200,7 @@ public class InicioDeSesion extends AppCompatActivity {
     /**
      * Valida si el correo y contraseña existen en la base de datos
      */
-    private void inicio_sesion_firebase() {
+    private void inicio_sesion_firebase(String correo, String contrasena) {
 
         mAuth.signInWithEmailAndPassword(correo, contrasena)
                 .addOnCompleteListener(task -> {
