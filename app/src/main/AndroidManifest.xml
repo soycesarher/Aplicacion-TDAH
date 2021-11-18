@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tdah">
+    package="com.example.tdah" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,6 +15,11 @@
         <activity
             android:name=".UsuarioPrincipal"
             android:label="@string/title_activity_menu_usuario"
+            android:theme="@style/Theme.TDAH.NoActionBar" />
+        <activity
+            android:name=".PsicologoPrincipal"
+            android:exported="false"
+            android:label="@string/title_activity_psicologo_principal"
             android:theme="@style/Theme.TDAH.NoActionBar" />
         <activity
             android:name=".DatosUsuario"
