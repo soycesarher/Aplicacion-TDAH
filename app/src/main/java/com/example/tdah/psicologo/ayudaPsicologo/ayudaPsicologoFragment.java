@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tdah.R;
 import com.example.tdah.databinding.FragmentAyudaPsicologoBinding;
 
 public class ayudaPsicologoFragment extends Fragment {
@@ -23,15 +24,10 @@ public class ayudaPsicologoFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         ayudaPsicologoViewModel =
                 new ViewModelProvider(this).get(ayudaPsicologoViewModel.class);
-
-        binding = FragmentAyudaPsicologoBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textSlideshow;
+        View root = inflater.inflate(R.layout.fragment_ayuda_psicologo, container,false);
         ayudaPsicologoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
             }
         });
         return root;

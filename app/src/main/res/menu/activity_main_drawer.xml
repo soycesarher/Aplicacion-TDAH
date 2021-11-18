@@ -36,19 +36,6 @@
             android:id="@+id/nav_ajustes"
             android:icon="@drawable/ajustes"
             android:title="@string/menu_configuracion" />
-        <item
-            android:id="@+id/cuenta_menu_psicologo"
-            android:icon="@drawable/cuenta_psicologo"
-            android:title="@string/cuenta_menu_psicologo" />
 
-        <item
-            android:id="@+id/configuracion_nenu_psicologo"
-            android:icon="@drawable/configuracion_psicologo"
-            android:title="@string/configuracion_nenu_psicologo" />
-
-        <item
-            android:id="@+id/ayuda_menu_psicologo"
-            android:icon="@drawable/ayuda_psicologo"
-            android:title="@string/ayuda_menu_psicologo" />
     </group>
 </menu>

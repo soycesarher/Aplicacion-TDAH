@@ -56,13 +56,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_cuenta"/>
+                  <entry key="nav_cuenta" />
                   <entry key="nav_gallery">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="256" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="nav_home">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
                             <option name="y" value="12" />
                           </Point>
                         </option>
@@ -81,8 +93,31 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_libros"/>
-                  <entry key="nav_home">
+                  <entry key="nav_libros" />
+                  <entry key="nav_padres" />
+                  <entry key="nav_slideshow">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="368" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </LayoutPositions>
+          </value>
+        </entry>
+        <entry key="mobile_navigation_psicologo.xml">
+          <value>
+            <LayoutPositions>
+              <option name="myPositions">
+                <map>
+                  <entry key="nav_menu_ayuda">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -94,15 +129,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_padres"/>
-                  <entry key="nav_slideshow">
+                  <entry key="nav_menu_configuracion">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
-                            <option name="y" value="12" />
                             <option name="y" value="368" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="nav_menu_cuenta">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-
     app:startDestination="@+id/nav_inicio">
 
     <fragment
@@ -11,19 +10,16 @@
         android:name="com.example.tdah.usuario.inicio.InicioFragment"
         android:label="@string/menu_inicio"
         tools:layout="@layout/fragment_inicio" />
-
-    <fragment
-        android:id="@+id/nav_actividad1"
-        class="com.example.tdah.usuario.actividad1.Actividad1Fragment"
-        android:label="@string/menu_actividad1"
-        tools:layout="@layout/fragment_actividad1" />
-
     <fragment
         android:id="@+id/nav_cuenta"
         class="com.example.tdah.usuario.cuenta.CuentaFragment"
         android:label="@string/menu_cuenta"
         tools:layout="@layout/fragment_cuenta" />
-
+    <fragment
+        android:id="@+id/nav_actividad1"
+        class="com.example.tdah.usuario.actividad1.Actividad1Fragment"
+        android:label="@string/menu_actividad1"
+        tools:layout="@layout/fragment_actividad1" />
     <fragment
         android:id="@+id/nav_actividad2"
         class="com.example.tdah.usuario.actividad2.Actividad2Fragment"
@@ -35,11 +31,6 @@
         android:label="@string/menu_actividad3"
         tools:layout="@layout/fragment_actividad3" />
     <fragment
-        android:id="@+id/nav_ajustes"
-        class="com.example.tdah.usuario.ajustes.AjustesFragment"
-        android:label="@string/menu_configuracion"
-        tools:layout="@layout/fragment_ajustes" />
-    <fragment
         android:id="@+id/nav_libros"
         class="com.example.tdah.usuario.libros.LibrosFragment"
         android:label="@string/menu_libros"
@@ -48,26 +39,11 @@
         android:id="@+id/nav_padres"
         class="com.example.tdah.usuario.padres.PadresFragment"
         android:label="@string/menu_padres"
-        tools:layout="@layout/fragment_padres"
-    app:startDestination="@+id/nav_home"/>
-
+        tools:layout="@layout/fragment_padres"/>
     <fragment
-        android:id="@+id/nav_menu_ayuda"
-        android:name="com.example.tdah.psicologo.configuracionPsicologo.configuracionPsicologoFragment"
-        android:label="@string/nav_menu_ayuda"
-        tools:layout="@layout/fragment_configuracion_psicologo"
-        />
+        android:id="@+id/nav_ajustes"
+        class="com.example.tdah.usuario.ajustes.AjustesFragment"
+        android:label="@string/menu_configuracion"
+        tools:layout="@layout/fragment_ajustes" />
 
-    <fragment
-        android:id="@+id/nav_menu_cuenta"
-        android:name="com.example.tdah.psicologo.cuentaPsicologo.cuentaPsicologoFragment"
-        android:label="@string/nav_menu_cuenta"
-        tools:layout="@layout/fragment_cuenta_psicologo" />
-
-    <fragment
-        android:id="@+id/nav_menu_configuracion"
-        android:name="com.example.tdah.psicologo.ayudaPsicologo.ayudaPsicologoFragment"
-        android:label="@string/nav_menu_configuracion"
-        tools:layout="@layout/fragment_ayuda_psicologo" />
->>>>>>> origin/psicologo
 </navigation>
