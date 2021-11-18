@@ -56,28 +56,28 @@ public class DatosUsuario extends AppCompatActivity {
     /**
      * @deprecated Este metodo regresa datos del usuario, solo es de prueba
      */
-    private void datosUsuario() {
-        UsuarioPadreTutor u = new UsuarioPadreTutor();
-        UsuarioPaciente p = new UsuarioPaciente();
-         u.setString_id( mAuth.getCurrentUser().getUid());
-        databaseReference.child("Usuario").child(u.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    p.setString_nombre_paciente(snapshot.child("string_nombre_paciente").getValue().toString());
-                    p.setInt_puntuacion(Integer.valueOf(snapshot.child("int_puntuacion").getValue().toString()));
-                    txt_nombre_paciente.setText(p.getString_nombre_paciente());
-                    txt_puntuacion_paciente.setText(String.valueOf(p.getInt_puntuacion()));
-                }else{
-                    Toast.makeText(DatosUsuario.this,"Los datos no existen ",Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });}
+//    private void datosUsuario() {
+//        UsuarioPadreTutor u = new UsuarioPadreTutor();
+//        UsuarioPaciente p = new UsuarioPaciente();
+//         u.setString_id( mAuth.getCurrentUser().getUid());
+//        databaseReference.child("Usuario").child(u.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(snapshot.exists()){
+//                    p.setString_nombre_paciente(snapshot.child("string_nombre_paciente").getValue().toString());
+//                    p.setInt_puntuacion(Integer.valueOf(snapshot.child("int_puntuacion").getValue().toString()));
+//                    txt_nombre_paciente.setText(p.getString_nombre_paciente());
+//                    txt_puntuacion_paciente.setText(String.valueOf(p.getInt_puntuacion()));
+//                }else{
+//                    Toast.makeText(DatosUsuario.this,"Los datos no existen ",Toast.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });}
 
 
 

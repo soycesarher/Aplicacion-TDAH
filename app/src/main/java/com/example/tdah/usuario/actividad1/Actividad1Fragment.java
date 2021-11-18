@@ -12,18 +12,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tdah.MainActivity;
 import com.example.tdah.R;
 import com.example.tdah.UsuarioPrincipal;
-import com.example.tdah.usuario.inicio.InicioViewModel;
+import com.example.tdah.modelos.UsuarioPaciente;
+import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Actividad1Fragment extends Fragment implements View.OnClickListener{
@@ -55,14 +57,8 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         puntuacion_alta = root.findViewById(R.id.puntuacion_alta);
 
-
         final TextView textView = root.findViewById(R.id.text_inicio);
-        Actividad1ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        Actividad1ViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
         return root;
     }
 
@@ -91,8 +87,13 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myref = database.getReference();
+        DatabaseReference databaseReference = database.getReference();
+        FirebaseUser usuario= FirebaseAuth.getInstance().getCurrentUser();
+        UsuarioPaciente paciente = new UsuarioPaciente();
+        UsuarioPadreTutor padreTutor = new UsuarioPadreTutor();
+
         String nombre=usuario_animal.getText().toString().toLowerCase();
         if(nombre.equals(nombre_animal[numero_generado])){
             establecer_animal(numero_generado);
@@ -107,13 +108,27 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
             mensaje_intentos.setText("Tiene " + intentos + " intentos");
             usuario_animal.setText("");
         }if(intentos==0){
-            //      Guardar en firebase
+            // Guardar en firebase
             score_shadows = puntuacion_actual_numero.getText().toString();
-            //score.setScore_shadows(score_shadows);
-            //score.setUserid(userid);
-            //score.update(GalleryFragment.this.getContext());
-            myref.child("scores").child(userid).child("score_shadows").setValue(score_shadows);
+            paciente.setInt_puntuacion_actividad_1(Integer.parseInt(score_shadows));
+            padreTutor.setString_id(usuario.getUid());
+            databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_1").setValue(paciente.getInt_puntuacion_actividad_1());
+            databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        paciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
+                        int puntuacion_actual= paciente.getInt_puntuacion_actividad_1(),puntuacion_actual_alta=paciente.getInt_puntuacion_alta_actividad_1();
+                        if(puntuacion_actual>puntuacion_actual_alta) {
+                            databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_1").setValue(puntuacion_actual);
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
+                }
+            });
             //main.finish();
         }
     }

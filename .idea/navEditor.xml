@@ -56,7 +56,8 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_cuenta">
+                  <entry key="nav_cuenta"/>
+                  <entry key="nav_gallery">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -80,7 +81,8 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_libros">
+                  <entry key="nav_libros"/>
+                  <entry key="nav_home">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -92,13 +94,15 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_padres">
+                  <entry key="nav_padres"/>
+                  <entry key="nav_slideshow">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
                             <option name="y" value="12" />
+                            <option name="y" value="368" />
                           </Point>
                         </option>
                       </LayoutPositions>
