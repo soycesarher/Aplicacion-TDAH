@@ -2,6 +2,7 @@ package com.example.tdah.usuario.cuenta;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,38 +33,44 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-public class CuentaFragment extends Fragment {
+public class CuentaFragment extends Fragment  {
 
+    private CuentaViewModel cuentaViewModel;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
     private Button btn_cerrar_sesion;
-    private TextView txt_nombre;
-    private TextView txt_apellido_paterno;
-    private TextView txt_apellido_materno;
-    private TextView txt_curp;
-    private TextView txt_correo;
+    private EditText txt_nombre;
+    private EditText txt_apellido_paterno;
+    private EditText txt_apellido_materno;
+    private EditText txt_curp;
+    private EditText txt_correo;
     private DatabaseReference databaseReference;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        CuentaViewModel cuentaViewModel = new ViewModelProvider(this).get(CuentaViewModel.class);
+        cuentaViewModel =
+                new ViewModelProvider(this).get(CuentaViewModel.class);
         View root = inflater.inflate(R.layout.fragment_cuenta, container, false);
         final TextView textView = root.findViewById(R.id.text_cuenta);
+
+        txt_nombre =root.findViewById(R.id.txt_cuenta_nombre);
+        txt_apellido_paterno =root.findViewById(R.id.txt_cuenta_apellido_paterno);
+        txt_apellido_materno =root.findViewById(R.id.txt_cuenta_apellido_materno);
+        txt_curp =root.findViewById(R.id.txt_cuenta_curp);
+        txt_correo = root.findViewById(R.id.txt_cuenta_correo);
+        btn_cerrar_sesion = (Button) root.findViewById(R.id.btn_cuenta_editar);
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        txt_nombre = (TextView) textView.findViewById(R.id.txt_cuenta_nombre);
-        txt_apellido_paterno = (TextView) textView.findViewById(R.id.txt_cuenta_apellido_paterno);
-        txt_apellido_materno = (TextView) textView.findViewById(R.id.txt_cuenta_apellido_materno);
-        txt_curp = (TextView) textView.findViewById(R.id.txt_cuenta_curp);
-        txt_correo = (TextView) textView.findViewById(R.id.txt_cuenta_correo);
-        btn_cerrar_sesion = (Button) btn_cerrar_sesion.findViewById(R.id.btn_cuenta_editar);
-
-        cuentaViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         datosUsuario();
-
+        cuentaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });
         return root;
     }
 
@@ -70,17 +78,6 @@ public class CuentaFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     private void datosUsuario() {
@@ -116,5 +113,32 @@ public class CuentaFragment extends Fragment {
             }
         });
 
+    }
+
+    public void updateEmail() {
+        // [START update_email]
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.updateEmail("user@example.com")
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "User email address updated.");
+                    }
+                });
+        // [END update_email]
+    }
+
+    public void updatePassword() {
+        // [START update_password]
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String newPassword = "SOME-SECURE-PASSWORD";
+
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "User password updated.");
+                    }
+                });
+        // [END update_password]
     }
 }

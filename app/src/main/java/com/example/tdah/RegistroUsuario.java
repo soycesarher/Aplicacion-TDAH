@@ -439,8 +439,7 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuarioPadreTutor.setBoolean_pago(pago());
 
                 usuarioPaciente.setString_nombre_paciente(nombre_paciente);
-                usuarioPaciente.setInt_progreso(0);
-                usuarioPaciente.setInt_puntuacion(0);
+
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
