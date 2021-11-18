@@ -1,9 +1,11 @@
 package com.example.tdah;
 
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,6 +29,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.tdah.validaciones.DatosDeCurp;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.Year;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 
@@ -54,6 +60,7 @@ public class RegistroUsuario extends AppCompatActivity {
     private boolean boolean_correo;
     private boolean boolean_curp;
     private boolean boolean_nip;
+    private boolean boolean_edad=false;
 
     private FirebaseDatabase firebase_database;
 
@@ -61,6 +68,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
     RequestQueue rq;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,8 +169,14 @@ public class RegistroUsuario extends AppCompatActivity {
 
         btn_verifica_curp.setOnClickListener(v -> {
             try {
+
                 recuperar(txt_curp);
-                btn_registrarse.setEnabled(true);
+                if(boolean_edad){
+                    btn_registrarse.setEnabled(true);
+                }else{
+                    Toast.makeText(RegistroUsuario.this, "El propietario no es mayor de edad", Toast.LENGTH_LONG).show();
+                }
+
             } catch (NullPointerException e) {
                 Toast.makeText(RegistroUsuario.this, "La CURP no fue encontrada", Toast.LENGTH_LONG).show();
             }
@@ -528,13 +542,13 @@ public class RegistroUsuario extends AppCompatActivity {
     /**
      * @param renapo
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void valida_datos_curp(String renapo) {
 
         DatosDeCurp validar = new DatosDeCurp(renapo);
         String nombre = validar.getString_nombre();
         String apellido_paterno = validar.getString_apellido_paterno();
         String apellido_materno = validar.getString_apellido_materno();
-        fecha_nacimiento = validar.getString_fecha_nacimiento();
         direccion = validar.getString_estado_nacimiento();
 
         txt_nombre_padre_tutor = findViewById(R.id.txt_nombre_padre_tutor);
@@ -543,13 +557,37 @@ public class RegistroUsuario extends AppCompatActivity {
         txt_apellido_paterno.setText(apellido_paterno);
         txt_apellido_materno = findViewById(R.id.txt_apellido_materno);
         txt_apellido_materno.setText(apellido_materno);
-        fecha_nacimiento = validar.getString_fecha_nacimiento();
+        String fecha_nacimiento_v = validar.getString_fecha_nacimiento();
 
+        if(valida_edad(fecha_nacimiento_v)){
+         boolean_edad = true;
+        }else{
+            boolean_edad = false;
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean valida_edad(String fecha_nacimiento_v) {
+        boolean edad=false;
+        String[] string_fecha = fecha_nacimiento_v.split("-");
+        fecha_nacimiento=string_fecha[0]+"/"+string_fecha[1]+"/"+string_fecha[2].substring(0,2);
+        int anio = Integer.parseInt(string_fecha[0]);
+        int mes = Integer.parseInt(string_fecha[1]);
+        int dia = Integer.parseInt(string_fecha[2].substring(0,2));
+        LocalDate localDate_fecha_actual = LocalDate.now();
+        LocalDate localDate_fecha_nacimiento = LocalDate.of(anio,mes,dia);
+        Period period_edad = Period.between(localDate_fecha_nacimiento,localDate_fecha_actual);
+        if(period_edad.getYears()>=18){
+            edad=true;
+        }
+        return edad;
     }
 
     /**
      * @param
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void recuperar(EditText txt_curp) {
 
         StringRequest requerimiento = new StringRequest(Request.Method.GET,

@@ -2,8 +2,6 @@ package com.example.tdah.usuario.cuenta;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Activity;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +18,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tdah.R;
-import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,18 +29,24 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-public class CuentaFragment extends Fragment  {
+public class CuentaFragment extends Fragment {
 
     private CuentaViewModel cuentaViewModel;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
-    private Button btn_cerrar_sesion;
+    private Button btn_editar;
     private EditText txt_nombre;
     private EditText txt_apellido_paterno;
     private EditText txt_apellido_materno;
     private EditText txt_curp;
     private EditText txt_correo;
     private DatabaseReference databaseReference;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,12 +55,12 @@ public class CuentaFragment extends Fragment  {
         View root = inflater.inflate(R.layout.fragment_cuenta, container, false);
         final TextView textView = root.findViewById(R.id.text_cuenta);
 
-        txt_nombre =root.findViewById(R.id.txt_cuenta_nombre);
-        txt_apellido_paterno =root.findViewById(R.id.txt_cuenta_apellido_paterno);
-        txt_apellido_materno =root.findViewById(R.id.txt_cuenta_apellido_materno);
-        txt_curp =root.findViewById(R.id.txt_cuenta_curp);
+        txt_nombre = root.findViewById(R.id.txt_cuenta_nombre);
+        txt_apellido_paterno = root.findViewById(R.id.txt_cuenta_apellido_paterno);
+        txt_apellido_materno = root.findViewById(R.id.txt_cuenta_apellido_materno);
+        txt_curp = root.findViewById(R.id.txt_cuenta_curp);
         txt_correo = root.findViewById(R.id.txt_cuenta_correo);
-        btn_cerrar_sesion = (Button) root.findViewById(R.id.btn_cuenta_editar);
+        btn_editar = (Button) root.findViewById(R.id.btn_cuenta_editar);
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -68,16 +70,10 @@ public class CuentaFragment extends Fragment  {
         cuentaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-
+                textView.setText(s);
             }
         });
         return root;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     private void datosUsuario() {
@@ -99,6 +95,7 @@ public class CuentaFragment extends Fragment  {
                     txt_apellido_materno.setText(u.getString_apellido_materno());
                     txt_correo.setText(u.getString_correo());
                     txt_curp.setText(u.getString_curp());
+                    Log.e(TAG, "Datos recuperados");
 
                 } else {
                     Log.e(TAG, "Datos no recuperados");
