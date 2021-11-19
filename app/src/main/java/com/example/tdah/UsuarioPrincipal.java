@@ -1,5 +1,6 @@
 package com.example.tdah;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -10,6 +11,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,7 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class UsuarioPrincipal extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
+    AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +37,26 @@ public class UsuarioPrincipal extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+
+
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
+
+         /*mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_actividad1, R.id.nav_cuenta, R.id.nav_inicio, R.id.nav_actividad2, R.id.nav_actividad3, R.id.nav_libros, R.id.nav_padres,
-        R.id.nav_ajustes)
+                R.id.nav_ajustes)
+                .setDrawerLayout(drawer)
+                .build();*/
+         mAppBarConfiguration = new AppBarConfiguration.Builder(
+                navController.getGraph())
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(navigationView,navController);
     }
 
     @Override

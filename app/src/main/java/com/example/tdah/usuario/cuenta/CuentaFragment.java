@@ -42,6 +42,10 @@ public class CuentaFragment extends Fragment {
     private EditText txt_correo;
     private DatabaseReference databaseReference;
 
+    public CuentaFragment(){
+        super(R.layout.fragment_cuenta);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -63,16 +67,17 @@ public class CuentaFragment extends Fragment {
         btn_editar = (Button) root.findViewById(R.id.btn_cuenta_editar);
 
         mAuth = FirebaseAuth.getInstance();
+        fUser = mAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
         datosUsuario();
-        cuentaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+/*        cuentaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 

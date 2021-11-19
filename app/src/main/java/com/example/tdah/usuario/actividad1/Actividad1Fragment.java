@@ -28,15 +28,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class Actividad1Fragment extends Fragment implements View.OnClickListener{
+public class Actividad1Fragment extends Fragment implements View.OnClickListener {
     private Actividad1ViewModel Actividad1ViewModel;
-    private String[] nombre_animal={"tucan","caballo","perro","gato","conejo","leon","pato","rinoceronte"};
-    private String[] sombra_animal={"s_tucan","s_caballo","s_perro","s_gato","s_conejo","s_leon","s_pato","s_rinoceronte"};
-    private int intentos=3;
+    private String[] nombre_animal = {"tucan", "caballo", "perro", "gato", "conejo", "leon", "pato", "rinoceronte"};
+    private String[] sombra_animal = {"s_tucan", "s_caballo", "s_perro", "s_gato", "s_conejo", "s_leon", "s_pato", "s_rinoceronte"};
+    private int intentos = 3;
     private Button aceptar;
-    private TextView mensaje_intentos,mensaje_cuenta, puntuacion_actual_numero, puntuacion_alta;
+    private TextView mensaje_intentos, mensaje_cuenta, puntuacion_actual_numero, puntuacion_alta;
     private EditText usuario_animal;
-    private int numero_generado=0;
+    private int numero_generado = 0;
     private ImageView miimagen;
     // puntajes
     private int puntuacion = 0;
@@ -51,37 +51,58 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
         View root = inflater.inflate(R.layout.fragment_actividad1, container, false);
         Componentes(root);
         main = (UsuarioPrincipal) getParentFragment().getActivity();
-        numero_generado=generaraleatorio();
+        numero_generado = generaraleatorio();
         establecer_sombra(numero_generado);
         mensaje_intentos.setText("Tiene " + intentos + " intentos");
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         puntuacion_alta = root.findViewById(R.id.puntuacion_alta);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+        UsuarioPaciente paciente = new UsuarioPaciente();
+        UsuarioPadreTutor padreTutor = new UsuarioPadreTutor();
+        databaseReference.child("Usuario").child(userid).child("Paciente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    paciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
+                    puntuacion_alta.setText(paciente.getInt_puntuacion_alta_actividad_1());
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
-        final TextView textView = root.findViewById(R.id.text_inicio);
-        Actividad1ViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
+//        final TextView textView = root.findViewById(R.id.text_inicio);
+//        Actividad1ViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
         return root;
     }
 
-    private void Componentes(View root){
+    private void Componentes(View root) {
         EditTextComponent(root);
         Botones(root);
         TextViewComponent(root);
         ImageViewComponent(root);
     }
-    private  void  EditTextComponent(View root){
+
+    private void EditTextComponent(View root) {
         usuario_animal = root.findViewById(R.id.txtAnimal);
     }
-    private void Botones(View root){
+
+    private void Botones(View root) {
         aceptar = root.findViewById(R.id.btnAceptar);
 
         aceptar.setOnClickListener(this);
     }
-    private void TextViewComponent(View root){
+
+    private void TextViewComponent(View root) {
         mensaje_intentos = root.findViewById(R.id.lblIntentos);
         mensaje_cuenta = root.findViewById(R.id.lblcuenta);
         puntuacion_actual_numero = root.findViewById(R.id.puntuacion_actual_numero);
     }
-    private void ImageViewComponent(View root){
+
+    private void ImageViewComponent(View root) {
         miimagen = root.findViewById(R.id.IMVanimal);
     }
 
@@ -90,24 +111,25 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
-        FirebaseUser usuario= FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         UsuarioPaciente paciente = new UsuarioPaciente();
         UsuarioPadreTutor padreTutor = new UsuarioPadreTutor();
 
-        String nombre=usuario_animal.getText().toString().toLowerCase();
-        if(nombre.equals(nombre_animal[numero_generado])){
+        String nombre = usuario_animal.getText().toString().toLowerCase();
+        if (nombre.equals(nombre_animal[numero_generado])) {
             establecer_animal(numero_generado);
             //      Aumentar puntuación en 1 y situarlo en la etiqueta
             puntuacion++;
-            puntuacion_actual_numero.setText( "" + puntuacion);
+            puntuacion_actual_numero.setText("" + puntuacion);
 
             esperar();
-        }else {
-            Toast.makeText(main.getApplicationContext(),"Ese no es el animal :c", Toast.LENGTH_SHORT).show();
-            intentos=intentos-1;
+        } else {
+            Toast.makeText(main.getApplicationContext(), "Ese no es el animal :c", Toast.LENGTH_SHORT).show();
+            intentos = intentos - 1;
             mensaje_intentos.setText("Tiene " + intentos + " intentos");
             usuario_animal.setText("");
-        }if(intentos==0){
+        }
+        if (intentos == 0) {
             // Guardar en firebase
             score_shadows = puntuacion_actual_numero.getText().toString();
             paciente.setInt_puntuacion_actividad_1(Integer.parseInt(score_shadows));
@@ -116,14 +138,16 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
             databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
+                    if (snapshot.exists()) {
                         paciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
-                        int puntuacion_actual= paciente.getInt_puntuacion_actividad_1(),puntuacion_actual_alta=paciente.getInt_puntuacion_alta_actividad_1();
-                        if(puntuacion_actual>puntuacion_actual_alta) {
+                        int puntuacion_actual = paciente.getInt_puntuacion_actividad_1(), puntuacion_actual_alta = paciente.getInt_puntuacion_alta_actividad_1();
+                        if (puntuacion_actual > puntuacion_actual_alta) {
                             databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_1").setValue(puntuacion_actual);
+                            puntuacion_alta.setText(paciente.getInt_puntuacion_alta_actividad_1());
                         }
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -133,17 +157,17 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
         }
     }
 
-    public void esperar(){
-        new CountDownTimer(5000,1000){
+    public void esperar() {
+        new CountDownTimer(5000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                mensaje_cuenta.setText("Generando en " + (millisUntilFinished/1000));
+                mensaje_cuenta.setText("Generando en " + (millisUntilFinished / 1000));
             }
 
             @Override
             public void onFinish() {
-                numero_generado=generaraleatorio();
+                numero_generado = generaraleatorio();
                 establecer_sombra(numero_generado);
                 mensaje_cuenta.setText("");
                 usuario_animal.setText("");
@@ -151,18 +175,18 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
         }.start();
     }
 
-    private void establecer_sombra(int numero){
+    private void establecer_sombra(int numero) {
         int id = getResources().getIdentifier(sombra_animal[numero], "drawable", main.getPackageName());
         miimagen.setImageResource(id);
     }
 
-    private void establecer_animal(int numero){
+    private void establecer_animal(int numero) {
         int id = getResources().getIdentifier(nombre_animal[numero], "drawable", main.getPackageName());
         miimagen.setImageResource(id);
     }
 
 
-    private int generaraleatorio(){
-        return (int)(Math.random()*nombre_animal.length);
+    private int generaraleatorio() {
+        return (int) (Math.random() * nombre_animal.length);
     }
 }

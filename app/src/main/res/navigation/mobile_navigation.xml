@@ -12,37 +12,37 @@
         tools:layout="@layout/fragment_inicio" />
     <fragment
         android:id="@+id/nav_cuenta"
-        class="com.example.tdah.usuario.cuenta.CuentaFragment"
+        android:name="com.example.tdah.usuario.cuenta.CuentaFragment"
         android:label="@string/menu_cuenta"
         tools:layout="@layout/fragment_cuenta" />
     <fragment
         android:id="@+id/nav_actividad1"
-        class="com.example.tdah.usuario.actividad1.Actividad1Fragment"
+        android:name="com.example.tdah.usuario.actividad1.Actividad1Fragment"
         android:label="@string/menu_actividad1"
         tools:layout="@layout/fragment_actividad1" />
     <fragment
         android:id="@+id/nav_actividad2"
-        class="com.example.tdah.usuario.actividad2.Actividad2Fragment"
+        android:name="com.example.tdah.usuario.actividad2.Actividad2Fragment"
         android:label="@string/menu_actividad2"
         tools:layout="@layout/fragment_actividad2" />
     <fragment
         android:id="@+id/nav_actividad3"
-        class="com.example.tdah.usuario.actividad3.Actividad3Fragment"
+        android:name="com.example.tdah.usuario.actividad3.Actividad3Fragment"
         android:label="@string/menu_actividad3"
         tools:layout="@layout/fragment_actividad3" />
     <fragment
         android:id="@+id/nav_libros"
-        class="com.example.tdah.usuario.libros.LibrosFragment"
+        android:name="com.example.tdah.usuario.libros.LibrosFragment"
         android:label="@string/menu_libros"
         tools:layout="@layout/fragment_libros" />
     <fragment
         android:id="@+id/nav_padres"
-        class="com.example.tdah.usuario.padres.PadresFragment"
+        android:name="com.example.tdah.usuario.padres.PadresFragment"
         android:label="@string/menu_padres"
         tools:layout="@layout/fragment_padres"/>
     <fragment
         android:id="@+id/nav_ajustes"
-        class="com.example.tdah.usuario.ajustes.AjustesFragment"
+        android:name="com.example.tdah.usuario.ajustes.AjustesFragment"
         android:label="@string/menu_configuracion"
         tools:layout="@layout/fragment_ajustes" />
 

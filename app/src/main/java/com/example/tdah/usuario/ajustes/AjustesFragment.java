@@ -29,18 +29,18 @@ public class AjustesFragment extends Fragment {
                 new ViewModelProvider(this).get(AjustesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_ajustes, container, false);
         final TextView textView = root.findViewById(R.id.text_ajustes);
-
+        mAuth = FirebaseAuth.getInstance();
         btn_cerrar_sesion = (Button) root.findViewById(R.id.btn_cerrar_sesion);
         btn_cerrar_sesion.setOnClickListener(v -> {
             mAuth.signOut();
             ir_a_main(inflater,container);
         });
-        AjustesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+/*        AjustesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 
