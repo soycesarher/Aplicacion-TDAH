@@ -18,10 +18,10 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_width="102dp"
+                android:layout_height="99dp"
                 android:layout_marginLeft="150dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginRight="0dp"
                 tools:src="@tools:sample/avatars" />
 
@@ -61,17 +61,17 @@
                 android:enabled="false"
                 android:hint="@string/etx_amaterno"/>
 
-            <EditText
-                android:id="@+id/txt_cuenta_curp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textPersonName"
-                android:hint="@string/etx_curp" />
+<!--            <EditText-->
+<!--                android:id="@+id/txt_cuenta_curp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginRight="25dp"-->
+<!--                android:layout_marginLeft="25dp"-->
+<!--                android:ems="10"-->
+<!--                android:enabled="false"-->
+<!--                android:inputType="textPersonName"-->
+<!--                android:hint="@string/etx_curp" />-->
 
             <EditText
                 android:id="@+id/txt_cuenta_correo"
@@ -82,7 +82,31 @@
                 android:layout_marginLeft="25dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:enabled="false"
                 android:hint="@string/etx_correo" />
+            <EditText
+                android:id="@+id/txt_cuenta_contrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textPersonName"
+                android:hint="@string/contrase_a_nueva" />
+
+            <EditText
+                android:id="@+id/txt_cuenta_confirma_contrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:enabled="false"
+                android:hint="@string/confirma_contrase_a" />
 
             <Button
                 android:id="@+id/btn_cuenta_editar"
@@ -100,6 +124,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginLeft="25dp"
+                android:enabled="false"
                 android:text="@string/guardar" />
 
             <Button
@@ -113,18 +138,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/text_cuenta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

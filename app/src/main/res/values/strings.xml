@@ -101,4 +101,7 @@
     <string name="pregunta">¿Qué animal es?</string>
     <string name="animal">Imagen de animal</string>
     <string name="aceptar">Aceptar</string>
+    <string name="contrase_a_nueva">Contraseña nueva</string>
+    <string name="confirma_contrase_a">Confirma contraseña</string>
+    <string name="error_contrasena_diferente">No es la misma contraseña</string>
 </resources>
