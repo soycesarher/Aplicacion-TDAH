@@ -58,6 +58,7 @@
                 android:layout_marginLeft="25dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:enabled="false"
                 android:hint="@string/etx_amaterno"/>
 
             <EditText

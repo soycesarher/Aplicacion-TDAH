@@ -11,7 +11,7 @@
     <string name="etx_nombres">Nombre(s)</string>
     <string name="etx_apaterno">Apellido Paterno</string>
     <string name="etx_amaterno">Apellido Materno</string>
-    <string name="etx_curp">Curp</string>
+    <string name="etx_curp">Curp (padre o tutor)</string>
     <string name="etx_correo">Correo electronico</string>
     <string name="etx_contrasena">Contraseña</string>
     <string name="etx_nip">Nip (4 digitos)</string>

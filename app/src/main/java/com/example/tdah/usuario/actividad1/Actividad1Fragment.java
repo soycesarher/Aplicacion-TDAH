@@ -1,5 +1,6 @@
 package com.example.tdah.usuario.actividad1;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -56,29 +57,30 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
         mensaje_intentos.setText("Tiene " + intentos + " intentos");
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         puntuacion_alta = root.findViewById(R.id.puntuacion_alta);
+        actualizaPuntuacionAlta();
+
+//        final TextView textView = root.findViewById(R.id.text_inicio);
+//        Actividad1ViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
+        return root;
+    }
+    public void actualizaPuntuacionAlta(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         UsuarioPaciente paciente = new UsuarioPaciente();
-        UsuarioPadreTutor padreTutor = new UsuarioPadreTutor();
         databaseReference.child("Usuario").child(userid).child("Paciente").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     paciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
-                    puntuacion_alta.setText(paciente.getInt_puntuacion_alta_actividad_1());
+                    puntuacion_alta.setText(""+paciente.getInt_puntuacion_alta_actividad_1());
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-//        final TextView textView = root.findViewById(R.id.text_inicio);
-//        Actividad1ViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
-        return root;
     }
-
     private void Componentes(View root) {
         EditTextComponent(root);
         Botones(root);
@@ -109,11 +111,6 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference();
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-        UsuarioPaciente paciente = new UsuarioPaciente();
-        UsuarioPadreTutor padreTutor = new UsuarioPadreTutor();
 
         String nombre = usuario_animal.getText().toString().toLowerCase();
         if (nombre.equals(nombre_animal[numero_generado])) {
@@ -132,31 +129,39 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
         if (intentos == 0) {
             // Guardar en firebase
             score_shadows = puntuacion_actual_numero.getText().toString();
-            paciente.setInt_puntuacion_actividad_1(Integer.parseInt(score_shadows));
-            padreTutor.setString_id(usuario.getUid());
-            databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_1").setValue(paciente.getInt_puntuacion_actividad_1());
-            databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        paciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
-                        int puntuacion_actual = paciente.getInt_puntuacion_actividad_1(), puntuacion_actual_alta = paciente.getInt_puntuacion_alta_actividad_1();
-                        if (puntuacion_actual > puntuacion_actual_alta) {
-                            databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_1").setValue(puntuacion_actual);
-                            puntuacion_alta.setText(paciente.getInt_puntuacion_alta_actividad_1());
-                        }
-                    }
-                }
+            guardaProgreso(Integer.parseInt(score_shadows));
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
             //main.finish();
         }
     }
+    public void guardaProgreso(int puntuacion){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+        UsuarioPaciente paciente = new UsuarioPaciente();
+        UsuarioPadreTutor padreTutor = new UsuarioPadreTutor();
+        paciente.setInt_puntuacion_actividad_1(puntuacion);
+        padreTutor.setString_id(usuario.getUid());
+        databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_1").setValue(paciente.getInt_puntuacion_actividad_1());
+        databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    paciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
+                    int puntuacion_actual = paciente.getInt_puntuacion_actividad_1(), puntuacion_actual_alta = paciente.getInt_puntuacion_alta_actividad_1();
+                    if (puntuacion_actual > puntuacion_actual_alta) {
+                        databaseReference.child("Usuario").child(padreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_1").setValue(puntuacion_actual);
+                        puntuacion_alta.setText(paciente.getInt_puntuacion_alta_actividad_1());
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     public void esperar() {
         new CountDownTimer(5000, 1000) {
 
