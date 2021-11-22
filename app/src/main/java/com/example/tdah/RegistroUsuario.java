@@ -471,7 +471,7 @@ public class RegistroUsuario extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(RegistroUsuario.this, MenuUsuario.class));
+            startActivity(new Intent(RegistroUsuario.this, UsuarioPrincipal.class));
             finish();
         }
     }
@@ -515,7 +515,6 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuarioPadreTutor.setString_nombre(nombre);
                 usuarioPadreTutor.setString_apellido_materno(apellido_materno);
                 usuarioPadreTutor.setString_apellido_paterno(apellido_paterno);
-                usuarioPadreTutor.setString_contrasena(contrasena);
                 usuarioPadreTutor.setString_correo(correo);
                 usuarioPadreTutor.setString_direccion(direccion);
                 usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
@@ -611,6 +610,7 @@ public class RegistroUsuario extends AppCompatActivity {
     /**
      * @param renapo
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void valida_datos_curp(String renapo) {
 
         DatosDeCurp validar = new DatosDeCurp(renapo);

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,7 +50,7 @@ public class CuentaFragment extends Fragment {
     private boolean boolean_correo;
     private boolean boolean_contrasena;
 
-    public CuentaFragment(){
+    public CuentaFragment() {
         super(R.layout.fragment_cuenta);
     }
 
@@ -74,7 +75,7 @@ public class CuentaFragment extends Fragment {
         txt_confirma_contrasena = root.findViewById(R.id.txt_cuenta_confirma_contrasenia);
 
         txt_correo = root.findViewById(R.id.txt_cuenta_correo);
-        btn_editar = (Button) root.findViewById(R.id.btn_cuenta_editar);
+        btn_editar = root.findViewById(R.id.btn_cuenta_editar);
         btn_guardar = root.findViewById(R.id.btn_cuenta_guardar);
 
         mAuth = FirebaseAuth.getInstance();
@@ -89,7 +90,7 @@ public class CuentaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean_contrasena = true;
-            boolean_contrasena = valida_contrasena(txt_contrasena);
+                boolean_contrasena = valida_contrasena(txt_contrasena);
 
             }
 
@@ -106,8 +107,8 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena=true;
-                boolean_contrasena = valida_confirma_contrasena(txt_confirma_contrasena,txt_contrasena);
+                boolean_contrasena = true;
+                boolean_contrasena = valida_confirma_contrasena(txt_confirma_contrasena, txt_contrasena);
             }
 
             @Override
@@ -124,7 +125,7 @@ public class CuentaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean_correo = false;
-            boolean_correo = valida_correo(txt_correo);
+                boolean_correo = valida_correo(txt_correo);
             }
 
             @Override
@@ -134,20 +135,22 @@ public class CuentaFragment extends Fragment {
         });
 
 
-            btn_editar.setOnClickListener(v -> {
-                     txt_contrasena.setEnabled(true);
-                     txt_confirma_contrasena.setEnabled(true);
-                     txt_correo.setEnabled(true);
-            });
-        if(!boolean_correo||boolean_contrasena){
+        btn_editar.setOnClickListener(v -> {
+            txt_contrasena.setEnabled(true);
+            txt_confirma_contrasena.setEnabled(true);
+            txt_correo.setEnabled(true);
+        });
+
+        if (!boolean_correo || boolean_contrasena) {
             btn_guardar.setEnabled(true);
 
         }
         btn_guardar.setOnClickListener(v -> {
-            if(!boolean_correo){
+            if (!boolean_correo) {
                 updateEmail(txt_correo.getText().toString());
+
             }
-            if(boolean_contrasena&&!txt_confirma_contrasena.getText().toString().isEmpty()){
+            if (boolean_contrasena && !txt_confirma_contrasena.getText().toString().isEmpty()) {
                 updatePassword(txt_confirma_contrasena.getText().toString());
             }
         });
@@ -175,7 +178,6 @@ public class CuentaFragment extends Fragment {
                     txt_apellido_paterno.setText(u.getString_apellido_paterno());
                     txt_apellido_materno.setText(u.getString_apellido_materno());
                     txt_correo.setText(u.getString_correo());
-//                    txt_curp.setText(u.getString_curp());
                     Log.e(TAG, "Datos recuperados");
 
                 } else {
@@ -192,6 +194,7 @@ public class CuentaFragment extends Fragment {
         });
 
     }
+
     /**
      * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
      *
@@ -257,6 +260,7 @@ public class CuentaFragment extends Fragment {
         }
         return boolean_contrasena_v;
     }
+
     private boolean valida_confirma_contrasena(EditText editText_contrasena, EditText editText_confirma) {
 
         editText_contrasena.setError(null);
@@ -267,7 +271,7 @@ public class CuentaFragment extends Fragment {
 
         View focusView = null;
 
-        if(!editText_contrasena.getText().toString().equals(editText_confirma.getText().toString())){
+        if (!editText_contrasena.getText().toString().equals(editText_confirma.getText().toString())) {
             editText_contrasena.setError(getString(R.string.error_contrasena_diferente));
             focusView = editText_contrasena;
             boolean_contrasena_v = true;
@@ -318,31 +322,29 @@ public class CuentaFragment extends Fragment {
     }
 
     public void updateEmail(String correo) {
-        // [START update_email]
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         user.updateEmail(correo)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         databaseReference.child("Usuario").child(user.getUid()).child("string_correo").setValue(correo);
-                        Log.d(TAG, "El correo se actualizó con éxito.");
+                        Toast.makeText(getContext(), "El correo se actualizó con éxito", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getContext(), "ERROR: No se actualizó el correo"+task.getResult().toString(), Toast.LENGTH_LONG).show();
                     }
                 });
-        // [END update_email]
     }
 
     public void updatePassword(String contrasena) {
-        // [START update_password]
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String newPassword = contrasena;
-
         user.updatePassword(newPassword)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-
-                        Log.d(TAG, "La contraseña se actualizó con éxito.");
+                        Toast.makeText(getContext(), "La contraseña se actualizó con éxito", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getContext(), "ERROR: No se actualizó la contraseña"+task.getResult().toString(), Toast.LENGTH_LONG).show();
                     }
                 });
-        // [END update_password]
     }
 }
