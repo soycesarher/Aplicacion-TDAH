@@ -130,6 +130,22 @@
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Paypal"
+                android:textColor="#00f"
+                android:textSize="22sp"
+                android:textAlignment="center"/>
+            <Button
+                android:id="@+id/btn_pagar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0D47A1"
+                android:text="Press to Pay"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                />
             <Button
                 android:id="@+id/btn_registrarse"
                 android:layout_width="match_parent"
@@ -143,10 +159,9 @@
                 android:id="@+id/btn_cancelar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Cancelar"
                 android:onClick="ir_main"
+                android:text="Cancelar"
                 android:textAlignment="center" />
-
 
             <TextView
                 android:id="@+id/lbl_tengo_cuenta"

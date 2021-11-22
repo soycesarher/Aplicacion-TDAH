@@ -1,9 +1,12 @@
 package com.example.tdah;
 
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,11 +31,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.tdah.validaciones.DatosDeCurp;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.Year;
 import java.util.Date;
+import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 
@@ -51,9 +59,17 @@ public class RegistroUsuario extends AppCompatActivity {
 
     private Button btn_registrarse;
     private Button btn_verifica_curp;
+    private Button btn_Paypal;
 
     private String fecha_nacimiento;
     private String direccion;
+
+    private static final String Id_client_Paypal = "AUV2kPXlL2kPxu9Y_PZUWfJTE9s67qAboJiGdxVvLutdOMuRAYVnLWVNkFJKCIvt-JbsUqPPPY5FJ_XJ";
+    private int Paypal_codigo = 1717;
+
+    private PayPalConfiguration paypalConfig = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(Id_client_Paypal);
 
     private boolean boolean_contrasena;
     private boolean boolean_nombre_paciente;
@@ -74,6 +90,14 @@ public class RegistroUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_registro_usuario);
+
+        //Paypal
+        btn_Paypal = findViewById(R.id.btn_pagar);
+
+        Intent intento = new Intent(this, PayPalService.class);
+        intento.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+        startService(intento);
+        // Fin PayPal
 
         inicializa_firebase();
 
@@ -98,7 +122,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_nombre_paciente = valida_nombre_paciente(txt_nombre_paciente);
+                boolean_nombre_paciente=valida_nombre_paciente(txt_nombre_paciente);
             }
 
             @Override
@@ -113,7 +137,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_curp = valida_curp(txt_curp);
+                boolean_curp=valida_curp(txt_curp);
             }
 
             @Override
@@ -128,7 +152,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_nip = valida_nip(txt_nip);
+                boolean_nip=valida_nip(txt_nip);
             }
 
             @Override
@@ -143,7 +167,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena = valida_contrasena(txt_contrasena);
+                boolean_contrasena=valida_contrasena(txt_contrasena);
             }
 
             @Override
@@ -159,7 +183,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_correo = valida_correo(txt_correo);
+                boolean_correo=valida_correo(txt_correo);
             }
 
             @Override
@@ -182,12 +206,54 @@ public class RegistroUsuario extends AppCompatActivity {
             }
         });
         btn_registrarse.setOnClickListener(v -> {
-            if (boolean_contrasena || !boolean_correo || !boolean_curp || !boolean_nip || !boolean_nombre_paciente) {
+            if (boolean_contrasena||!boolean_correo||!boolean_curp||!boolean_nip||!boolean_nombre_paciente){
                 Toast.makeText(RegistroUsuario.this, "Faltan datos", Toast.LENGTH_SHORT).show();
-            } else {
+            }else{
                 ingresa_base_datos();
             }
         });
+        btn_Paypal.setOnClickListener(v -> Metodo_Paypal());
+    }
+
+    /**
+     * Este método asigna el monto a pagar por la suscripción
+     */
+    private void Metodo_Paypal(){
+        PayPalPayment Payment = new PayPalPayment(new BigDecimal('5'),  "USD", "Test pago"
+    ,PayPalPayment.PAYMENT_INTENT_SALE);
+
+        Intent intento = new Intent(this, PaymentActivity.class);
+        intento.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
+        intento.putExtra(PaymentActivity.EXTRA_PAYMENT, Payment);
+
+        startActivityForResult(intento, Paypal_codigo);
+    }
+
+    /**
+     *
+     */
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
+    }
+
+    /**
+     * Si requestCode y resultCode son correctos realiza el pago y se muestra en pantalla
+     * @param requestCode codigo para que se acepte el pago
+     * @param resultCode codigo para pagar
+     * @param data Intent para abrir la actividad de PayPal
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Paypal_codigo){
+            if (resultCode == Activity.RESULT_OK){
+                Toast.makeText(this, "Pago procesado", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this, "Pago no procesado", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private boolean valida_nombre_paciente(EditText editText_nombre_paciente) {
@@ -227,7 +293,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
         String curp = editText_curp.getText().toString().trim();
 
-        boolean boolean_curp_v = true;
+        boolean boolean_curp_v=true;
 
         View focusView = null;
 
@@ -405,7 +471,7 @@ public class RegistroUsuario extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(RegistroUsuario.this, UsuarioPrincipal.class));
+            startActivity(new Intent(RegistroUsuario.this, MenuUsuario.class));
             finish();
         }
     }
@@ -434,11 +500,14 @@ public class RegistroUsuario extends AppCompatActivity {
         String contrasena = txt_contrasena.getText().toString();
         String nip = txt_nip.getText().toString();
 
+
         mAuth.createUserWithEmailAndPassword(correo, contrasena).addOnCompleteListener(task -> {
             UsuarioPadreTutor usuarioPadreTutor = new UsuarioPadreTutor();
             UsuarioPaciente usuarioPaciente = new UsuarioPaciente();
             if (task.isSuccessful()) {
+
                 FirebaseUser usuario_actual = mAuth.getCurrentUser();
+
                 usuarioPadreTutor.setString_id(usuario_actual.getUid());
                 usuarioPadreTutor.setInt_nip(Integer.parseInt(nip));
                 usuarioPadreTutor.setString_curp(curp);
@@ -446,7 +515,7 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuarioPadreTutor.setString_nombre(nombre);
                 usuarioPadreTutor.setString_apellido_materno(apellido_materno);
                 usuarioPadreTutor.setString_apellido_paterno(apellido_paterno);
-
+                usuarioPadreTutor.setString_contrasena(contrasena);
                 usuarioPadreTutor.setString_correo(correo);
                 usuarioPadreTutor.setString_direccion(direccion);
                 usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
@@ -511,13 +580,13 @@ public class RegistroUsuario extends AppCompatActivity {
      * Regresa si el pago se aplico correctamente
      *
      * @return boolean_pago
-     */
+
+    */
     private Boolean pago() {
         Boolean boolean_pago = false;
 
         return boolean_pago;
     }
-
 
     /**
      * Abre main_activity
@@ -542,7 +611,6 @@ public class RegistroUsuario extends AppCompatActivity {
     /**
      * @param renapo
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void valida_datos_curp(String renapo) {
 
         DatosDeCurp validar = new DatosDeCurp(renapo);
