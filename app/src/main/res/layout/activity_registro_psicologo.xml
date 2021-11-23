@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#72BEC3"
+    tools:context=".RegistroPsicologo">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/lbl_psicologo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/lbl_psicologo"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/txt_nombre_padre_tutor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/etx_nombres"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_apellido_paterno"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/etx_apaterno"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_apellido_materno"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/etx_amaterno"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/lbl_docimicilio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/lbl_domicilios"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/txt_calle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/calle"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_num_exterior"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/num_exterior"
+                android:inputType="textEmailAddress"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_cp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/codigopostal"
+                android:inputType="textPassword"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_localidad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/localidad"
+                android:inputType="textEmailAddress"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_municipio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/municipio"
+                android:inputType="textPassword"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="@string/estado" />
+
+            <TextView
+                android:id="@+id/lbl_contacto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/lbl_contacto"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/txt_telefono"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/txt_Telefono_Psicologo"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_correo_psicologo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/etx_correo"
+                android:inputType="textEmailAddress"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_contraseña_psicologo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/etx_contrasena"
+                android:inputType="textPassword"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/lbl_profesional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/lbl_profesional"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/txt_cedula_psicologo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/txt_Cedula"
+                android:inputType="textPassword"
+                android:textAlignment="center"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btn_pagar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="#3F51B5"
+                android:text="Realizar Pago" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <Button
+                    android:id="@+id/btn_registrarse"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/btn_registrarse"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/btn_cancelar"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="72dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:onClick="ir_main"
+                    android:text="Cancelar"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

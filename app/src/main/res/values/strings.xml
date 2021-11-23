@@ -104,4 +104,15 @@
     <string name="contrase_a_nueva">Contraseña nueva</string>
     <string name="confirma_contrase_a">Confirma contraseña</string>
     <string name="error_contrasena_diferente">No es la misma contraseña</string>
+
+    <string name="calle">Calle</string>
+    <string name="num_exterior">N. Exterior</string>
+    <string name="codigopostal">Codigo Postal</string>
+    <string name="localidad">Localidad</string>
+    <string name="municipio">Municipio</string>
+    <string name="estado">Estado</string>
+
+    <string name="lbl_domicilios">Datos Domiciliarios</string>
+    <string name="lbl_contacto">Contacto</string>
+    <string name="lbl_profesional">Información Profesional</string>
 </resources>

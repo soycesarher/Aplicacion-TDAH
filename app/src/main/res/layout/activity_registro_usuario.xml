@@ -91,7 +91,6 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
 
-
             <EditText
                 android:id="@+id/txt_nombre_paciente"
                 android:layout_width="match_parent"
