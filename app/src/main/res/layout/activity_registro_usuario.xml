@@ -32,6 +32,30 @@
                 android:text="@string/tvw_usuario"
                 android:textAlignment="center"
                 android:textSize="34sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/txt_curp"
+                    android:layout_width="245dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:ems="10"
+                    android:hint="@string/etx_curp"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <Button
+                    android:id="@+id/btn_verifica_curp"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:text="Verifica curp"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/txt_nombre_padre_tutor"
@@ -67,30 +91,6 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/txt_curp"
-                    android:layout_width="245dp"
-                    android:layout_height="match_parent"
-                   android:layout_marginRight="5dp"
-                    android:ems="10"
-                    android:hint="@string/etx_curp"
-                    android:inputType="textPersonName"
-                    android:textAlignment="center"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/btn_verifica_curp"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:text="Verifica curp"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
 
             <EditText
                 android:id="@+id/txt_nombre_paciente"
@@ -141,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#3F51B5"
-                android:text="Pagar"
+                android:text="Pagar (opiconal)"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 />
