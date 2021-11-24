@@ -115,4 +115,10 @@
     <string name="lbl_domicilios">Datos Domiciliarios</string>
     <string name="lbl_contacto">Contacto</string>
     <string name="lbl_profesional">Información Profesional</string>
+
+    <string name="puntuacion_oro">Mi Putuacion</string>
+    <string name="jugar">Jugar</string>
+    <string name="puntuaciones">Puntuaciones</string>
+    <string name="acercade">Acerca De</string>
+    <string name="menu">Menu</string>
 </resources>

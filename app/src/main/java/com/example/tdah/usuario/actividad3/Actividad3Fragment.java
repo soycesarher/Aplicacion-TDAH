@@ -1,36 +1,57 @@
 package com.example.tdah.usuario.actividad3;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tdah.MainActivity;
 import com.example.tdah.R;
+import com.example.tdah.UsuarioPrincipal;
+import com.example.tdah.usuario.Oro;
 
 public class Actividad3Fragment extends Fragment{
 
+    FragmentTransaction transaction;
+    Fragment fragmentGO;
+
+    private static ImageView oro;
     private Actividad3ViewModel Actividad3ViewModel;
+    UsuarioPrincipal main;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Actividad3ViewModel =
                 new ViewModelProvider(this).get(Actividad3ViewModel.class);
         View root = inflater.inflate(R.layout.fragment_actividad3, container, false);
-        final TextView textView = root.findViewById(R.id.text_actividad3);
-        Actividad3ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        main = (UsuarioPrincipal) getParentFragment().getActivity();
+
+
+        imagenSetup(root);
+
+        return root;
+    }
+
+    public void  imagenSetup(View root){
+        oro= root.findViewById(R.id.image_oro);
+        oro.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Oro.class);
+                startActivity(intent);
             }
         });
-        return root;
     }
 
 }

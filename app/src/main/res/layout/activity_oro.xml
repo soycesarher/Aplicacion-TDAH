@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#72BEC3"
+    tools:context=".usuario.Oro">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txt_puntuacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:text="@string/puntuacion_oro" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ImageDuende"
+                android:layout_width="150dp"
+                android:layout_height="150dp"/>
+
+            <TextView
+                android:id="@+id/txt_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFFFFF"
+                android:gravity="center"
+                android:text="@string/menu"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/btnJugar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boton_personalizado"
+                android:text="@string/jugar"
+                android:layout_marginTop="10dp"
+                android:textColor="#0E0E0E" />
+
+            <Button
+                android:id="@+id/btnPuntuaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boton_personalizado"
+                android:layout_marginTop="10dp"
+                android:text="@string/puntuaciones"
+                android:textColor="#0E0E0E"/>
+
+            <Button
+                android:id="@+id/btnAcercaDe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boton_personalizado"
+                android:layout_marginTop="10dp"
+                android:text="@string/acercade"
+                android:textColor="#0E0E0E"/>
+
+            <Button
+                android:id="@+id/btnSalir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boton_personalizado"
+                android:layout_marginTop="10dp"
+                android:text="@string/regresar"
+                android:textColor="#0E0E0E"/>
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

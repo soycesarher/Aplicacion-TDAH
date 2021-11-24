@@ -31,6 +31,7 @@
         <activity
             android:name=".RegistroUsuario"
             android:exported="false" />
+        <activity android:name=".usuario.Oro"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
