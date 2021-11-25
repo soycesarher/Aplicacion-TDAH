@@ -36,7 +36,7 @@
                 android:textSize="34sp" />
 
             <EditText
-                android:id="@+id/txt_nombre_padre_tutor"
+                android:id="@+id/txt_nombre_psicologo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
@@ -134,7 +134,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:hint="@string/estado" />
+                android:hint="@string/estado"
+                android:minHeight="48dp" />
 
             <TextView
                 android:id="@+id/lbl_contacto"
@@ -152,7 +153,7 @@
                 android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="@string/txt_Telefono_Psicologo"
-                android:inputType="textPersonName"
+                android:inputType="phone"
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -168,7 +169,7 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <EditText
-                android:id="@+id/txt_contraseña_psicologo"
+                android:id="@+id/txt_contrasena_psicologo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -230,7 +231,6 @@
                     android:layout_marginLeft="72dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:onClick="ir_main"
                     android:text="Cancelar"
                     android:textAlignment="center" />
 

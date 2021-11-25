@@ -22,28 +22,32 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
+
 import com.example.tdah.validaciones.DatosDeCurp;
+
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
-import org.json.JSONException;
-
 import java.text.ParseException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
+
 import java.util.regex.Pattern;
 
 
@@ -195,11 +199,7 @@ public class RegistroUsuario extends AppCompatActivity {
             try {
 
                 recuperar(txt_curp);
-                if (boolean_edad) {
-                    btn_registrarse.setEnabled(true);
-                } else {
-                    Toast.makeText(RegistroUsuario.this, "El propietario no es mayor de edad", Toast.LENGTH_LONG).show();
-                }
+
 
             } catch (NullPointerException e) {
                 Toast.makeText(RegistroUsuario.this, "La CURP no fue encontrada", Toast.LENGTH_LONG).show();
@@ -269,6 +269,11 @@ public class RegistroUsuario extends AppCompatActivity {
 
     }
 
+    /**
+     * Valida el formato de editText_nombre_paciente
+     * @param editText_nombre_paciente EditText que contiente el paciente
+     * @return boolean_nombre_paciente_v Regresa el booleano false si no es correcto el formato y true es formato
+     */
     private boolean valida_nombre_paciente(EditText editText_nombre_paciente) {
 
         editText_nombre_paciente.setError(null);
@@ -335,7 +340,12 @@ public class RegistroUsuario extends AppCompatActivity {
 
         return boolean_curp_v;
     }
-
+    /**
+     * Esta funcion retorna verdadero si el nip tiene errores y  si es falso no tiene errores
+     *
+     * @param editText_nip EditText nip
+     * @return boolean_nip_v
+     */
     private boolean valida_nip(EditText editText_nip) {
 
         editText_nip.setError(null);
@@ -371,7 +381,7 @@ public class RegistroUsuario extends AppCompatActivity {
      * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
      *
      * @param editText_contrasena EditText contrasena
-     * @return boolean_error
+     * @return boolean_contrasena_v
      */
     private boolean valida_contrasena(EditText editText_contrasena) {
 
@@ -532,6 +542,7 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuarioPadreTutor.setString_correo(correo);
                 usuarioPadreTutor.setString_direccion(direccion);
                 usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
+
                 try {
 
                     usuarioPadreTutor.setString_fecha_pago(fecha_pago()[0]);
@@ -541,6 +552,12 @@ public class RegistroUsuario extends AppCompatActivity {
                     Toast.makeText(RegistroUsuario.this, "Error: formato de fecha, " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 usuarioPaciente.setString_nombre_paciente(nombre_paciente);
+                usuarioPaciente.setInt_puntuacion_alta_actividad_1(0);
+                usuarioPaciente.setInt_puntuacion_alta_actividad_2(0);
+                usuarioPaciente.setInt_puntuacion_alta_actividad_3(0);
+                usuarioPaciente.setInt_puntuacion_actividad_1(0);
+                usuarioPaciente.setInt_puntuacion_actividad_2(0);
+                usuarioPaciente.setInt_puntuacion_actividad_3(0);
 
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
@@ -567,7 +584,6 @@ public class RegistroUsuario extends AppCompatActivity {
                     } else {
                         Toast.makeText(RegistroUsuario.this, "Mensaje no recibido", Toast.LENGTH_SHORT).show();
                     }
-
 
                 });
 
@@ -647,6 +663,12 @@ public class RegistroUsuario extends AppCompatActivity {
 
     }
 
+    /**
+     * Valida la edad del usuario y activa el botón de registro
+     * @param fecha_nacimiento_v String que contiene la fecha del usuario
+     *
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean valida_edad(String fecha_nacimiento_v) {
         boolean edad = false;
@@ -659,12 +681,15 @@ public class RegistroUsuario extends AppCompatActivity {
         LocalDate localDate_fecha_nacimiento = LocalDate.of(anio, mes, dia);
         Period period_edad = Period.between(localDate_fecha_nacimiento, localDate_fecha_actual);
         if (period_edad.getYears() >= 18) {
-            edad = true;
+            btn_registrarse.setEnabled(true);
+        }else{
+            Toast.makeText(RegistroUsuario.this, "El padre o tutor no es mayor de edad", Toast.LENGTH_LONG).show();
         }
         return edad;
     }
 
     /**
+     * Recupera los datos de la API
      * @param txt_curp curp para buscarlo en la api
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -673,7 +698,7 @@ public class RegistroUsuario extends AppCompatActivity {
         StringRequest requerimiento = new StringRequest(Request.Method.GET,
                 "https://us-west4-arsus-production.cloudfunctions.net/curp?curp=" + txt_curp.getText().toString() + "&apiKey=WgrtpPpMT6gCrKmawXDipiEzQQv2",
                 this::valida_datos_curp,
-                error -> Toast.makeText(RegistroUsuario.this, "ERROR: " + error.getMessage() + " INTENTE DE NUEVO.", Toast.LENGTH_SHORT).show());
+                error -> Toast.makeText(RegistroUsuario.this, "ERROR: " + error.getMessage() + " INTENTE DE NUEVO.", Toast.LENGTH_LONG).show());
         rq.add(requerimiento);
     }
 
