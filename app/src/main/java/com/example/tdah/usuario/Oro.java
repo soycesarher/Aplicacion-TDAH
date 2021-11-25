@@ -57,6 +57,8 @@ public class Oro extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Oro.this, "JUGAR", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Oro.this, Escenario.class);
+                startActivity(intent);
             }
         });
 
