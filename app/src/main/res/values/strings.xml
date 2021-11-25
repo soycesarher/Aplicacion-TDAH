@@ -121,10 +121,12 @@
     <string name="puntuaciones">Puntuaciones</string>
     <string name="acercade">Acerca De</string>
     <string name="menu">Menu</string>
+    <string name="error_numero_exterior">Longitud incorrecta</string>
+    <string name="error_telefono_invalido">Telefono invalido</string>
 
     <string name="txtContador"> 0 </string>
     <string name="txtTiempo"> 0S </string>
-    
+
     <string name="Anchotv"> -- </string>
     <string name="Altotv"> -- </string>
 

@@ -39,6 +39,13 @@ private DatabaseReference databaseReference;
 
     private boolean boolean_error_texto;
     private boolean boolean_error_contrasena;
+    private boolean boolean_error_numero_exterior;
+    private boolean boolean_error_correo;
+    private boolean boolean_error_telefono;
+    private boolean boolean_error_cedula;
+    private boolean boolean_error_cp;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,8 +131,242 @@ private DatabaseReference databaseReference;
             }
         });
 
+        txt_localidad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_texto = valida_texto(txt_localidad);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_correo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                boolean_error_correo = valida_correo(txt_correo);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_contrasena.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_contrasena = valida_contrasena(txt_contrasena);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_num_exterior.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_numero_exterior = valida_numero_exterior(txt_num_exterior);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_cp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_cp = valida_cp(txt_cp);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
+
+        txt_municipio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                boolean_error_texto = valida_texto(txt_municipio);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_telefono.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_telefono = valida_telefono(txt_telefono);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+        txt_celdula.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_cedula = valida_cedula(txt_celdula);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+    }
+
+    private boolean valida_cedula(EditText editText_cedula) {
+
+        editText_cedula.setError(null);
+
+        String string_cedula = editText_cedula.getText().toString().trim();
+
+        boolean boolean_error = true;
+
+        View focusView = null;
+
+        if (string_cedula.isEmpty()) {
+            editText_cedula.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_cedula;
+            boolean_error = false;
+        }
+
+        if (!string_cedula.matches(".{7,8}")) {
+            editText_cedula.setError(getString(R.string.error_formato_no_valido));
+            focusView = editText_cedula;
+            boolean_error = false;
+        }
+
+        if (!boolean_error) {
+
+            focusView.requestFocus();
+
+        }
+
+        return boolean_error;
+
+    }
+
+    private boolean valida_numero_exterior(EditText editText_num_exterior) {
+
+        editText_num_exterior.setError(null);
+
+        String string_num_ext = editText_num_exterior.getText().toString().trim();
+
+        boolean boolean_error = true;
+
+        View focusView = null;
+
+        if (string_num_ext.isEmpty()) {
+            editText_num_exterior.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_num_exterior;
+            boolean_error = false;
+        }
+
+        if (!string_num_ext.matches(".{2,10}")) {
+            editText_num_exterior.setError(getString(R.string.error_numero_exterior));
+            focusView = editText_num_exterior;
+            boolean_error = false;
+        }
+
+        if (!boolean_error) {
+
+            focusView.requestFocus();
+
+        }
+
+        return boolean_error;
+    }
+    private boolean valida_cp(EditText editText_cp) {
+
+        editText_cp.setError(null);
+
+        String string_cp = editText_cp.getText().toString().trim();
+
+        boolean boolean_error = true;
+
+        View focusView = null;
+
+        if (string_cp.isEmpty()) {
+            editText_cp.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_cp;
+            boolean_error = false;
+        }
+
+        if (!string_cp.matches(".{5}")) {
+            editText_cp.setError(getString(R.string.error_formato_no_valido));
+            focusView = editText_cp;
+            boolean_error = false;
+        }
+
+        if (!boolean_error) {
+
+            focusView.requestFocus();
+
+        }
+
+        return boolean_error;
     }
 
     @Override
@@ -163,6 +404,12 @@ private DatabaseReference databaseReference;
             boolean_error = false;
         }
 
+        if (sting_texto.matches(".*\\s.*")) {
+            editText_texto.setError(getString(R.string.error_sin_espacios));
+            focusView = editText_texto;
+            boolean_error= true;
+        }
+
         if (!boolean_error) {
 
             focusView.requestFocus();
@@ -171,6 +418,7 @@ private DatabaseReference databaseReference;
 
         return boolean_error;
     }
+
     /**
      * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
      *
@@ -270,6 +518,41 @@ private DatabaseReference databaseReference;
 
         }
         return boolean_correo_v;
+
+    }
+    /**
+     * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
+     *
+     * @param editText_telefono EditText correo
+     * @return boolean_error
+     */
+    private boolean valida_telefono(EditText editText_telefono) {
+
+        editText_telefono.setError(null);
+
+        boolean boolean_error = true;
+
+        View focusView = null;
+
+        Pattern pattern = Patterns.PHONE;
+
+        String telefono = editText_telefono.getText().toString().trim();
+
+        if (TextUtils.isEmpty(telefono)) {
+            editText_telefono.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_telefono;
+            boolean_error = false;
+        } else if (!pattern.matcher(telefono).matches()) {
+            editText_telefono.setError(getString(R.string.error_telefono_invalido));
+            focusView = editText_telefono;
+            boolean_error = false;
+        }
+        if (!boolean_error) {
+
+            focusView.requestFocus();
+
+        }
+        return boolean_error;
 
     }
 
