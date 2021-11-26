@@ -10,6 +10,9 @@ public class Usuario implements Serializable{
     private String string_direccion;
     private String string_correo;
     private String string_id;
+    private String string_fecha_pago;
+    private String string_fecha_fin_suscripcion;
+
 
     public Usuario() {
 
@@ -72,5 +75,21 @@ public class Usuario implements Serializable{
 
     public void setString_id(String string_id) {
         this.string_id = string_id;
+    }
+
+    public String getString_fecha_pago() {
+        return string_fecha_pago;
+    }
+
+    public void setString_fecha_pago(String string_fecha_pago) {
+        this.string_fecha_pago = string_fecha_pago;
+    }
+
+    public String getString_fecha_fin_suscripcion() {
+        return string_fecha_fin_suscripcion;
+    }
+
+    public void setString_fecha_fin_suscripcion(String string_fecha_fin_suscripcion) {
+        this.string_fecha_fin_suscripcion = string_fecha_fin_suscripcion;
     }
 }

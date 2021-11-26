@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class UsuarioPadreTutor extends Usuario implements Serializable {
 
-    private String string_curp, string_fecha_pago;
-    private String string_fecha_fin_suscripcion;
+    private String string_curp;
+
     private int int_nip;
 
     public UsuarioPadreTutor() {
@@ -19,14 +19,6 @@ public class UsuarioPadreTutor extends Usuario implements Serializable {
         this.string_curp = string_curp;
     }
 
-    public String getString_fecha_pago() {
-        return string_fecha_pago;
-    }
-
-    public void setString_fecha_pago(String string_fecha_pago) {
-        this.string_fecha_pago = string_fecha_pago;
-    }
-
     public int getInt_nip() {
         return int_nip;
     }
@@ -35,11 +27,4 @@ public class UsuarioPadreTutor extends Usuario implements Serializable {
         this.int_nip = int_nip;
     }
 
-    public String isString_fecha_fin_suscripcion() {
-        return string_fecha_fin_suscripcion;
-    }
-
-    public void setString_fecha_fin_suscripcion(String string_fecha_fin_suscripcion) {
-        this.string_fecha_fin_suscripcion = string_fecha_fin_suscripcion;
-    }
 }

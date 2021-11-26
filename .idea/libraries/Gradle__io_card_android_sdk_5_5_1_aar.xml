@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: io.card:android-sdk:5.5.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b3c03dc03dcb7359c0df38077a31b95c/transformed/jetified-android-sdk-5.5.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b3c03dc03dcb7359c0df38077a31b95c/transformed/jetified-android-sdk-5.5.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b3c03dc03dcb7359c0df38077a31b95c/transformed/jetified-android-sdk-5.5.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/15b6eaea4f5fe9c7d4f9cf7b3b947d93/transformed/jetified-android-sdk-5.5.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/15b6eaea4f5fe9c7d4f9cf7b3b947d93/transformed/jetified-android-sdk-5.5.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/15b6eaea4f5fe9c7d4f9cf7b3b947d93/transformed/jetified-android-sdk-5.5.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.card/android-sdk/5.5.1/36b64abd31ed163886c93b1c86e31038e82b265b/android-sdk-5.5.1-javadoc.jar!/" />

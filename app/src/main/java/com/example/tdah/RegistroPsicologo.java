@@ -2,6 +2,7 @@ package com.example.tdah;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -9,15 +10,24 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
+import com.example.tdah.modelos.UsuarioPaciente;
+import com.example.tdah.modelos.UsuarioPadreTutor;
+import com.example.tdah.modelos.UsuarioPsicologo;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.util.regex.Pattern;
+
+import io.card.payment.i18n.locales.LocalizedStringsEN_GB;
 
 public class RegistroPsicologo extends Activity {
 
@@ -566,5 +576,72 @@ private DatabaseReference databaseReference;
         FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
         databaseReference = firebase_database.getReference();
     }
+
+    /**
+     * Recupera los valores obtenidos de los botones, autentica el correo y contrasenia he ingresa
+     * la información a la base de datos.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void ingresa_base_datos() {
+
+
+        String string_nombre = txt_nombre_psicologo.getText().toString();
+        String string_apellido_paterno = txt_apellido_paterno.getText().toString();
+        String string_apellido_materno = txt_apellido_materno.getText().toString();
+        String string_calle = txt_calle.getText().toString();
+        String string_num_ext = txt_num_exterior.getText().toString();
+        String string_cp = txt_cp.getText().toString();
+        String string_localidad = txt_localidad.getText().toString();
+        String string_municipio = txt_municipio.getText().toString();
+        String string_telefono = txt_telefono.getText().toString();
+        String string_correo = txt_correo.getText().toString();
+        String string_contrasena = txt_contrasena.getText().toString();
+        String string_cedula = txt_celdula.getText().toString();
+
+
+
+        mAuth.createUserWithEmailAndPassword(string_correo, string_contrasena).addOnCompleteListener(task -> {
+            UsuarioPsicologo usuarioPsicologo = new UsuarioPsicologo();
+            if (task.isSuccessful()) {
+
+                FirebaseUser usuario_actual = mAuth.getCurrentUser();
+
+                assert usuario_actual != null;
+                usuarioPsicologo.setString_id(usuario_actual.getUid());
+                usuarioPsicologo.setString_nombre(string_nombre);
+                usuarioPsicologo.setString_apellido_paterno(string_apellido_paterno);
+                usuarioPsicologo.setString_apellido_materno(string_apellido_materno);
+                usuarioPsicologo.setString_direccion(string_calle+","+string_num_ext+","+string_cp+
+                        ","+string_localidad+","+string_municipio);
+                usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
+                usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
+
+                usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        Toast.makeText(RegistroPsicologo.this, "Mensaje enviado", Toast.LENGTH_LONG).show();
+                        databaseReference.child("Usuario").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
+                            if (task2.isSuccessful()) {
+
+
+
+                            } else {
+                                Toast.makeText(RegistroPsicologo.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+                            }
+
+                        });
+                    } else {
+                        Toast.makeText(RegistroPsicologo.this, "Mensaje no recibido", Toast.LENGTH_LONG).show();
+                    }
+
+                });
+
+            } else {
+
+                Toast.makeText(RegistroPsicologo.this, "Fallo de autenticación", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
 
 }
