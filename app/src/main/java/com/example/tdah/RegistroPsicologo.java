@@ -15,8 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.tdah.modelos.UsuarioPaciente;
-import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.example.tdah.modelos.UsuarioPsicologo;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,8 +52,6 @@ private DatabaseReference databaseReference;
     private boolean boolean_error_telefono;
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -598,10 +594,10 @@ private DatabaseReference databaseReference;
         String string_contrasena = txt_contrasena.getText().toString();
         String string_cedula = txt_celdula.getText().toString();
 
-
-
         mAuth.createUserWithEmailAndPassword(string_correo, string_contrasena).addOnCompleteListener(task -> {
+
             UsuarioPsicologo usuarioPsicologo = new UsuarioPsicologo();
+
             if (task.isSuccessful()) {
 
                 FirebaseUser usuario_actual = mAuth.getCurrentUser();
@@ -617,19 +613,27 @@ private DatabaseReference databaseReference;
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
+
                     if (task1.isSuccessful()) {
+
                         Toast.makeText(RegistroPsicologo.this, "Mensaje enviado", Toast.LENGTH_LONG).show();
-                        databaseReference.child("Usuario").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
+
+                        databaseReference.child("Psicologo").child("NoValidado").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
+
                             if (task2.isSuccessful()) {
 
 
 
                             } else {
+
                                 Toast.makeText(RegistroPsicologo.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+
                             }
 
                         });
+
                     } else {
+
                         Toast.makeText(RegistroPsicologo.this, "Mensaje no recibido", Toast.LENGTH_LONG).show();
                     }
 
