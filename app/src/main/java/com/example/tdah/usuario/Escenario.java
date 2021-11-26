@@ -1,11 +1,15 @@
 package com.example.tdah.usuario;
 
+import android.app.Dialog;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.PatternMatcher;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +29,8 @@ public class Escenario extends AppCompatActivity {
     int AltoPantalla;
 
     Random aleatorio;
+    boolean GameOver = false;
+    Dialog miDialog;
 
 
     int contador=0;
@@ -38,26 +44,32 @@ public class Escenario extends AppCompatActivity {
         txtContador = findViewById(R.id.txtContador);
         txtTiempo = findViewById(R.id.txtTiempo);
 
+        miDialog = new Dialog(Escenario.this);
+
+
         Anchotv = findViewById(R.id.Anchotv);
         Altotv = findViewById(R.id.Altotv);
 
         Pantalla();
+        CuentaAtras();
 
         //AL HACER CLIC EN LA IMAGEN
         imgMoneda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                contador ++;
-                txtContador.setText(String.valueOf(contador));
-                imgMoneda.setImageResource(R.drawable.monedas);
+                if(!GameOver) {
+                    contador++;
+                    txtContador.setText(String.valueOf(contador));
+                    imgMoneda.setImageResource(R.drawable.monedas);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        imgMoneda.setImageResource(R.drawable.moneda);
-                        Movimiento();
-                    }
-                }, 500);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            imgMoneda.setImageResource(R.drawable.moneda);
+                            Movimiento();
+                        }
+                    }, 500);
+                }
             }
         });
     }
@@ -89,5 +101,59 @@ public class Escenario extends AppCompatActivity {
 
         imgMoneda.setX(randomX);
         imgMoneda.setY(randomY);
+    }
+
+    private void CuentaAtras(){
+        new CountDownTimer(30000, 1000){
+            public void onTick(long millisUntilFinished){
+                long segundosRestantes = millisUntilFinished/1000;
+                txtTiempo.setText(segundosRestantes+"S");
+
+            }
+
+            @Override
+            public void onFinish() {
+                txtTiempo.setText("0S");
+                GameOver = true;
+                MensajeGameOver();
+            }
+        }.start();
+    }
+
+    public void MensajeGameOver() {
+        String ubicacion = "fuentes/letra.TTF";
+        Typeface typeface = Typeface.createFromAsset(Escenario.this.getAssets(), ubicacion);
+        TextView SeAcaboTxt, RecolectadoTxt, NumeroTxt;
+        Button Jugardenuevo;
+        miDialog.setContentView(R.layout.gameover);
+
+        SeAcaboTxt = miDialog.findViewById(R.id.SeAcaboTxt);
+        RecolectadoTxt = miDialog.findViewById(R.id.RecolectadoTxt);
+        NumeroTxt = miDialog.findViewById(R.id.NumeroTxt);
+
+        Jugardenuevo = miDialog.findViewById(R.id.Jugardenuevo);
+
+        String moneda = String.valueOf(contador);
+        NumeroTxt.setText(moneda);
+
+        SeAcaboTxt.setTypeface(typeface);
+        RecolectadoTxt.setTypeface(typeface);
+        NumeroTxt.setTypeface(typeface);
+
+        Jugardenuevo.setTypeface(typeface);
+
+        Jugardenuevo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contador = 0;
+                miDialog.dismiss();
+                txtContador.setText("0");
+                GameOver = false;
+                CuentaAtras();
+                Movimiento();
+            }
+        });
+
+        miDialog.show();
     }
 }

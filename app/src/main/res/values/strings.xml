@@ -128,4 +128,10 @@
     <string name="Anchotv"> -- </string>
     <string name="Altotv"> -- </string>
 
+    <string name="SeAcaboTxt">¡Se acabo el tiempo!</string>
+    <string name="RecolectadoTxt">Has recolectado</string>
+    <string name="NumeroTxt"> -- </string>
+    <string name="Jugardenuevo">Jugar De Nuevo</string>
+
+
 </resources>
