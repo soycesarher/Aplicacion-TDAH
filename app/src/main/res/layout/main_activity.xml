@@ -18,10 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingBottom="30dp"
-            android:paddingTop="30dp"
+            android:padding="30dp"
             android:orientation="vertical"
             >
 
@@ -53,22 +50,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="20dp"
                 android:onClick="ir_iniciar_sesion"
                 android:text="@string/btn_usuario"
                 android:textAlignment="center"
-                tools:ignore="UsingOnClickInXml" />
+                tools:ignore="UsingOnClickInXml"
+                android:background="@drawable/boton_personalizado"/>
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="0dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
                 android:onClick="ir_iniciar_sesion"
                 android:text="@string/btn_psicologo"
                 android:textAlignment="center"
-                tools:ignore="UsingOnClickInXml" />
+                tools:ignore="UsingOnClickInXml"
+                android:background="@drawable/boton_personalizado"/>
 
         </LinearLayout>
     </ScrollView>

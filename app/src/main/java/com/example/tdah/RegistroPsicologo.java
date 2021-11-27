@@ -42,7 +42,7 @@ public class RegistroPsicologo extends Activity {
     private EditText txt_contrasena;
     private EditText txt_celdula;
 
-private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
     private boolean boolean_error_texto;
@@ -78,12 +78,15 @@ private DatabaseReference databaseReference;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean_error_texto = valida_texto(txt_nombre_psicologo);
             }
+
             @Override
-            public void afterTextChanged(Editable s) {            }
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         txt_apellido_paterno.addTextChangedListener(new TextWatcher() {
@@ -223,8 +226,6 @@ private DatabaseReference databaseReference;
             }
         });
 
-
-
         txt_municipio.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -259,8 +260,6 @@ private DatabaseReference databaseReference;
 
             }
         });
-
-
 
         txt_celdula.addTextChangedListener(new TextWatcher() {
             @Override
@@ -344,6 +343,7 @@ private DatabaseReference databaseReference;
 
         return boolean_error;
     }
+
     private boolean valida_cp(EditText editText_cp) {
 
         editText_cp.setError(null);
@@ -383,8 +383,10 @@ private DatabaseReference databaseReference;
             finish();
         }
     }
+
     /**
      * Valida el formato de editText_texto
+     *
      * @param editText_texto EditText que contiente el paciente
      * @return boolean_nombre_paciente_v Regresa el booleano false si no es correcto el formato y true es formato
      */
@@ -413,7 +415,7 @@ private DatabaseReference databaseReference;
         if (sting_texto.matches(".*\\s.*")) {
             editText_texto.setError(getString(R.string.error_sin_espacios));
             focusView = editText_texto;
-            boolean_error= true;
+            boolean_error = true;
         }
 
         if (!boolean_error) {
@@ -526,6 +528,7 @@ private DatabaseReference databaseReference;
         return boolean_correo_v;
 
     }
+
     /**
      * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
      *
@@ -580,7 +583,6 @@ private DatabaseReference databaseReference;
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ingresa_base_datos() {
 
-
         String string_nombre = txt_nombre_psicologo.getText().toString();
         String string_apellido_paterno = txt_apellido_paterno.getText().toString();
         String string_apellido_materno = txt_apellido_materno.getText().toString();
@@ -603,12 +605,13 @@ private DatabaseReference databaseReference;
                 FirebaseUser usuario_actual = mAuth.getCurrentUser();
 
                 assert usuario_actual != null;
+
                 usuarioPsicologo.setString_id(usuario_actual.getUid());
                 usuarioPsicologo.setString_nombre(string_nombre);
                 usuarioPsicologo.setString_apellido_paterno(string_apellido_paterno);
                 usuarioPsicologo.setString_apellido_materno(string_apellido_materno);
-                usuarioPsicologo.setString_direccion(string_calle+","+string_num_ext+","+string_cp+
-                        ","+string_localidad+","+string_municipio);
+                usuarioPsicologo.setString_direccion(string_calle + "," + string_num_ext + "," + string_cp +
+                        "," + string_localidad + "," + string_municipio);
                 usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
 
@@ -623,7 +626,6 @@ private DatabaseReference databaseReference;
                             if (task2.isSuccessful()) {
 
 
-
                             } else {
 
                                 Toast.makeText(RegistroPsicologo.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
@@ -635,6 +637,7 @@ private DatabaseReference databaseReference;
                     } else {
 
                         Toast.makeText(RegistroPsicologo.this, "Mensaje no recibido", Toast.LENGTH_LONG).show();
+
                     }
 
                 });
@@ -642,10 +645,11 @@ private DatabaseReference databaseReference;
             } else {
 
                 Toast.makeText(RegistroPsicologo.this, "Fallo de autenticación", Toast.LENGTH_LONG).show();
+
             }
+
         });
 
     }
-
 
 }

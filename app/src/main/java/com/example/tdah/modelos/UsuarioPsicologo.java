@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class UsuarioPsicologo extends Usuario implements Serializable {
     private int int_cedula;
     private int int_telefono;
-    private double double_pago;
     private String string_especialidad,string_perfilProfesional;
 
     public UsuarioPsicologo() {
@@ -17,14 +16,6 @@ public class UsuarioPsicologo extends Usuario implements Serializable {
 
     public void setInt_cedula(int int_cedula) {
         this.int_cedula = int_cedula;
-    }
-
-    public double getDouble_pago() {
-        return double_pago;
-    }
-
-    public void setDouble_pago(double double_pago) {
-        this.double_pago = double_pago;
     }
 
     public String getString_especialidad() {

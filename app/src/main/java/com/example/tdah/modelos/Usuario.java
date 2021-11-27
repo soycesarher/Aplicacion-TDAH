@@ -18,7 +18,6 @@ public class Usuario implements Serializable{
 
     }
 
-
     public String getString_nombre() {
         return string_nombre;
     }

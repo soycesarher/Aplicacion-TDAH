@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="30dp"
             android:orientation="vertical"
             android:gravity="center">
 
@@ -44,10 +45,11 @@
                 android:id="@+id/btnJugar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/boton_personalizado"
-                android:text="@string/jugar"
                 android:layout_marginTop="10dp"
-                android:textColor="#0E0E0E" />
+                android:background="@drawable/boton_personalizado"
+                android:foregroundTint="#FFFFFF"
+                android:text="@string/jugar"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/btnPuntuaciones"
@@ -56,7 +58,7 @@
                 android:background="@drawable/boton_personalizado"
                 android:layout_marginTop="10dp"
                 android:text="@string/puntuaciones"
-                android:textColor="#0E0E0E"/>
+                android:textColor="#FFFFFF"/>
 
             <Button
                 android:id="@+id/btnAcercaDe"
@@ -65,7 +67,7 @@
                 android:background="@drawable/boton_personalizado"
                 android:layout_marginTop="10dp"
                 android:text="@string/acercade"
-                android:textColor="#0E0E0E"/>
+                android:textColor="#FFFFFF"/>
 
             <Button
                 android:id="@+id/btnSalir"
@@ -74,7 +76,7 @@
                 android:background="@drawable/boton_personalizado"
                 android:layout_marginTop="10dp"
                 android:text="@string/regresar"
-                android:textColor="#0E0E0E"/>
+                android:textColor="#FFFFFF"/>
         </LinearLayout>
 
     </ScrollView>

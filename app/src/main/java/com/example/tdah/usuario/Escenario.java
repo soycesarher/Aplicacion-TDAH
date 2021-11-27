@@ -13,14 +13,33 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tdah.R;
+import com.example.tdah.modelos.UsuarioPaciente;
+import com.example.tdah.modelos.UsuarioPadreTutor;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
 public class Escenario extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
+    private FirebaseDatabase firebase_database;
+    private DatabaseReference databaseReference;
+    private UsuarioPaciente usuarioPaciente;
+    private UsuarioPadreTutor usuarioPadreTutor;
+
+
 
     TextView txtContador, txtTiempo, Anchotv, Altotv;
     ImageView imgMoneda;
@@ -134,6 +153,7 @@ public class Escenario extends AppCompatActivity {
         Jugardenuevo = miDialog.findViewById(R.id.Jugardenuevo);
 
         String moneda = String.valueOf(contador);
+        guardaProgreso(contador);
         NumeroTxt.setText(moneda);
 
         SeAcaboTxt.setTypeface(typeface);
@@ -156,4 +176,31 @@ public class Escenario extends AppCompatActivity {
 
         miDialog.show();
     }
+    public void guardaProgreso(int puntuacion){
+
+        usuarioPaciente.setInt_puntuacion_actividad_1(puntuacion);
+        usuarioPadreTutor.setString_id(firebaseUser.getUid());
+        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_3").setValue(usuarioPaciente.getInt_puntuacion_actividad_1());
+        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    usuarioPaciente.setInt_puntuacion_alta_actividad_3(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_3").getValue().toString()));
+                    int puntuacion_actual = usuarioPaciente.getInt_puntuacion_actividad_3(), puntuacion_actual_alta = usuarioPaciente.getInt_puntuacion_alta_actividad_3();
+                    if (puntuacion_actual > puntuacion_actual_alta) {
+                        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_3").setValue(puntuacion_actual);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+
 }

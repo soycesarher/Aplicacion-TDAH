@@ -25,52 +25,51 @@
 
                 <TextView
                     android:id="@+id/Anchotv"
-                    android:text="@string/Anchotv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/Anchotv" />
 
                 <TextView
                     android:id="@+id/Altotv"
-                    android:text="@string/Altotv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/Altotv" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@drawable/olla"
                 android:layout_width="80dp"
-                android:layout_height="80dp">
-            </androidx.appcompat.widget.AppCompatImageView>
+                android:layout_height="80dp"
+                android:src="@drawable/olla"></androidx.appcompat.widget.AppCompatImageView>
 
             <TextView
                 android:id="@+id/txtContador"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
                 android:text="@string/txtContador"
                 android:textColor="#000000"
-                android:layout_marginStart="10dp"
-                android:textSize="20sp"
-                android:layout_width="50dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"/>
+                android:textSize="20sp" />
 
             <!--ANIMACIÓN-->
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="20dp"
-                app:lottie_imageAssetsFolder="assets"
+                app:lottie_autoPlay="true"
                 app:lottie_fileName="tiempo.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"/>
+                app:lottie_imageAssetsFolder="assets"
+                app:lottie_loop="true" />
 
             <TextView
                 android:id="@+id/txtTiempo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="00dp"
                 android:text="@string/txtTiempo"
                 android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginStart="00dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="20sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -83,7 +82,7 @@
                 android:id="@+id/imgMoneda"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/moneda"/>
+                android:src="@drawable/moneda" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
