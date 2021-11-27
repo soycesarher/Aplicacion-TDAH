@@ -20,6 +20,7 @@ import com.example.tdah.R;
 import com.example.tdah.UsuarioPrincipal;
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
+import com.example.tdah.usuario.Escenario;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -152,20 +153,44 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
     }
     public void guardaProgreso(int puntuacion){
 
-        usuarioPaciente.setInt_puntuacion_actividad_1(puntuacion);
         usuarioPadreTutor.setString_id(firebaseUser.getUid());
+
+        usuarioPaciente.setInt_puntuacion_actividad_1(puntuacion);
+
         databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_1").setValue(usuarioPaciente.getInt_puntuacion_actividad_1());
+
         databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+
                     usuarioPaciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
-                    int puntuacion_actual = usuarioPaciente.getInt_puntuacion_actividad_1(), puntuacion_actual_alta = usuarioPaciente.getInt_puntuacion_alta_actividad_1();
+                    usuarioPaciente.setInt_contador_actividad_1(Integer.parseInt(snapshot.child("int_contador_actividad_1").getValue().toString()));
+                    usuarioPaciente.setInt_suma_puntuacion_actividad_1(Integer.parseInt(snapshot.child("int_suma_actividad_1").getValue().toString()));
+                    usuarioPaciente.setFloat_promedio_actividad_1(Float.parseFloat(snapshot.child("float_promedio_actividad_1").getValue().toString()));
+
+                    int puntuacion_actual = usuarioPaciente.getInt_puntuacion_actividad_1(), puntuacion_actual_alta = usuarioPaciente.getInt_puntuacion_alta_actividad_1(),
+                            contador = usuarioPaciente.getInt_contador_actividad_1(), suma = usuarioPaciente.getInt_suma_puntuacion_actividad_1();
+
+                    float promedio;
+
+                    contador++;
+                    suma+= usuarioPaciente.getInt_suma_puntuacion_actividad_1();
+                    promedio = suma/contador;
+
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_contador_actividad_1").setValue(contador);
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_suma_actividad_1").setValue(suma);
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("float_promedio_actividad_1").setValue(promedio);
+
                     if (puntuacion_actual > puntuacion_actual_alta) {
+
                         databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_1").setValue(puntuacion_actual);
-                        puntuacion_alta.setText(usuarioPaciente.getInt_puntuacion_alta_actividad_1());
+
+                        Toast.makeText(getContext(), "Nueva puntuación alta: "+puntuacion_actual, Toast.LENGTH_SHORT).show();
+
                     }
                 }
+
             }
 
             @Override
@@ -174,6 +199,7 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
             }
         });
     }
+
     public void esperar() {
         new CountDownTimer(5000, 1000) {
 

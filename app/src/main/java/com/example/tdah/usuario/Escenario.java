@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +54,9 @@ public class Escenario extends AppCompatActivity {
 
 
     int contador=0;
+
+    public Escenario() {
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -176,22 +180,47 @@ public class Escenario extends AppCompatActivity {
 
         miDialog.show();
     }
-    public void guardaProgreso(int puntuacion){
 
-        usuarioPaciente.setInt_puntuacion_actividad_1(puntuacion);
+    public void guardaProgreso(int puntuacion) {
+
         usuarioPadreTutor.setString_id(firebaseUser.getUid());
-        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_3").setValue(usuarioPaciente.getInt_puntuacion_actividad_1());
+
+        usuarioPaciente.setInt_puntuacion_actividad_3(puntuacion);
+
+        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_3").setValue(usuarioPaciente.getInt_puntuacion_actividad_3());
+
         databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+
                     usuarioPaciente.setInt_puntuacion_alta_actividad_3(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_3").getValue().toString()));
-                    int puntuacion_actual = usuarioPaciente.getInt_puntuacion_actividad_3(), puntuacion_actual_alta = usuarioPaciente.getInt_puntuacion_alta_actividad_3();
+                    usuarioPaciente.setInt_contador_actividad_3(Integer.parseInt(snapshot.child("int_contador_actividad_3").getValue().toString()));
+                    usuarioPaciente.setInt_suma_puntuacion_actividad_3(Integer.parseInt(snapshot.child("int_suma_actividad_3").getValue().toString()));
+                    usuarioPaciente.setFloat_promedio_actividad_3(Float.parseFloat(snapshot.child("float_promedio_actividad_3").getValue().toString()));
+
+                    int puntuacion_actual = usuarioPaciente.getInt_puntuacion_actividad_3(), puntuacion_actual_alta = usuarioPaciente.getInt_puntuacion_alta_actividad_3(),
+                            contador = usuarioPaciente.getInt_contador_actividad_3(), suma = usuarioPaciente.getInt_suma_puntuacion_actividad_3();
+
+                    float promedio;
+
+                    contador++;
+                    suma += usuarioPaciente.getInt_suma_puntuacion_actividad_3();
+                    promedio = suma / contador;
+
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_contador_actividad_3").setValue(contador);
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_suma_actividad_3").setValue(suma);
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("float_promedio_actividad_3").setValue(promedio);
+
                     if (puntuacion_actual > puntuacion_actual_alta) {
+
                         databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_3").setValue(puntuacion_actual);
+
+                        Toast.makeText(Escenario.this, "Nueva puntuación alta: " + puntuacion_actual, Toast.LENGTH_SHORT).show();
 
                     }
                 }
+
             }
 
             @Override
