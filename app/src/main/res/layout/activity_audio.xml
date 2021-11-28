@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".audio.Audio"
-    android:background="@color/teal_200">
+    android:background="@color/teal_200"
+    tools:context=".audio.Audio">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,20 +13,65 @@
         android:layout_margin="20dp"
         android:background="@color/teal_200"
         android:orientation="vertical"
-        android:weightSum="15">
+        android:weightSum="5">
 
-        <ImageView
-            android:id="@+id/imageView5"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+            <ListView
+                android:id="@+id/lv_canciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 />
+        </ScrollView>
 
-            android:layout_weight="1"
-            android:background="@android:drawable/ic_menu_slideshow"
-            />
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/v_miniatura"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:drawable/ic_menu_slideshow" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2">
+                <TextView
+                    android:id="@+id/txt_titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:textSize="20sp"
+                    android:hint="Titulo" />
+                <TextView
+                    android:id="@+id/txt_duracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:hint="Duración" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="3">
@@ -60,8 +105,8 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
