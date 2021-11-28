@@ -31,7 +31,8 @@
                 android:layout_margin="20dp"
                 android:text="@string/tvw_usuario"
                 android:textAlignment="center"
-                android:textSize="34sp" />
+                android:textSize="34sp"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,9 +53,9 @@
                     android:id="@+id/btn_verifica_curp"
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/teal_700"
                     android:text="Verifica curp"
-                    android:textAlignment="center"
-                    android:background="@drawable/boton_personalizado"/>
+                    android:textAlignment="center" />
 
             </LinearLayout>
 
@@ -140,11 +141,11 @@
                 android:id="@+id/btn_pagar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Pagar (opiconal)"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/boton_personalizado"
-                />
+                android:backgroundTint="@color/teal_700"
+                android:text="Pago"
+                app:icon="@drawable/cio_paypal_logo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,8 +161,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:text="@string/btn_registrarse"
-                    android:textAlignment="center"
-                    android:background="@drawable/boton_personalizado"/>
+                    android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/btn_cancelar"
@@ -170,10 +170,10 @@
                     android:layout_marginLeft="72dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
+                    android:backgroundTint="@color/teal_700"
                     android:onClick="ir_main"
                     android:text="Cancelar"
-                    android:textAlignment="center"
-                    android:background="@drawable/boton_personalizado"/>
+                    android:textAlignment="center" />
 
             </LinearLayout>
 

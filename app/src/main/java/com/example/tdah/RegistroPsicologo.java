@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.ParseException;
 import java.util.regex.Pattern;
 
 import io.card.payment.i18n.locales.LocalizedStringsEN_GB;
@@ -52,7 +51,9 @@ public class RegistroPsicologo extends Activity {
     private boolean boolean_error_telefono;
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
+        private boolean boolean_pago;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -277,6 +278,15 @@ public class RegistroPsicologo extends Activity {
 
             }
         });
+
+        if(boolean_error_cedula||boolean_error_correo||!boolean_error_contrasena
+                ||boolean_error_texto||boolean_error_numero_exterior||boolean_error_cp||boolean_error_telefono||boolean_pago){
+
+            Toast.makeText(RegistroPsicologo.this, "Llene correctamente los campos", Toast.LENGTH_LONG).show();
+
+        }else{
+            ingresa_base_datos();
+        }
 
 
     }
@@ -581,6 +591,7 @@ public class RegistroPsicologo extends Activity {
      * la información a la base de datos.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
+
     public void ingresa_base_datos() {
 
         String string_nombre = txt_nombre_psicologo.getText().toString();
@@ -614,6 +625,8 @@ public class RegistroPsicologo extends Activity {
                         "," + string_localidad + "," + string_municipio);
                 usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
+                usuarioPsicologo.setString_especialidad("Por verificar");
+                usuarioPsicologo.setString_perfilProfesional("Por verificar");
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
 
