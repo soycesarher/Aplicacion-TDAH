@@ -15,16 +15,15 @@
         android:orientation="vertical"
         android:weightSum="5">
 
-        <ScrollView
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_canciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5">
-            <ListView
-                android:id="@+id/lv_canciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                 />
-        </ScrollView>
+            android:textColor="@color/white"
+            android:background="@color/teal_700"
+            android:layout_weight="5"/>
 
         <SeekBar
             android:id="@+id/seekBar"
@@ -43,26 +42,34 @@
                 android:id="@+id/v_miniatura"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@android:drawable/ic_menu_slideshow" />
+                android:background="@android:drawable/ic_menu_slideshow"
+                android:backgroundTint="@color/purple_500" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="2">
+
                 <TextView
                     android:id="@+id/txt_titulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/teal_700"
+                    android:text="Titulo"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
-                    android:textSize="20sp"
-                    android:hint="Titulo" />
                 <TextView
                     android:id="@+id/txt_duracion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:hint="Duración" />
+                    android:background="@color/teal_700"
+
+
+                    android:text="Duracion"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -104,6 +111,8 @@
                 app:srcCompat="@android:drawable/ic_media_next" />
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 

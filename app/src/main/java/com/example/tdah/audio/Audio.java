@@ -1,6 +1,8 @@
 package com.example.tdah.audio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,10 +13,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Audio extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
+    private List<AudioModelo> lista_audio_modelo;
+    private MediaPlayer mediaPlayer;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +28,16 @@ public class Audio extends AppCompatActivity {
 
         setContentView(R.layout.activity_audio);
 
+        recyclerView = findViewById(R.id.rv_canciones);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        lista_audio_modelo = new ArrayList<>();
+
+
+
     }
+
 
     public void reproducir(String url){
 
@@ -40,26 +55,6 @@ public class Audio extends AppCompatActivity {
 
     }
 
-    public void listAllFiles() {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        // [START storage_list_all]
-        StorageReference listRef = storage.getReference().child("files");
-
-        listRef.listAll()
-                .addOnSuccessListener(listResult -> {
-                    for (StorageReference prefix : listResult.getPrefixes()) {
-                        // All the prefixes under listRef.
-                        // You may call listAll() recursively on them.
-                    }
-                    for (StorageReference item : listResult.getItems()) {
-                        // All the items under listRef.
-                        item.getDownloadUrl();
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // Uh-oh, an error occurred!
-                });
-    }
 
     public  void pausa(String url) {
 
