@@ -71,7 +71,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
         AudioModelo audioModelo = lista_audio_modelo.get(position);
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Picasso.get().load(audioModelo.getString_url_imagen()).fit().into(viewHolder.v_miniatura_layout);
+        Picasso.get().load(audioModelo.getString_url_imagen()).fit().error(android.R.drawable.ic_menu_gallery).into(viewHolder.v_miniatura_layout);
         viewHolder.txt_titulo.setText(audioModelo.getString_nombre_cancion());
         viewHolder.txt_titulo.setOnClickListener(v -> onClickInterface.setClick(position));
     }

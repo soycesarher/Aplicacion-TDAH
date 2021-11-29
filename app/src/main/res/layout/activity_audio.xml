@@ -20,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_canciones"
             android:layout_width="match_parent"
@@ -46,8 +45,8 @@
                 android:id="@+id/v_miniatura"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@android:drawable/ic_menu_slideshow"
-                android:backgroundTint="@color/purple_500" />
+                android:backgroundTint="@color/purple_500"
+                android:background="@android:drawable/ic_menu_gallery"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -69,8 +68,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/teal_700"
-
-
                     android:text="Duracion"
                     android:textColor="@color/white"
                     android:textSize="20sp" />

@@ -145,6 +145,7 @@ public class Audio extends AppCompatActivity {
                         .get(indice)
                         .getString_url_imagen())
                 .fit()
+                .error(android.R.drawable.ic_menu_gallery)
                 .into(v_miniatura);
 
         int_tiempo_final = mediaPlayer.getDuration() ;
@@ -160,6 +161,7 @@ public class Audio extends AppCompatActivity {
             seekBar.setMax(int_tiempo_final);
             solo_una_vez = 1;
         }
+
         seekBar.setProgress(int_tiempo_inicial);
         handler.postDelayed(actualiza_audio,100);
 
