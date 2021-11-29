@@ -13,7 +13,11 @@
         android:layout_margin="20dp"
         android:background="@color/teal_200"
         android:orientation="vertical"
-        android:weightSum="5">
+        android:weightSum="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
 
@@ -52,7 +56,7 @@
                 android:layout_weight="2">
 
                 <TextView
-                    android:id="@+id/txt_titulo"
+                    android:id="@+id/txt_titulo_r"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/teal_700"
@@ -61,7 +65,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/txt_duracion"
+                    android:id="@+id/txt_duracion_r"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/teal_700"
@@ -99,7 +103,8 @@
                 android:layout_weight="1"
                 android:background="empty"
                 android:minHeight="48dp"
-                app:srcCompat="@android:drawable/ic_media_play" />
+                app:srcCompat="@android:drawable/ic_media_play"
+                />
 
             <ImageButton
                 android:id="@+id/btn_siguiente"

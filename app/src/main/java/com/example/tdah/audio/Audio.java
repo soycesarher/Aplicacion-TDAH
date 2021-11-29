@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 
 import com.example.tdah.R;
@@ -15,24 +20,34 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-
-import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Audio extends AppCompatActivity {
 
     private List<AudioModelo> lista_audio_modelo;
     private MediaPlayer mediaPlayer;
-    private RecyclerView recyclerView;
+
+    private Handler handler;
 
     private DatabaseReference databaseReference;
+
     private OnClickInterface onClickInterface;
 
+    private RecyclerView recyclerView;
+    private TextView txt_titulo, txt_duracion;
+    private ImageButton imgbtn_reproducir,imgbtn_anterior,imgbtn_siguiente;
+    private ImageView v_miniatura;
+    private SeekBar seekBar;
 
+    private static int solo_una_vez = 0;
+    private int int_tiempo_final,int_tiempo_inicial,abc_audio=0;
+
+
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +57,37 @@ public class Audio extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_canciones);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        txt_titulo = findViewById(R.id.txt_titulo_r);
+        txt_duracion = findViewById(R.id.txt_duracion_r);
+        v_miniatura = findViewById(R.id.v_miniatura);
 
         recupera_canciones();
 
-        lista_audio_modelo = new ArrayList<>();
-        onClickInterface = new OnClickInterface() {
-            @Override
-            public void setClick(int abc) {
-                //aquí podemos hacer lo que queremos con el item list
-                lista_audio_modelo.get(abc).getString_url_cancion();
+        mediaPlayer = MediaPlayer.create(this,abc_audio);
+
+        onClickInterface = abc -> {
+            if(mediaPlayer.isPlaying()){
+                mediaPlayer.stop();
             }
+
+            abc_audio = abc;
+
+            reproducir(abc);
+
+
+
         };
+
+        imgbtn_reproducir.setOnClickListener(v -> {
+            if(mediaPlayer.isPlaying()){
+                mediaPlayer.pause();
+                imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_pause);
+            }else{
+                mediaPlayer.start();
+                imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_play);
+            }
+
+        });
 
 
     }
@@ -72,11 +106,9 @@ public class Audio extends AppCompatActivity {
                     AudioModelo audioModelo = new AudioModelo(string_nombre_cancion,string_url_cancion,string_url_imagen);
                     lista_audio_modelo.add(audioModelo);
 
-
-
                     int_id_cancion++;
                 }
-                Adaptador adapter = new Adaptador(Audio.this,lista_audio_modelo);
+                Adaptador adapter = new Adaptador(Audio.this,lista_audio_modelo,onClickInterface);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -86,14 +118,15 @@ public class Audio extends AppCompatActivity {
 
             }
         });
+
     }
 
 
-    public void reproducir(String url){
+    public void reproducir(int indice){
 
         try{
 
-            mediaPlayer.setDataSource(url);
+            mediaPlayer.setDataSource(lista_audio_modelo.get(indice).getString_url_cancion());
 
             mediaPlayer.setOnPreparedListener(MediaPlayer::start);
 
@@ -103,26 +136,41 @@ public class Audio extends AppCompatActivity {
 
         }
 
-    }
+        txt_titulo.setText(lista_audio_modelo
+                .get(indice)
+                .getString_nombre_cancion());
 
+        Picasso.get()
+                .load(lista_audio_modelo
+                        .get(indice)
+                        .getString_url_imagen())
+                .fit()
+                .into(v_miniatura);
 
-    public  void pausa(String url) {
+        int_tiempo_final = mediaPlayer.getDuration() ;
 
-        if(mediaPlayer.isPlaying()) {
+        int_tiempo_inicial = mediaPlayer.getCurrentPosition();
 
-            try {
+        txt_duracion.setText(String.format("%d:%d" ,
+                TimeUnit.MILLISECONDS.toMinutes(int_tiempo_final),
+                TimeUnit.MILLISECONDS.toSeconds(int_tiempo_final)-
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(int_tiempo_final))));
 
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.setOnPreparedListener(MediaPlayer::pause);
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
-            }
-
+        if(solo_una_vez == 0){
+            seekBar.setMax(int_tiempo_final);
+            solo_una_vez = 1;
         }
+        seekBar.setProgress(int_tiempo_inicial);
+        handler.postDelayed(actualiza_audio,100);
 
     }
+
+
+    private Runnable actualiza_audio = () -> {
+        int_tiempo_inicial = mediaPlayer.getCurrentPosition();
+        seekBar.setProgress(int_tiempo_inicial);
+        handler.postDelayed((Runnable) this,100);
+    };
+
 
 }

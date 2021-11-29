@@ -26,13 +26,7 @@ public class LibrosFragment extends Fragment {
         librosViewModel =
                 new ViewModelProvider(this).get(LibrosViewModel.class);
         View root = inflater.inflate(R.layout.fragment_libros, container, false);
-        final TextView textView = root.findViewById(R.id.text_libros);
-        librosViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 

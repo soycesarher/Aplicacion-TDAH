@@ -21,14 +21,15 @@ import java.util.List;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
 
-    private String[] localDataSet;
+
     private Context contexto;
     private List<AudioModelo> lista_audio_modelo;
     private OnClickInterface onClickInterface;
 
-    public Adaptador( Context contexto, List<AudioModelo> lista_audio_modelo) {
+    public Adaptador(Context contexto, List<AudioModelo> lista_audio_modelo, OnClickInterface onClickInterface) {
         this.contexto = contexto;
         this.lista_audio_modelo = lista_audio_modelo;
+        this.onClickInterface = onClickInterface;
     }
 
     /**
@@ -45,11 +46,6 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             txt_titulo = view.findViewById(R.id.txt_titulo);
             txt_duracion = view.findViewById(R.id.txt_duracion);
             v_miniatura_layout = view.findViewById(R.id.v_miniatura_layout);
-            view.setOnClickListener(v -> {
-                int pos = getAdapterPosition();
-
-            });
-
 
         }
 
@@ -57,15 +53,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
 
     }
 
-    /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
-     */
-    public Adaptador(String[] dataSet) {
-        localDataSet = dataSet;
-    }
+
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -85,14 +73,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
         // contents of the view with that element
         Picasso.get().load(audioModelo.getString_url_imagen()).fit().into(viewHolder.v_miniatura_layout);
         viewHolder.txt_titulo.setText(audioModelo.getString_nombre_cancion());
-        viewHolder.txt_titulo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickInterface.setClick(position);
-            }
-        });
-
-
+        viewHolder.txt_titulo.setOnClickListener(v -> onClickInterface.setClick(position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
