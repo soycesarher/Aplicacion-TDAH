@@ -44,7 +44,6 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             super(view);
             // Define click listener for the ViewHolder's View
             txt_titulo = view.findViewById(R.id.txt_titulo);
-            txt_duracion = view.findViewById(R.id.txt_duracion);
             v_miniatura_layout = view.findViewById(R.id.v_miniatura_layout);
 
         }
@@ -71,9 +70,9 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
         AudioModelo audioModelo = lista_audio_modelo.get(position);
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Picasso.get().load(audioModelo.getString_url_imagen())
-                .fit()
-                .into(viewHolder.v_miniatura_layout);
+//        Picasso.get().load(audioModelo.getString_url_imagen())
+//                .fit().into(viewHolder.v_miniatura_layout);
+        viewHolder.v_miniatura_layout.setImageResource(audioModelo.getInt_imagen());
 
         viewHolder.txt_titulo.setText(audioModelo.getString_nombre_cancion());
 

@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Audio extends AppCompatActivity {
 
+/*
 
         private List<AudioModelo> lista_audio_modelo;
         private MediaPlayer mediaPlayer;
@@ -232,6 +233,7 @@ public class Audio extends AppCompatActivity {
             seekBar.setProgress(int_tiempo_inicial);
             handler.postDelayed((Runnable) this, 100);
         };
+*/
 
 
 

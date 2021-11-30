@@ -26,21 +26,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:background="@color/white"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/white"
-            android:clickable="true"/>
+            android:backgroundTint="@color/teal_200"
+            android:clickable="true"
+            android:textColor="@color/white" />
 
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:progressTint="@color/purple_500" />
+            android:progressTint="@color/purple_500"
+            android:clickable="false"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:layout_weight="1"
+            android:background="@drawable/boton_personalizado"
+            android:backgroundTint="@color/purple_500"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -48,32 +52,32 @@
                 android:id="@+id/v_miniatura"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:backgroundTint="@color/purple_500"
-                android:background="@android:drawable/ic_menu_gallery"/>
+                android:background="@drawable/boton_personalizado"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/caratula" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="2">
+                android:layout_weight="2"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_titulo_r"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/teal_200"
                     android:text="@string/titulo"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txt_duracion_r"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/design_default_color_secondary"
                     android:text="@string/duracion"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -95,6 +99,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/boton_personalizado"
                 android:backgroundTint="@color/teal_700"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:minHeight="48dp"
                 app:srcCompat="@android:drawable/ic_media_previous" />
 
@@ -105,6 +112,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/boton_personalizado"
                 android:backgroundTint="@color/teal_700"
+                android:layout_margin="10dp"
                 android:minHeight="48dp"
                 app:srcCompat="@android:drawable/ic_media_play" />
 
@@ -115,6 +123,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/boton_personalizado"
                 android:backgroundTint="@color/teal_700"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:minHeight="48dp"
                 app:srcCompat="@android:drawable/ic_media_next" />
 
