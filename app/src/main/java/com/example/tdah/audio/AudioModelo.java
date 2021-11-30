@@ -8,8 +8,11 @@ public class AudioModelo {
     public AudioModelo() {
     }
 
-
-
+    public AudioModelo(int int_cancion, String string_nombre_cancion, int int_imagen) {
+        this.int_cancion = int_cancion;
+        this.string_nombre_cancion = string_nombre_cancion;
+        this.int_imagen = int_imagen;
+    }
 
     public int getInt_cancion() {
         return int_cancion;

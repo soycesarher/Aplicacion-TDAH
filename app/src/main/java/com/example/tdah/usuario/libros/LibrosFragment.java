@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -48,19 +49,19 @@ public class LibrosFragment extends Fragment {
 
     private int int_tiempo_final, int_tiempo_inicial, abc_audio = 0;
 
-    private final int[] INTS_CANCIONES = {R.raw.caperucita_roja,
+    public final int[] INTS_CANCIONES = {R.raw.caperucita_roja,
             R.raw.el_gato_con_botas,
             R.raw.la_bella_durmiente,
             R.raw.los_tres_cerditos,
             R.raw.pinocho};
 
-    private final int[] INTS_IMAGENES = {R.drawable.imagen_caperucita_roja,
+    public final int[] INTS_IMAGENES = {R.drawable.imagen_caperucita_roja,
             R.drawable.imagen_gato_botas,
             R.drawable.imagen_bella_durmiente,
             R.drawable.imagen_tres_cerditos,
             R.drawable.imagen_pinocho};
 
-    private final String[] STRINGS_NOMBRES_CANCION = {"Caperucita roja",
+    public final String[] STRINGS_NOMBRES_CANCION = {"Caperucita roja",
             "El gato con botas",
             "La bella durmiente",
             "Los tres cerditos",
@@ -164,11 +165,10 @@ public class LibrosFragment extends Fragment {
 
 
         for (int e = 0; e < INTS_IMAGENES.length; e++) {
-            audioModelo.setInt_cancion(INTS_CANCIONES[e]);
-            audioModelo.setInt_imagen(INTS_IMAGENES[e]);
-            audioModelo.setString_nombre_cancion(STRINGS_NOMBRES_CANCION[e]);
 
-            lista_audio_modelo.add(audioModelo);
+            Toast.makeText(getContext(), "Nombre cancion: "+STRINGS_NOMBRES_CANCION[e], Toast.LENGTH_SHORT).show();
+
+            lista_audio_modelo.add(new AudioModelo(INTS_CANCIONES[e],STRINGS_NOMBRES_CANCION[e],INTS_IMAGENES[e]));
 
         }
 
