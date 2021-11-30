@@ -30,27 +30,15 @@ public class UsuarioPrincipal extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
 
-
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-         /*mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_actividad1, R.id.nav_cuenta, R.id.nav_inicio, R.id.nav_actividad2, R.id.nav_actividad3, R.id.nav_libros, R.id.nav_padres,
-                R.id.nav_ajustes)
-                .setDrawerLayout(drawer)
-                .build();*/
          mAppBarConfiguration = new AppBarConfiguration.Builder(
                 navController.getGraph())
                 .setDrawerLayout(drawer)
@@ -61,7 +49,6 @@ public class UsuarioPrincipal extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_usuario, menu);
         return true;
     }
