@@ -13,34 +13,45 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:orientation="horizontal"
-            android:weightSum="2"
+            android:weightSum="3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/v_miniatura_layout"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/boton_personalizado"
-                android:backgroundTint="@color/white"
+                android:layout_width="150px"
+                android:layout_height="150px"
                 android:contentDescription="@string/caratula"
-                 />
+                app:riv_mutate_background="true"
+                app:riv_corner_radius="30dip"
 
+                />
 
             <TextView
                 android:id="@+id/txt_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/teal_700"
                 android:layout_marginStart="10dp"
                 android:text="@string/titulo"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 android:gravity="fill_vertical"/>
 
+            <TextView
+                android:id="@+id/txt_tipo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/teal_700"
+                android:layout_marginStart="10dp"
+                android:text="@string/tipo"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="fill_vertical"/>
 
         </LinearLayout>
 

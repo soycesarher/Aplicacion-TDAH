@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".usuario.libros.LibrosFragment"
-    android:background="@color/teal_200">
+    android:background="#72BEC3">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:background="@color/teal_200"
+        android:background="#72BEC3"
         android:orientation="vertical"
         android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,9 +26,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:background="@color/white"
-            android:backgroundTint="@color/teal_200"
+            android:backgroundTint="#72BEC3"
             android:clickable="true"
             android:textColor="@color/white" />
+        <ProgressBar
+            android:progress="0"
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
         <SeekBar
             android:id="@+id/seekBar"
@@ -48,13 +55,14 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/v_miniatura"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/boton_personalizado"
-                android:backgroundTint="@color/white"
-                android:contentDescription="@string/caratula" />
+                android:layout_width="150px"
+                android:layout_height="150px"
+                android:contentDescription="@string/caratula"
+                android:src="@drawable/ic_menu_slideshow"
+                app:riv_mutate_background="true"
+                app:riv_corner_radius="30dip"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -63,13 +71,14 @@
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
+
                 <TextView
                     android:id="@+id/txt_titulo_r"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/titulo"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="34sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -78,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/duracion"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -103,6 +112,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:minHeight="48dp"
+
                 app:srcCompat="@android:drawable/ic_media_previous" />
 
             <ImageButton

@@ -137,7 +137,7 @@
     <string name="caratula">Caratula</string>
     <string name="titulo">Titulo</string>
     <string name="duracion">Duracion</string>
-
+    <string name="tipo">tipo</string>
 
 
 </resources>

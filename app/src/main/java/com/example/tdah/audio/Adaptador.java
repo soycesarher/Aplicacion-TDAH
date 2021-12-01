@@ -9,78 +9,105 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tdah.R;
 
-import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
-import java.util.List;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
 
 
-    private Context contexto;
-    private List<AudioModelo> lista_audio_modelo;
-    private OnClickInterface onClickInterface;
 
-    public Adaptador(Context contexto, List<AudioModelo> lista_audio_modelo, OnClickInterface onClickInterface) {
-        this.contexto = contexto;
+    private ArrayList<AudioModelo> lista_audio_modelo;
+    private OnClickListener mOnClickListener;
+
+
+    public interface OnClickListener{
+        void onClick(int position);
+    }
+
+    public Adaptador( ArrayList<AudioModelo> lista_audio_modelo, OnClickListener onClickListener) {
+
         this.lista_audio_modelo = lista_audio_modelo;
-        this.onClickInterface = onClickInterface;
+        this.mOnClickListener = onClickListener;
+
     }
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_titulo, txt_duracion;
-        ImageView v_miniatura_layout;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView txt_titulo, txt_tipo;
+        public ImageView v_miniatura_layout;
+        public OnClickListener onClickListener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnClickListener onClickListener) {
             super(view);
+            this.onClickListener = onClickListener;
             // Define click listener for the ViewHolder's View
             txt_titulo = view.findViewById(R.id.txt_titulo);
+            txt_tipo = view.findViewById(R.id.txt_tipo);
             v_miniatura_layout = view.findViewById(R.id.v_miniatura_layout);
 
+            view.setClickable(true);
+            view.setOnClickListener(this);
+
         }
-
-
-
+                @Override
+        public void onClick(View v) {
+            onClickListener.onClick(getAdapterPosition());
+        }
     }
 
 
-
-    // Create new views (invoked by the layout manager)
+    /**
+     * Crea una nueva vista y tipo de vista
+     * @param viewGroup vista que contiene las demas vistas
+     * @param viewType entero que sirve para saber el tipo de vista
+     * @return un objeto ViewHolder
+     */
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(contexto)
+        View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_cancion, viewGroup, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnClickListener);
     }
+
+    /**
+     * Este método es usuado para llenar los datos en el recyclerview
+     * @param viewHolder vista que regresa el método onCreateViewHolder
+     * @param position posicion en la lista del elemento AudioModelo
+     */
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+
         AudioModelo audioModelo = lista_audio_modelo.get(position);
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-//        Picasso.get().load(audioModelo.getString_url_imagen())
-//                .fit().into(viewHolder.v_miniatura_layout);
+
         viewHolder.v_miniatura_layout.setImageResource(audioModelo.getInt_imagen());
 
         viewHolder.txt_titulo.setText(audioModelo.getString_nombre_cancion());
 
-        viewHolder.txt_titulo.setOnClickListener(v -> onClickInterface.setClick(position));
+        viewHolder.txt_tipo.setText(audioModelo.getString_tipo());
+
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * Regresa el tamanio de la lista_audio_modelo
+     * @return tamanio de la lista_audio_modelo
+     */
     @Override
     public int getItemCount() {
         return lista_audio_modelo.size();
