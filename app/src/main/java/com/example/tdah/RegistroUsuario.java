@@ -698,7 +698,7 @@ public class RegistroUsuario extends AppCompatActivity {
         StringRequest requerimiento = new StringRequest(Request.Method.GET,
                 "https://us-west4-arsus-production.cloudfunctions.net/curp?curp=" + txt_curp.getText().toString() + "&apiKey=WgrtpPpMT6gCrKmawXDipiEzQQv2",
                 this::valida_datos_curp,
-                error -> Toast.makeText(RegistroUsuario.this, "ERROR: " + error.getMessage() + " INTENTE DE NUEVO.", Toast.LENGTH_LONG).show());
+                error -> Toast.makeText(RegistroUsuario.this, "INTENTE DE NUEVO.", Toast.LENGTH_LONG).show());
         rq.add(requerimiento);
     }
 

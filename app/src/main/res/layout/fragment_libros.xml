@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:background="#72BEC3"
         android:orientation="vertical"
         android:weightSum="5"
@@ -29,29 +29,50 @@
             android:backgroundTint="#72BEC3"
             android:clickable="true"
             android:textColor="@color/white" />
-        <ProgressBar
-            android:progress="0"
-            android:id="@+id/progress_bar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:progressTint="@color/purple_500"
-            android:clickable="false"/>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:padding="10dp"
+           android:layout_weight="1"
+           android:background="@drawable/boton_personalizado"
+           android:backgroundTint="@color/purple_500"
+           android:orientation="vertical"
+           android:weightSum="2">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:weightSum="4"
+               android:padding="10dp">
+
+               <ProgressBar
+                   android:id="@+id/pb_progreso_cancion"
+                   style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="4"
+                   android:clickable="false"
+                   android:nestedScrollingEnabled="false"
+                   android:progressTint="#72BEC3" />
+               <TextView
+                   android:id="@+id/txt_duracion_r"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="20dp"
+                   android:text="0:0"
+                   android:textStyle="bold"
+                   android:textColor="@color/white"
+                   android:textSize="14sp" />
+
+           </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_weight="1"
-            android:background="@drawable/boton_personalizado"
-            android:backgroundTint="@color/purple_500"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -60,7 +81,7 @@
                 android:layout_width="150px"
                 android:layout_height="150px"
                 android:contentDescription="@string/caratula"
-                android:src="@drawable/ic_menu_slideshow"
+                android:src="@android:drawable/ic_menu_slideshow"
                 app:riv_mutate_background="true"
                 app:riv_corner_radius="30dip"/>
 
@@ -81,18 +102,12 @@
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_duracion_r"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/duracion"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
             </LinearLayout>
 
 
         </LinearLayout>
+
+       </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

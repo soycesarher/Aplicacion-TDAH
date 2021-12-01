@@ -51,7 +51,7 @@ public class Audio extends AppCompatActivity {
         private TextView txt_titulo, txt_duracion;
         private ImageButton imgbtn_reproducir, imgbtn_anterior, imgbtn_siguiente;
         private ImageView v_miniatura;
-        private SeekBar seekBar;
+        private SeekBar pb_progreso_cancion;
 
         private static int solo_una_vez = 0;
         private int int_tiempo_final, int_tiempo_inicial, abc_audio = 0;
@@ -218,11 +218,11 @@ public class Audio extends AppCompatActivity {
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(int_tiempo_final))));
 
             if (solo_una_vez == 0) {
-                seekBar.setMax(int_tiempo_final);
+                pb_progreso_cancion.setMax(int_tiempo_final);
                 solo_una_vez = 1;
             }
 
-            seekBar.setProgress(int_tiempo_inicial);
+            pb_progreso_cancion.setProgress(int_tiempo_inicial);
             handler.postDelayed(actualiza_audio, 100);
 
         }
@@ -230,7 +230,7 @@ public class Audio extends AppCompatActivity {
 
         private final Runnable actualiza_audio = () -> {
             int_tiempo_inicial = mediaPlayer.getCurrentPosition();
-            seekBar.setProgress(int_tiempo_inicial);
+            pb_progreso_cancion.setProgress(int_tiempo_inicial);
             handler.postDelayed((Runnable) this, 100);
         };
 */

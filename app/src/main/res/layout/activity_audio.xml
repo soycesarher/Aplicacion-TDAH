@@ -30,7 +30,7 @@
             android:textColor="@color/white" />
 
         <SeekBar
-            android:id="@+id/seekBar"
+            android:id="@+id/pb_progreso_cancion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"

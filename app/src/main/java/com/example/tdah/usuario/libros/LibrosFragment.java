@@ -1,11 +1,9 @@
 package com.example.tdah.usuario.libros;
 
-import static java.lang.String.*;
-
 import androidx.fragment.app.Fragment;
 
 
-import android.media.AudioManager;
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 
 import android.os.Bundle;
@@ -17,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,15 +26,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tdah.R;
 import com.example.tdah.audio.Adaptador;
 import com.example.tdah.audio.AudioModelo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Logger;
 
 
 public class LibrosFragment extends Fragment implements Adaptador.OnClickListener {
+
 
     private final ArrayList<AudioModelo> lista_audio_modelo = new ArrayList<>();
 
@@ -52,28 +54,26 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
     private ImageButton imgbtn_reproducir, imgbtn_anterior, imgbtn_siguiente;
     private ImageView v_miniatura;
 
-    private ProgressBar progress_bar;
-    private SeekBar seekBar;
+    private ProgressBar pb_progreso_cancion;
 
-    private MediaObserver observer = null;
     private MediaController mediaController;
 
-    private static int solo_una_vez = 0;
+    private DatabaseReference databaseReference;
 
-    private int int_tiempo_final, int_tiempo_inicial, abc_audio = 0;
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
+
+    private static int solo_una_vez = 0;
+    private double double_tiempo_final = 0, double_tiempo_inicial = 0;
+    private int int_indice = 0;
 
     private final int[] INTS_CANCIONES = {R.raw.caperucita_roja,
             R.raw.el_gato_con_botas,
             R.raw.la_bella_durmiente,
             R.raw.los_tres_cerditos,
             R.raw.pinocho};
+    final int[] int_numero_canciones = {3};
 
-    private final String[] STRINGS_CANCIONES = {"https://firebasestorage.googleapis.com/v0/b/aplicacion-tdah.appspot.com/o/Caperucita%20Roja.mp3?alt=media&token=15874027-7c71-4b52-8cdf-70b469f8bd4a",
-            "https://firebasestorage.googleapis.com/v0/b/aplicacion-tdah.appspot.com/o/El%20Gato%20con%20Botas.mp3?alt=media&token=a3bbc748-9163-49bb-bd25-f970a6807170",
-            "https://firebasestorage.googleapis.com/v0/b/aplicacion-tdah.appspot.com/o/La%20Bella%20Durmiente.mp3?alt=media&token=4d745267-6a33-4ae5-8d8b-b1bfba912ac5",
-            "https://firebasestorage.googleapis.com/v0/b/aplicacion-tdah.appspot.com/o/Los%20Tres%20Cerditos.mp3?alt=media&token=3f0efdfe-6221-4c7c-85e5-9460b21b2540",
-            "https://firebasestorage.googleapis.com/v0/b/aplicacion-tdah.appspot.com/o/Pinocho.mp3?alt=media&token=eff49ff0-a629-4df7-a596-df20874ee8b3"
-    };
 
     private final int[] INTS_IMAGENES = {R.drawable.imagen_caperucita_roja,
             R.drawable.imagen_gato_botas,
@@ -81,16 +81,18 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
             R.drawable.imagen_tres_cerditos,
             R.drawable.imagen_pinocho};
 
-    private final String[] STRINGS_NOMBRES_CANCION = {"Caperucita roja",
+    private final String[] STRINGS_NOMBRES_CANCION = {
+            "Caperucita roja",
             "El gato con botas",
             "La bella durmiente",
             "Los tres cerditos",
-            "Pinocho"};
+            "Pinocho"
+    };
 
     private final String[] STRINGS_TIPO = {"Gratis",
             "Gratis",
             "Gratis",
-            "Gratis",
+            "Paga",
             "Paga"};
 
     private LibrosViewModel librosViewModel;
@@ -100,6 +102,10 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
         librosViewModel =
                 new ViewModelProvider(this).get(LibrosViewModel.class);
         View root = inflater.inflate(R.layout.fragment_libros, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         recyclerView = root.findViewById(R.id.rv_canciones);
         recyclerView.setHasFixedSize(true);
@@ -117,15 +123,14 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
         imgbtn_siguiente.setEnabled(false);
         imgbtn_reproducir.setEnabled(false);
 
-        seekBar = root.findViewById(R.id.seekBar);
-        progress_bar = root.findViewById(R.id.progress_bar);
+        pb_progreso_cancion = root.findViewById(R.id.pb_progreso_cancion);
 
         cargaListaCanciones();
 
         mediaPlayer = new MediaPlayer();
 
 
-        mediaPlayer.setOnBufferingUpdateListener((mp, percent) -> progress_bar.setSecondaryProgress(percent));
+        mediaPlayer.setOnBufferingUpdateListener((mp, percent) -> pb_progreso_cancion.setSecondaryProgress(percent));
 
         imgbtn_reproducir.setOnClickListener(v -> {
 
@@ -145,43 +150,32 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
 
         });
 
-        mediaPlayer.setOnCompletionListener(mp -> {
-
-            observer.stop();
-
-            progress_bar.setProgress(mediaPlayer.getCurrentPosition());
-
-            mediaPlayer.stop();
-
-            mediaPlayer.reset();
-
-            imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_play);
-
-        });
 
         imgbtn_siguiente.setOnClickListener(v -> {
 
-            abc_audio++;
+            int_indice++;
 
-            if (abc_audio >= INTS_IMAGENES.length)
-                abc_audio = 0;
+            if (int_indice >= int_numero_canciones[0])
+                int_indice = 0;
 
             mediaPlayer.stop();
 
-            reproducir(abc_audio);
+            cargaValores(int_indice);
+            mediaPlayer.start();
 
         });
 
         imgbtn_anterior.setOnClickListener(v -> {
 
-            abc_audio--;
+            int_indice--;
 
-            if (abc_audio < 0)
-                abc_audio = INTS_IMAGENES.length - 1;
+            if (int_indice < 0)
+                int_indice = int_numero_canciones[0]-1;
 
             mediaPlayer.stop();
 
-            reproducir(abc_audio);
+            cargaValores(int_indice);
+            mediaPlayer.start();
 
         });
 
@@ -191,7 +185,25 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
     public void cargaListaCanciones() {
 
 
-        for (int e = 0; e < INTS_IMAGENES.length; e++) {
+        databaseReference.child("Usuario").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String string_pago = snapshot.child("string_fecha_pago").getValue().toString();
+
+                    if(!string_pago.equalsIgnoreCase("-1")){
+                        int_numero_canciones[0] = INTS_CANCIONES.length;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        for (int e = 0; e < int_numero_canciones[0]; e++) {
 
             lista_audio_modelo.add(new AudioModelo(INTS_CANCIONES[e], STRINGS_NOMBRES_CANCION[e], INTS_IMAGENES[e], STRINGS_TIPO[e]));
 
@@ -203,68 +215,39 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
 
     }
 
+    public void cargaValores(int indice) {
 
-    public void reproducir(int indice) {
-
-        MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), INTS_CANCIONES[indice]);
-
+        mediaPlayer = MediaPlayer.create(getContext(), INTS_CANCIONES[indice]);
         Toast.makeText(getContext(), "Espere un momento", Toast.LENGTH_LONG).show();
+        double_tiempo_final = mediaPlayer.getDuration();
 
-        mediaPlayer.setOnPreparedListener(mp -> {
+        double_tiempo_inicial = mediaPlayer.getCurrentPosition();
 
-            mp.start();
+        imgbtn_reproducir.setEnabled(true);
+        imgbtn_anterior.setEnabled(true);
+        imgbtn_siguiente.setEnabled(true);
 
-            imgbtn_reproducir.setEnabled(true);
-            imgbtn_anterior.setEnabled(true);
-            imgbtn_siguiente.setEnabled(true);
+        imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_pause);
 
-            imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_pause);
 
-        });
+        txt_titulo.setText(STRINGS_NOMBRES_CANCION[int_indice]);
 
-        int_tiempo_final = mediaPlayer.getDuration();
-
-        int_tiempo_inicial = mediaPlayer.getCurrentPosition();
-
-        txt_titulo.setText(STRINGS_NOMBRES_CANCION[indice]);
-
-        v_miniatura.setImageResource(INTS_IMAGENES[indice]);
+        v_miniatura.setImageResource(INTS_IMAGENES[int_indice]);
 
         if (solo_una_vez == 0) {
 
-            seekBar.setMax(int_tiempo_final);
+            pb_progreso_cancion.setMax((int) double_tiempo_final);
 
             solo_una_vez = 1;
 
         }
 
-        seekBar.setProgress(int_tiempo_inicial);
+        pb_progreso_cancion.setProgress((int) double_tiempo_inicial);
 
-        handler.postDelayed(actualiza_audio, 100);
 
-        observer = new MediaObserver();
-
-        new Thread(observer).start();
+        handler.postDelayed(runnable_seekbar, 100);
 
     }
-
-    private final Runnable actualiza_audio = new Runnable() {
-        @Override
-        public void run() {
-
-            int_tiempo_inicial = mediaPlayer.getCurrentPosition();
-
-            txt_duracion.setText(format("%d:%d",
-                    TimeUnit.MILLISECONDS.toMinutes(int_tiempo_inicial),
-                    TimeUnit.MILLISECONDS.toSeconds(int_tiempo_inicial) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(int_tiempo_inicial))));
-
-            seekBar.setProgress(int_tiempo_inicial);
-
-            handler.postDelayed(this, 100);
-
-        }
-    };
 
     @Override
     public void onDestroy() {
@@ -280,54 +263,50 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
     @Override
     public void onClick(int position) {
 
-        abc_audio = position;
+        int_indice = position;
 
         if (mediaPlayer.isPlaying()) {
 
             mediaPlayer.stop();
 
-            reproducir(position);
+
+            cargaValores(position);
+
+            mediaPlayer.start();
 
             imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_pause);
 
         } else {
 
-            reproducir(position);
+            cargaValores(position);
 
+            mediaPlayer.start();
             imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_pause);
 
         }
 
-        adapter.notifyDataSetChanged();
 
     }
 
-    private class MediaObserver implements Runnable {
-        private AtomicBoolean stop = new AtomicBoolean(false);
-
-        public void stop() {
-
-            stop.set(true);
-
-        }
-
+    private final Runnable runnable_seekbar = new Runnable() {
+        @SuppressLint("DefaultLocale")
         @Override
         public void run() {
+            if (mediaPlayer != null) {
+                double_tiempo_inicial = mediaPlayer.getCurrentPosition();
 
-            while (!stop.get()) {
+                txt_duracion.setText(String.format("%d:%d",
+                        TimeUnit.MILLISECONDS.toMinutes((long) double_tiempo_inicial),
+                        TimeUnit.MILLISECONDS.toSeconds((long) double_tiempo_inicial) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) double_tiempo_inicial))));
 
-                progress_bar.setProgress((int) ((double) mediaPlayer.getCurrentPosition() / (double) mediaPlayer.getDuration() * 100));
+                pb_progreso_cancion.setProgress((int) double_tiempo_inicial);
 
-                try {
-
-                    Thread.sleep(100);
-
-                } catch (Exception ex) {
-
-                    ex.printStackTrace();
-
-                }
+                handler.postDelayed(this, 100);
             }
+
+
         }
-    }
+    };
+
 }
