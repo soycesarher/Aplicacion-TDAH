@@ -68,7 +68,9 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
-                android:text="@string/tvw_ingresar" />
+                android:background="@drawable/boton_personalizado"
+                android:text="@string/tvw_ingresar"
+                android:enabled="false"/>
 
             <Button
                 android:id="@+id/btn_PadresCancelar"
@@ -77,7 +79,13 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
-                android:text="@string/btn_cancelar" />
+                android:background="@drawable/boton_personalizado"
+                android:text="@string/btn_cancelar"
+
+                />
+
         </LinearLayout>
+
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

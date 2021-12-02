@@ -138,6 +138,7 @@
     <string name="titulo">Titulo</string>
     <string name="duracion">Duracion</string>
     <string name="tipo">tipo</string>
+    <string name="error_nip_incorrecto">nip incorrecto</string>
 
 
 </resources>
