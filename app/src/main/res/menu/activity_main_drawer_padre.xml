@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/informacion_menu_padre"
+            android:icon="@drawable/cuenta_psicologo"
+            android:title="@string/informacion_menu_padre" />
+
+        <item
+            android:id="@+id/mapas_menu_padre"
+            android:icon="@drawable/configuracion_psicologo"
+            android:title="@string/mapas_menu_padre" />
+
+        <item
+            android:id="@+id/psicologos_menu_padre"
+            android:icon="@drawable/ayuda_psicologo"
+            android:title="@string/psicologos_menu_padre" />
+
+    </group>
+
+</menu>

@@ -17,6 +17,10 @@
             android:label="@string/title_activity_menu_usuario"
             android:theme="@style/Theme.TDAH.NoActionBar"></activity>
         <activity
+            android:name=".PadrePrincipal"
+            android:label="@string/title_activity_menu_usuario"
+            android:theme="@style/Theme.TDAH.NoActionBar"></activity>
+        <activity
             android:name=".PsicologoPrincipal"
             android:exported="false"
             android:label="@string/title_activity_psicologo_principal"

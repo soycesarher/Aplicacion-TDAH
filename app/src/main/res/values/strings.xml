@@ -39,9 +39,17 @@
     <string name="nav_menu_ayuda">Menu Ayuda</string>
     <string name="nav_menu_configuracion">Menu Configuración</string>
 
+    <string name="nav_menu_informacion">Menu Informacion</string>
+    <string name="nav_menu_mapas">Menu Mapas</string>
+    <string name="nav_menu_psicologos">Menu Psicologos</string>
+
     <string name="cuenta_menu_psicologo">Cuenta</string>
     <string name="configuracion_nenu_psicologo">Configuración</string>
     <string name="ayuda_menu_psicologo">Ayuda</string>
+
+    <string name="informacion_menu_padre">Informacion</string>
+    <string name="mapas_menu_padre">Mapas</string>
+    <string name="psicologos_menu_padre">Psicologos</string>
 
     <string name="title_menu_psicologo">TDAH Móvil</string>
 
