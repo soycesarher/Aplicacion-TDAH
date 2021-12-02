@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_padre"
+
+    app:startDestination="@+id/nav_inicio_padre">
+
+    <fragment
+        android:id="@+id/nav_menu_informacion"
+        android:name="com.example.tdah.padre.informacion.informacionFragment"
+        android:label="@string/nav_menu_informacion"
+        tools:layout="@layout/fragment_informacion"
+        />
+
+    <fragment
+        android:id="@+id/nav_menu_mapas"
+        android:name="com.example.tdah.padre.mapas.mapasFragment"
+        android:label="@string/nav_menu_mapas"
+        tools:layout="@layout/fragment_mapas" />
+
+    <fragment
+        android:id="@+id/nav_menu_psicologos"
+        android:name="com.example.tdah.padre.psicologos.psicologosFragment"
+        android:label="@string/nav_menu_psicologos"
+        tools:layout="@layout/fragment_psicologos" />
+    >>>>>>> origin/padre
+
+</navigation>
