@@ -28,9 +28,7 @@ public class InicioDeSesion extends AppCompatActivity {
 
     private EditText txt_correo;
     private EditText txt_contrasena;
-//
-//    private String correo = "";
-//    private String contrasena = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
