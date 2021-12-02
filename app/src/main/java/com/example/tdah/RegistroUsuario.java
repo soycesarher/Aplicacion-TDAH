@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
 
 public class RegistroUsuario extends AppCompatActivity {
 
-    private DatabaseReference usuario;
+    private DatabaseReference databaseReference;
 
     private EditText txt_nombre_padre_tutor;
     private EditText txt_nombre_paciente;
@@ -487,7 +487,7 @@ public class RegistroUsuario extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
-        usuario = firebase_database.getReference();
+        databaseReference = firebase_database.getReference();
     }
 
     @Override
@@ -563,10 +563,10 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
                         Toast.makeText(RegistroUsuario.this, "Mensaje enviado", Toast.LENGTH_SHORT).show();
-                        usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor).addOnCompleteListener(task2 -> {
+                        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).setValue(usuarioPadreTutor).addOnCompleteListener(task2 -> {
                             if (task2.isSuccessful()) {
 
-                                usuario.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente).addOnCompleteListener(task3 -> {
+                                databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").setValue(usuarioPaciente).addOnCompleteListener(task3 -> {
                                     if (task3.isSuccessful()) {
                                         Toast.makeText(RegistroUsuario.this, "Usuario registrado", Toast.LENGTH_LONG).show();
 

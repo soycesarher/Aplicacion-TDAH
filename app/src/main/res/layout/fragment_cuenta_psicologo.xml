@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="-107dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,111 +35,124 @@
                 android:id="@+id/txt_NombrePsicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textPersonName"
+                android:minHeight="48dp"
                 android:text="@string/txt_NombrePsicologo"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:textColor="#5E5D5D" />
 
             <EditText
                 android:id="@+id/txt_ApellidoP_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textPersonName"
+                android:minHeight="48dp"
                 android:text="@string/txt_ApellidoP_Psicologo"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:textColor="#5E5D5D" />
 
             <EditText
                 android:id="@+id/txt_ApellidoM_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/txt_ApellidoM_Psicologo"
                 android:gravity="center"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:text="@string/txt_ApellidoM_Psicologo"
+                android:textColor="#5E5D5D" />
 
             <EditText
                 android:id="@+id/txt_Direccion_Consultorio"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
-                android:inputType="textPostalAddress"
-                android:text="@string/txt_Direccion_Consultorio"
                 android:gravity="center"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:inputType="textPostalAddress"
+                android:minHeight="48dp"
+                android:text="@string/txt_Direccion_Consultorio"
+                android:textColor="#5E5D5D" />
 
             <EditText
                 android:id="@+id/txt_CorreoContacto_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
-                android:inputType="textEmailAddress"
-                android:text="@string/txt_CorreoContacto_Psicologo"
                 android:gravity="center"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:text="@string/txt_CorreoContacto_Psicologo"
+                android:textColor="#5E5D5D" />
 
             <EditText
                 android:id="@+id/txt_Telefono_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="@string/txt_Telefono_Psicologo"
                 android:gravity="center"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:inputType="phone"
+                android:minHeight="48dp"
+                android:text="@string/txt_Telefono_Psicologo"
+                android:textColor="#5E5D5D" />
 
             <EditText
                 android:id="@+id/txt_Cedula"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/txt_Cedula"
                 android:gravity="center"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:text="@string/txt_Cedula"
+                android:textColor="#5E5D5D" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_perfil_profesional"
+                android:layout_width="350dp"
+                android:layout_gravity="center"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/boton_personalizado"
+                    android:backgroundTint="@color/white"
+                    android:hint="@string/txt_descripcion" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
                 android:id="@+id/btn_Verificar_Cedula"
-                android:text="@string/btn_Verificar_Cedula"
-                android:layout_gravity="center"
-                />
-
-            <EditText
-                android:id="@+id/txt_descripcion"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/txt_descripcion"
-                android:gravity="center"
-                android:textColor="#5E5D5D"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:text="@string/btn_Verificar_Cedula" />
+
+
+
 
             <Button
                 android:id="@+id/btn_Editar_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_Editar_Psicologo"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:text="@string/btn_Editar_Psicologo" />
+
+
 
             <Button
                 android:id="@+id/btn_Guardar_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_Guardar_Psicologo"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:text="@string/btn_Guardar_Psicologo" />
 
         </LinearLayout>
     </ScrollView>
