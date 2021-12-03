@@ -1,9 +1,6 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.cardview:cardview:1.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/322f31ab066b2cf9d72df833b3df8ea3/transformed/cardview-1.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/322f31ab066b2cf9d72df833b3df8ea3/transformed/cardview-1.0.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/322f31ab066b2cf9d72df833b3df8ea3/transformed/cardview-1.0.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8df51c54c93bd68d2e29aabb9e0456af/transformed/cardview-1.0.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/8df51c54c93bd68d2e29aabb9e0456af/transformed/cardview-1.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8df51c54c93bd68d2e29aabb9e0456af/transformed/cardview-1.0.0/res" />

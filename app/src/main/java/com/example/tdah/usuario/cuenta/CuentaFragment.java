@@ -2,6 +2,7 @@ package com.example.tdah.usuario.cuenta;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -20,7 +21,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tdah.PadrePrincipal;
 import com.example.tdah.R;
+import com.example.tdah.UsuarioPrincipal;
 import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +52,7 @@ public class CuentaFragment extends Fragment {
     private DatabaseReference databaseReference;
     private boolean boolean_correo;
     private boolean boolean_contrasena;
+    private FirebaseUser firebaseUser;
 
     public CuentaFragment() {
         super(R.layout.fragment_cuenta);
@@ -57,6 +61,7 @@ public class CuentaFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 
@@ -146,13 +151,13 @@ public class CuentaFragment extends Fragment {
 
         }
         btn_guardar.setOnClickListener(v -> {
-            if (!boolean_correo) {
-                updateEmail(txt_correo.getText().toString());
 
-            }
-            if (boolean_contrasena && !txt_confirma_contrasena.getText().toString().isEmpty()) {
-                updatePassword(txt_confirma_contrasena.getText().toString());
-            }
+            if (boolean_correo)
+                actualizaCorreo(txt_correo.getText().toString());
+
+            if (!boolean_contrasena && !txt_confirma_contrasena.getText().toString().isEmpty())
+                actualizaContrasena(txt_confirma_contrasena.getText().toString());
+
         });
 
         datosUsuario();
@@ -321,24 +326,25 @@ public class CuentaFragment extends Fragment {
 
     }
 
-    public void updateEmail(String correo) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        user.updateEmail(correo)
+    public void actualizaCorreo(String string_correo) {
+        Toast.makeText(getContext(), "Actualizando correo", Toast.LENGTH_SHORT).show();
+        firebaseUser.updateEmail(string_correo)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        databaseReference.child("Usuario").child(user.getUid()).child("string_correo").setValue(correo);
+                        databaseReference.child("Usuario").child(firebaseUser.getUid()).child("string_correo").setValue(string_correo);
                         Toast.makeText(getContext(), "El correo se actualizó con éxito", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getContext(), UsuarioPrincipal.class));
+
                     }else{
                         Toast.makeText(getContext(), "ERROR: No se actualizó el correo"+task.getResult().toString(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
-    public void updatePassword(String contrasena) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String newPassword = contrasena;
-        user.updatePassword(newPassword)
+    public void actualizaContrasena(String string_contrasena) {
+
+        Toast.makeText(getContext(), "Actualizando contraseña", Toast.LENGTH_SHORT).show();
+        firebaseUser.updatePassword(string_contrasena)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "La contraseña se actualizó con éxito", Toast.LENGTH_LONG).show();
@@ -346,5 +352,6 @@ public class CuentaFragment extends Fragment {
                         Toast.makeText(getContext(), "ERROR: No se actualizó la contraseña"+task.getResult().toString(), Toast.LENGTH_LONG).show();
                     }
                 });
+
     }
 }

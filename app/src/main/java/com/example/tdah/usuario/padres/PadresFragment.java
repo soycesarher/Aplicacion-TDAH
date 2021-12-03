@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tdah.PadrePrincipal;
 import com.example.tdah.R;
 import com.example.tdah.RegistroUsuario;
 import com.example.tdah.UsuarioPrincipal;
@@ -32,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class PadresFragment extends Fragment{
     private PadresViewModel padresViewModel;
     private Button btn_padres_nip,btn_padres_regresar;
@@ -40,7 +43,7 @@ public class PadresFragment extends Fragment{
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
-
+    private  UsuarioPadreTutor u;
     private boolean boolean_nip;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,6 +56,7 @@ public class PadresFragment extends Fragment{
         btn_padres_nip = root.findViewById(R.id.btn_PadresNip);
         btn_padres_regresar = root.findViewById(R.id.btn_PadresCancelar);
 
+        u = new UsuarioPadreTutor();
         inicializa_firebase();
 
         txt_nip.addTextChangedListener(new TextWatcher() {
@@ -78,8 +82,7 @@ public class PadresFragment extends Fragment{
             if(!autentica_nip(txt_nip)){
 
 
-                //TODO: Aquí va el intent para la actividad de padres
-
+                startActivity(new Intent(getContext(), PadrePrincipal.class));
 
             }else{
                 Toast.makeText(getContext(), "Verifique el nip", Toast.LENGTH_SHORT).show();
@@ -93,11 +96,14 @@ public class PadresFragment extends Fragment{
     }
 
     private boolean autentica_nip(EditText editText_nip) {
+
+        UsuarioPadreTutor u = new UsuarioPadreTutor();
+
         editText_nip.setError(null);
         String nip = editText_nip.getText().toString().trim();
         boolean boolean_nip = true;
         View focusView = null;
-        UsuarioPadreTutor u = new UsuarioPadreTutor();
+
         u.setString_id(firebaseUser.getUid());
 
         databaseReference.child("Usuario").child(u.getString_id()).addValueEventListener(new ValueEventListener() {
@@ -105,8 +111,7 @@ public class PadresFragment extends Fragment{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
 
-                    u.setInt_nip(Integer.parseInt(snapshot.child("string_nip").getValue().toString()));
-
+                    u.setInt_nip(Integer.parseInt(Objects.requireNonNull(snapshot.child("int_nip").getValue()).toString()));
                 }
             }
 

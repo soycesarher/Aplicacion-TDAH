@@ -189,7 +189,7 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    String string_pago = snapshot.child("string_fecha_fin_pago").getValue().toString();
+                    String string_pago = snapshot.child("string_fecha_fin_suscripcion").getValue().toString();
 
                     if(!string_pago.equalsIgnoreCase("-1")){
                         int_numero_canciones[0] = INTS_CANCIONES.length;

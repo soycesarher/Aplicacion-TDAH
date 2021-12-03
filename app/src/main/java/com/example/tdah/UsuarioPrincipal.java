@@ -87,6 +87,7 @@ public class UsuarioPrincipal extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     String string_fecha_termino_suscripcion = snapshot.child("string_fecha_fin_suscripcion").getValue().toString();
+                    if(!string_fecha_termino_suscripcion.equalsIgnoreCase("-1"))
                     valida_fecha_suscripcion(string_fecha_termino_suscripcion);
 
                 }

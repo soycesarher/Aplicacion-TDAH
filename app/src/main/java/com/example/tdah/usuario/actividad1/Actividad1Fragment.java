@@ -62,7 +62,7 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
         numero_generado = generaraleatorio();
         establecer_sombra(numero_generado);
         mensaje_intentos.setText("Tiene " + intentos + " intentos");
-
+        usuarioPaciente = new UsuarioPaciente();
         puntuacion_alta = root.findViewById(R.id.puntuacion_alta);
         inicializa_firebase();
         actualizaPuntuacionAlta();
@@ -77,8 +77,9 @@ public class Actividad1Fragment extends Fragment implements View.OnClickListener
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    usuarioPaciente.setInt_puntuacion_alta_actividad_1(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString()));
+                if (snapshot.exists()&& snapshot.hasChildren()){
+                    int int_puntuacion_actividad_1 = Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_1").getValue().toString());
+                    usuarioPaciente.setInt_puntuacion_alta_actividad_1(int_puntuacion_actividad_1);
                     puntuacion_alta.setText(""+usuarioPaciente.getInt_puntuacion_alta_actividad_1());
                 }
             }
