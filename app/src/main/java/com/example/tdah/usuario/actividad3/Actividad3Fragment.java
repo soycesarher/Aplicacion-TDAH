@@ -61,12 +61,9 @@ public class Actividad3Fragment extends Fragment{
 
     public void  imagenSetup(View root){
         oro= root.findViewById(R.id.image_oro);
-        oro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Oro.class);
-                startActivity(intent);
-            }
+        oro.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), Oro.class);
+            startActivity(intent);
         });
     }
 
