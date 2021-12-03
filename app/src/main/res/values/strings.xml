@@ -147,6 +147,7 @@
     <string name="duracion">Duracion</string>
     <string name="tipo">tipo</string>
     <string name="error_nip_incorrecto">nip incorrecto</string>
+    <string name="title_activity_mapa_centros">MapaCentros</string>
 
 
 </resources>

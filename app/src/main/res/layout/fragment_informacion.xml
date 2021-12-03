@@ -1,6 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#72BEC3">
 
-</LinearLayout>
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingTop="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp">
+
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="298dp"
+                android:layout_height="198dp"
+                android:layout_gravity="center"
+                app:srcCompat="@mipmap/tdah" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="TDAH: qué es, síntomas y causas"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="El trastorno por déficit de atención con hiperactividad (TDAH) es un problema de salud mental que suele aparecer en la infancia, generalmente a partir de los 7 años, y que está clasificado como un trastorno de conducta. Se caracteriza, de ahí su denominación, porque los niños se muestran hiperactivos (una actividad física excesiva), impulsivos y tiene problemas para mantener la atención en una única actividad de forma continuada.
+
+Todo ello conlleva problemas en el rendimiento escolar, así en sus relaciones personales con los amigos, los profesores y la propia familia."
+                />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Causas del TDAH"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="No se conocen las causas del TDAH, aunque los diferentes estudios que se han realizado en este sentido apuntan a que hay un componente genético importante, hasta el punto de que algunos expertos consideran que existe un 76% de posibilidades de que los hijos de una persona con este trastorno también lo desarrollen. Asimismo, los estudios más recientes consideran que el ambiente familiar (hogares desestructurados) y el entorno social (relaciones conflictivas) sólo pueden actuar como impulsores de los síntomas, pero no contribuir a la aparición de la enfermedad."
+                />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Síntomas del TDAH"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="341dp"
+                android:layout_height="140dp"
+                app:srcCompat="@mipmap/imagen3"
+                />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Es importante advertir que cualquier persona puede en un momento dado presentar alguno de los síntomas relacionados con el TDAH, sin que ello implique ninguna relación con la enfermedad. De hecho, el diagnóstico de TDAH implica dos condiciones fundamentales: la coexistencia de diversos síntomas y que éstos se manifiesten en los diferentes ambientes sociales del niño (familia, colegio, círculo de amigos) y de forma constante y prolongada, causando, además problemas evidentes de relación social y de rendimiento escolar.
+
+También hay que tener en cuenta que no todas las personas diagnosticadas de TDAH presentan los mismos síntomas, sino que existe una gran variabilidad de unos a otros. De hecho, en función de los síntomas de cada paciente, se han establecido tres tipos diferentes de TDAH:"
+                />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="1) TDAH con hiperactividad-impulsividad"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="> Frecuentemente, mantiene un estado de excitación continua.\n
+> Habla mucho, incluso en situaciones en que debe permanecer callado, como durante la clase.\n
+> Se muestra inquieto en clase y le cuesta mucho permanecer sentado. Se remueve constantemente en la silla y puede llegar a levantarse durante la clase.\n
+> En situaciones en las que debe mantener una actitud de espera, no para de moverse, saltar y correr.\n
+> Interrumpe muy a menudo a los demás en conversaciones, juegos, etc. En actividades de grupo es incapaz de esperar su turno. Incluso tiende a responder antes de que la persona que habla con él haya terminado de formular la pregunta.\n
+> No puede mantenerse tranquilo mientras juega.\n"
+                />
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="2) TDAH con falta de atención"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text=" Tiene problemas para mantener la atención en cualquier actividad que esté realizando, lo que le lleva a cometer errores por perderse los detalles de las cosas.\n
+Se distrae con suma facilidad ante cualquier estímulo externo.\n
+No termina lo que empieza y cambia de actividad rápidamente.\n
+Le resulta muy difícil organizarse, de modo que pierde cosas que necesita para realizar una actividad o las olvida en casa frecuentemente cuando se trata de cosas del colegio. También olvida los deberes que tiene que hacer o las tareas que se le encomiendan en casa.\n
+A veces  se muestra como ausente, como si no escuchara lo que se le está diciendo.\n"
+
+                />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="3) TDAH combinado."
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="El niño manifiesta los síntomas de los dos tipos anteriores es decir, de hiperactividad-impulsividad y de falta de atención."
+                />
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

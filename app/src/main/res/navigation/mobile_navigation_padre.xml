@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation_padre"
 
-    app:startDestination="@+id/nav_inicio_padre">
+    app:startDestination="@id/nav_menu_psicologos">
+    <fragment
+        android:id="@+id/nav_menu_psicologos"
+        android:name="com.example.tdah.padre.psicologos.psicologosFragment"
+        android:label="@string/nav_menu_psicologos"
+        tools:layout="@layout/fragment_psicologos" />
 
     <fragment
         android:id="@+id/nav_menu_informacion"
@@ -13,17 +18,16 @@
         tools:layout="@layout/fragment_informacion"
         />
 
-    <fragment
-        android:id="@+id/nav_menu_mapas"
-        android:name="com.example.tdah.padre.mapas.mapasFragment"
-        android:label="@string/nav_menu_mapas"
-        tools:layout="@layout/fragment_mapas" />
+    <activity
+        android:id="@+id/mapaCentros"
+        android:name="com.example.tdah.MapaCentros"
+        android:label="activity_mapa_centros"
+        tools:layout="@layout/activity_mapa_centros" />
 
-    <fragment
-        android:id="@+id/nav_menu_psicologos"
-        android:name="com.example.tdah.padre.psicologos.psicologosFragment"
-        android:label="@string/nav_menu_psicologos"
-        tools:layout="@layout/fragment_psicologos" />
-    >>>>>>> origin/padre
+    <activity
+        android:id="@+id/listaPsicologos"
+        android:name="com.example.tdah.ListaPsicologos"
+        android:label="activity_lista_psicologos"
+        tools:layout="@layout/activity_lista_psicologos" />
 
 </navigation>
