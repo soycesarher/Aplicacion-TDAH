@@ -29,6 +29,10 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
 
 
     public interface OnClickListener{
+        /**
+         * Regresa la posición de la tarjeta
+         * @param position posición de la tarjeta seleccionada
+         */
         void onClick(int position);
     }
 

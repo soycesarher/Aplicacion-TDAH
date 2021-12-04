@@ -30,12 +30,7 @@ public class cuentaPsicologoFragment extends Fragment {
 
         final TextView textView = binding.txtNombrePsicologo;
 
-        cuentaPsicologoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        cuentaPsicologoViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
         return root;
     }
 

@@ -51,7 +51,7 @@ public class RegistroPsicologo extends Activity {
     private boolean boolean_error_telefono;
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
-        private boolean boolean_pago;
+    private boolean boolean_pago;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -279,12 +279,12 @@ public class RegistroPsicologo extends Activity {
             }
         });
 
-        if(boolean_error_cedula||boolean_error_correo||!boolean_error_contrasena
-                ||boolean_error_texto||boolean_error_numero_exterior||boolean_error_cp||boolean_error_telefono||boolean_pago){
+        if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
+                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono || boolean_pago) {
 
             Toast.makeText(RegistroPsicologo.this, "Llene correctamente los campos", Toast.LENGTH_LONG).show();
 
-        }else{
+        } else {
             ingresa_base_datos();
         }
 
@@ -627,6 +627,7 @@ public class RegistroPsicologo extends Activity {
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
                 usuarioPsicologo.setString_especialidad("Por verificar");
                 usuarioPsicologo.setString_perfilProfesional("Por verificar");
+                usuarioPsicologo.setBoolean_validado(false);
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
 
@@ -637,7 +638,7 @@ public class RegistroPsicologo extends Activity {
                         databaseReference.child("Psicologo").child("NoValidado").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
 
                             if (task2.isSuccessful()) {
-
+                                Toast.makeText(RegistroPsicologo.this, "Se realizó el registro con éxito", Toast.LENGTH_LONG).show();
 
                             } else {
 

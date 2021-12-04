@@ -6,6 +6,7 @@ public class UsuarioPsicologo extends Usuario implements Serializable {
     private int int_cedula;
     private int int_telefono;
     private String string_especialidad,string_perfilProfesional;
+    private boolean boolean_validado;
 
     public UsuarioPsicologo() {
     }
@@ -40,5 +41,13 @@ public class UsuarioPsicologo extends Usuario implements Serializable {
 
     public void setInt_telefono(int int_telefono) {
         this.int_telefono = int_telefono;
+    }
+
+    public boolean isBoolean_validado() {
+        return boolean_validado;
+    }
+
+    public void setBoolean_validado(boolean boolean_validado) {
+        this.boolean_validado = boolean_validado;
     }
 }

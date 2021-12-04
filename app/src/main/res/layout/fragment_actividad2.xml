@@ -17,6 +17,7 @@
             android:id="@+id/instrucciones_activ2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:layout_weight="1"
             android:text="Resuelve el siguiente triángulo mágico de 10 poniendo números del 1-6 en cada casilla. (Cada lado del triángulo debe sumar 10 unidades)" />
 

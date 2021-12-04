@@ -18,6 +18,8 @@ import com.example.tdah.MainActivity;
 import com.example.tdah.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class AjustesFragment extends Fragment {
     private AjustesViewModel AjustesViewModel;
     private Button btn_cerrar_sesion;
@@ -35,12 +37,7 @@ public class AjustesFragment extends Fragment {
             mAuth.signOut();
             ir_a_main(inflater,container);
         });
-/*        AjustesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+
         return root;
     }
 
@@ -49,6 +46,6 @@ public class AjustesFragment extends Fragment {
                 new ViewModelProvider(this).get(AjustesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_ajustes, container, false);
         startActivity(new Intent(root.getContext(),MainActivity.class));
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 }

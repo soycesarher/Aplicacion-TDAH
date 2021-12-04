@@ -120,7 +120,7 @@
     <string name="municipio">Municipio</string>
     <string name="estado">Estado</string>
 
-    <string name="lbl_domicilios">Datos Domiciliarios</string>
+    <string name="lbl_domicilios">Datos consultorio</string>
     <string name="lbl_contacto">Contacto</string>
     <string name="lbl_profesional">Información Profesional</string>
 

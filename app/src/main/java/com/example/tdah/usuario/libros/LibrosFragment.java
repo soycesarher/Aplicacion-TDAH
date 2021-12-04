@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.MediaPlayer;
 
 import android.os.Bundle;
@@ -284,6 +285,7 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
             imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_pause);
 
         }
+
 
 
     }
