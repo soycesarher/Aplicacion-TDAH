@@ -33,6 +33,7 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
     private TextView str_puntos;
     private TextView num_puntos;
     private Button comprobar;
+    private Button reiniciar;
 
     UsuarioPrincipal main;
 
@@ -77,12 +78,28 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
     private void Botones(View root) {
         comprobar = root.findViewById(R.id.btn_comprobar_triangulo);
         comprobar.setOnClickListener(this);
+        reiniciar = root.findViewById(R.id.btn_reiniciar_triangulo);
+        reiniciar.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        sumarTriangulo();
+       if(comprobar.getId() == v.getId()){
+           sumarTriangulo();
+       } else{
+           triangulo_nv1_a.setText("");
+           triangulo_nv2_a.setText("");
+           triangulo_nv2_b.setText("");
+           triangulo_nv3_a.setText("");
+           triangulo_nv3_b.setText("");
+           triangulo_nv3_c.setText("");
+           suma_l.setText("0");
+           suma_r.setText("0");
+           suma_b.setText("0");
+           num_puntos.setText("0");
+       }
     }
+
 
     //Este método realiza la suma
     private void sumarTriangulo () {
