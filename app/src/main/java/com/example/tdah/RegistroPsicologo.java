@@ -1,7 +1,9 @@
 package com.example.tdah;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,26 +15,35 @@ import android.widget.Button;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.tdah.modelos.UsuarioPsicologo;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.regex.Pattern;
 import io.card.payment.i18n.locales.LocalizedStringsEN_GB;
 
-public class RegistroPsicologo extends Activity {
+
 
 public class RegistroPsicologo extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     String estado, municipio, localidad;
+
+    private Spinner sp_estado;
+    private Spinner sp_municipio;
+    private Spinner sp_localidad;
 
     private EditText txt_nombre_psicologo;
     private EditText txt_apellido_paterno;
@@ -49,6 +60,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
+    FirebaseUser usuario_actual;
 
     private boolean boolean_error_texto;
     private boolean boolean_error_contrasena;
@@ -58,6 +70,13 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
         private boolean boolean_pago;
+
+    private boolean boolean_pdf=false;
+
+    private Button btn_curriculum;
+    private Uri uri_pdf = null;
+    private ProgressDialog pd_dialogo;
+    private String string_url_curriculum;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -75,7 +94,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
         txt_num_exterior = findViewById(R.id.txt_num_exterior);
         txt_cp = findViewById(R.id.txt_cp);
         txt_localidad = findViewById(R.id.txt_localidad);
-        txt_municipio = findViewById(R.id.txt_municipio);
+//        txt_municipio = findViewById(R.id.txt_municipio);
         txt_telefono = findViewById(R.id.txt_telefono);
         txt_correo = findViewById(R.id.txt_correo_psicologo);
         txt_contrasena = findViewById(R.id.txt_contrasena_psicologo);
@@ -330,6 +349,39 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
             ingresa_base_datos();
         }
 
+
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        switch (parent.getId()){
+            case R.id.sp_estado:
+                if (position!=0){
+                    estado = parent.getItemAtPosition(position).toString();
+                }else{
+                    estado="";
+                }
+                break;
+            case R.id.sp_municipio:
+                if (position!=0){
+                    municipio = parent.getItemAtPosition(position).toString();
+                }else{
+                    municipio="";
+                }
+                break;
+            case R.id.sp_localidad:
+                if (position!=0){
+                    localidad = parent.getItemAtPosition(position).toString();
+                }else{
+                    localidad = "";
+                }
+                break;
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
@@ -627,6 +679,8 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
         FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
         databaseReference = firebase_database.getReference();
     }
+
+
 
     /**
      * Recupera los valores obtenidos de los botones, autentica el correo y contrasenia he ingresa
