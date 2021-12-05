@@ -9,7 +9,10 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -26,7 +29,9 @@ import java.util.regex.Pattern;
 
 import io.card.payment.i18n.locales.LocalizedStringsEN_GB;
 
-public class RegistroPsicologo extends Activity {
+public class RegistroPsicologo extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+
+    String estado, municipio, localidad;
 
     private EditText txt_nombre_psicologo;
     private EditText txt_apellido_paterno;
@@ -40,6 +45,10 @@ public class RegistroPsicologo extends Activity {
     private EditText txt_correo;
     private EditText txt_contrasena;
     private EditText txt_celdula;
+
+    private Spinner sp_estado;
+    private Spinner sp_municipio;
+    private Spinner sp_localidad;
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
@@ -69,11 +78,32 @@ public class RegistroPsicologo extends Activity {
         txt_num_exterior = findViewById(R.id.txt_num_exterior);
         txt_cp = findViewById(R.id.txt_cp);
         txt_localidad = findViewById(R.id.txt_localidad);
-        txt_municipio = findViewById(R.id.txt_municipio);
         txt_telefono = findViewById(R.id.txt_telefono);
         txt_correo = findViewById(R.id.txt_correo_psicologo);
         txt_contrasena = findViewById(R.id.txt_contrasena_psicologo);
         txt_celdula = findViewById(R.id.txt_cedula_psicologo);
+
+
+
+        ArrayAdapter<CharSequence> estadoAdapter, municipioAdapter, localidadAdapter;
+
+        estadoAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.estado, android.R.layout.simple_spinner_item);
+        municipioAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.municipio, android.R.layout.simple_spinner_item);
+        localidadAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.localidad, android. R.layout.simple_spinner_item);
+
+        sp_estado = findViewById(R.id.sp_estado);
+        sp_estado.setAdapter(estadoAdapter);
+
+        sp_municipio = findViewById(R.id.sp_municipio);
+        sp_municipio.setAdapter(municipioAdapter);
+
+        sp_localidad = findViewById(R.id.sp_localidad);
+        sp_localidad.setAdapter(localidadAdapter);
+
+        sp_estado.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        sp_municipio.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        sp_localidad.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
 
         txt_nombre_psicologo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -288,6 +318,39 @@ public class RegistroPsicologo extends Activity {
             ingresa_base_datos();
         }
 
+
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        switch (parent.getId()){
+            case R.id.sp_estado:
+                if (position!=0){
+                    estado = parent.getItemAtPosition(position).toString();
+                }else{
+                    estado="";
+                }
+                break;
+            case R.id.sp_municipio:
+                if (position!=0){
+                    municipio = parent.getItemAtPosition(position).toString();
+                }else{
+                    municipio="";
+                }
+                break;
+            case R.id.sp_localidad:
+                if (position!=0){
+                    localidad = parent.getItemAtPosition(position).toString();
+                }else{
+                    localidad = "";
+                }
+                break;
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
@@ -665,4 +728,9 @@ public class RegistroPsicologo extends Activity {
 
     }
 
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }
