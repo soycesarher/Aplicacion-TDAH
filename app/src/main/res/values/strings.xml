@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TDAH</string>
     <string name="btn_usuario">Usuario</string>
+    <string name="btn_terminos">Terminos</string>
     <string name="btn_psicologo">Psicologo</string>
     <string name="tvw_tdah">TDAH</string>
     <string name="btn_registrarse">Registrarse</string>
