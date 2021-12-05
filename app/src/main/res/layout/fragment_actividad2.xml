@@ -150,11 +150,11 @@
 
                 <TextView
                     android:id="@+id/triangulo_izq"
-                    android:layout_width="wrap_content"
+                    android:layout_width="30px"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Lado L:" />
+                    android:gravity="end"
+                    android:text="Lado izquierdo:" />
 
                 <TextView
                     android:id="@+id/triangulo_puntos_izq"
@@ -175,11 +175,11 @@
 
                 <TextView
                     android:id="@+id/triangulo_der"
-                    android:layout_width="wrap_content"
+                    android:layout_width="30px"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Lado R:" />
+                    android:gravity="end"
+                    android:text="Lado derecho:" />
 
                 <TextView
                     android:id="@+id/triangulo_puntos_der"
@@ -201,11 +201,11 @@
 
                 <TextView
                     android:id="@+id/triangulo_bas"
-                    android:layout_width="wrap_content"
+                    android:layout_width="30px"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Lado B:" />
+                    android:gravity="end"
+                    android:text="Lado Base:" />
 
                 <TextView
                     android:id="@+id/triangulo_puntos_bas"

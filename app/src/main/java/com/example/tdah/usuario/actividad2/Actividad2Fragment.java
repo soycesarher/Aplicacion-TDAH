@@ -113,7 +113,9 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
                                             int suma_lado_izq = valor_niv3_a+valor_niv2_a+valor_niv1_a;
                                             int suma_lado_der = valor_niv3_c+valor_niv2_b+valor_niv1_a;
                                             int suma_lado_base = valor_niv3_a+valor_niv3_b+valor_niv3_c;
-
+                                            suma_l.setText(""+suma_lado_izq);
+                                            suma_r.setText(""+suma_lado_der);
+                                            suma_b.setText(""+suma_lado_base);
                                             if(suma_lado_izq == 10){
                                                 Toast.makeText(main.getApplicationContext(), "El lado izquierdo es Correcto!", Toast.LENGTH_SHORT).show();
                                             } else {
@@ -145,7 +147,6 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
             Toast.makeText(main.getApplicationContext(), "Primero debes llenar todo el triangulo", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void msm_dato_rep(){
         Toast.makeText(main.getApplicationContext(), "No se pueden repetir los numeros!", Toast.LENGTH_SHORT).show();
     }
