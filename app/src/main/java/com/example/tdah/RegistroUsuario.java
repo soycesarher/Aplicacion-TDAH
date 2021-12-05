@@ -214,7 +214,10 @@ public class RegistroUsuario extends AppCompatActivity {
         });
         btn_Paypal.setOnClickListener(v -> Metodo_Paypal());
     }
-
+    public void Terminos(View view){
+    Intent termino = new Intent(this, TerminosCondiciones.class);
+    startActivity(termino);
+    }
     /**
      * Este método asigna el monto a pagar por la suscripción
      */

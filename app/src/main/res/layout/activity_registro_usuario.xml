@@ -147,6 +147,16 @@
                 android:text="Pago"
                 app:icon="@drawable/cio_paypal_logo" />
 
+            <Button
+                android:id="@+id/btn_terminos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/teal_700"
+                android:onClick="Terminos"
+                android:text="Terminos y Condiciones" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
