@@ -14,12 +14,8 @@ import java.util.ArrayList;
 
 public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> {
 
-
-
-
     private ArrayList<UsuarioPsicologo> lista_psicologo_modelo;
     private final AdaptadorPdf.OnClickListener mOnClickListener;
-
 
     public interface OnClickListener{
         /**
@@ -95,8 +91,6 @@ public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> 
 //        viewHolder.txt_titulo.setText(audioModelo.getString_nombre_cancion());
 //
 //        viewHolder.txt_tipo.setText(audioModelo.getString_tipo());
-
-
     }
 
     /**

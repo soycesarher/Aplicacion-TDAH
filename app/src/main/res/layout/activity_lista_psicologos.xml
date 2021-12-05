@@ -25,10 +25,16 @@
             android:paddingRight="30dp"
             android:paddingBottom="30dp">
 
-
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_psicologos"
                 android:layout_width="match_parent"
-                android:layout_height="626dp" />
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:background="@color/white"
+                android:backgroundTint="#72BEC3"
+                android:clickable="true"
+                android:textColor="@color/white" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

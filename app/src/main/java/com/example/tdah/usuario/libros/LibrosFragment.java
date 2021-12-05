@@ -43,10 +43,10 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
 
 
     private final ArrayList<AudioModelo> lista_audio_modelo = new ArrayList<>();
+    private Adaptador adapter;
 
     private MediaPlayer mediaPlayer;
 
-    private Adaptador adapter;
 
     private Handler handler = new Handler();
 
@@ -270,7 +270,6 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
 
             mediaPlayer.stop();
 
-
             cargaValores(position);
 
             mediaPlayer.start();
@@ -285,8 +284,6 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
             imgbtn_reproducir.setImageResource(android.R.drawable.ic_media_pause);
 
         }
-
-
 
     }
 

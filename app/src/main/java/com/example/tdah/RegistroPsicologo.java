@@ -1,7 +1,9 @@
 package com.example.tdah;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +11,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,15 +19,17 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.tdah.modelos.UsuarioPsicologo;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.regex.Pattern;
-
-import io.card.payment.i18n.locales.LocalizedStringsEN_GB;
 
 public class RegistroPsicologo extends Activity {
 
@@ -43,6 +48,7 @@ public class RegistroPsicologo extends Activity {
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
+    FirebaseUser usuario_actual;
 
     private boolean boolean_error_texto;
     private boolean boolean_error_contrasena;
@@ -52,6 +58,12 @@ public class RegistroPsicologo extends Activity {
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
     private boolean boolean_pago;
+    private boolean boolean_pdf=false;
+
+    private Button btn_curriculum;
+    private Uri uri_pdf = null;
+    private ProgressDialog pd_dialogo;
+    private String string_url_curriculum;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -61,6 +73,7 @@ public class RegistroPsicologo extends Activity {
         setContentView(R.layout.activity_registro_psicologo);
 
         inicializa_firebase();
+
 
         txt_nombre_psicologo = findViewById(R.id.txt_nombre_psicologo);
         txt_apellido_paterno = findViewById(R.id.txt_apellido_paterno);
@@ -74,6 +87,20 @@ public class RegistroPsicologo extends Activity {
         txt_correo = findViewById(R.id.txt_correo_psicologo);
         txt_contrasena = findViewById(R.id.txt_contrasena_psicologo);
         txt_celdula = findViewById(R.id.txt_cedula_psicologo);
+
+
+        btn_curriculum = findViewById(R.id.btn_curriculum);
+
+        // After Clicking on this we will be
+        // redirected to choose pdf
+        btn_curriculum.setOnClickListener(v -> {
+            Intent galleryIntent = new Intent();
+            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+            // We will be redirected to choose pdf
+            galleryIntent.setType("application/pdf");
+            startActivityForResult(galleryIntent, 1);
+        });
 
         txt_nombre_psicologo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -280,7 +307,8 @@ public class RegistroPsicologo extends Activity {
         });
 
         if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
-                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono || boolean_pago) {
+                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp
+                || boolean_error_telefono || boolean_pago||boolean_pdf) {
 
             Toast.makeText(RegistroPsicologo.this, "Llene correctamente los campos", Toast.LENGTH_LONG).show();
 
@@ -613,7 +641,7 @@ public class RegistroPsicologo extends Activity {
 
             if (task.isSuccessful()) {
 
-                FirebaseUser usuario_actual = mAuth.getCurrentUser();
+                 usuario_actual = mAuth.getCurrentUser();
 
                 assert usuario_actual != null;
 
@@ -626,7 +654,7 @@ public class RegistroPsicologo extends Activity {
                 usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
                 usuarioPsicologo.setString_especialidad("Por verificar");
-                usuarioPsicologo.setString_perfilProfesional("Por verificar");
+                usuarioPsicologo.setString_perfilProfesional(string_url_curriculum);
                 usuarioPsicologo.setBoolean_validado(false);
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
@@ -638,6 +666,7 @@ public class RegistroPsicologo extends Activity {
                         databaseReference.child("Psicologo").child("NoValidado").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
 
                             if (task2.isSuccessful()) {
+
                                 Toast.makeText(RegistroPsicologo.this, "Se realizó el registro con éxito", Toast.LENGTH_LONG).show();
 
                             } else {
@@ -663,6 +692,68 @@ public class RegistroPsicologo extends Activity {
             }
 
         });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+
+
+            pd_dialogo = new ProgressDialog(this);
+
+            pd_dialogo.setMessage("Cargando archivo");
+
+            pd_dialogo.show();
+
+            uri_pdf = data.getData();
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+            usuario_actual = mAuth.getCurrentUser();
+
+            Toast.makeText(RegistroPsicologo.this, uri_pdf.toString(), Toast.LENGTH_SHORT).show();
+
+            // Here we are uploading the pdf in firebase storage with the name of current time
+            final StorageReference filepath = storageReference.child(usuario_actual.getUid() + "." + "pdf");
+
+            Toast.makeText(RegistroPsicologo.this, filepath.getName(), Toast.LENGTH_SHORT).show();
+
+            filepath.putFile(uri_pdf).continueWithTask((Continuation) task -> {
+
+                if (!task.isSuccessful()) {
+
+                    throw task.getException();
+
+                }
+
+                return filepath.getDownloadUrl();
+
+            }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
+
+                if (task.isSuccessful()) {
+
+                    pd_dialogo.dismiss();
+
+                    Uri uri = task.getResult();
+
+                    string_url_curriculum = uri.toString();
+
+                    Toast.makeText(RegistroPsicologo.this, "Cargado exitosamente", Toast.LENGTH_SHORT).show();
+
+                    boolean_pdf = true;
+
+                } else {
+
+                    pd_dialogo.dismiss();
+
+                    Toast.makeText(RegistroPsicologo.this, "Error al cargar archivo", Toast.LENGTH_SHORT).show();
+
+                }
+
+            });
+        }
 
     }
 

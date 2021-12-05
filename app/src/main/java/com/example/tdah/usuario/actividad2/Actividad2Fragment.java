@@ -41,10 +41,7 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
         View root = inflater.inflate(R.layout.fragment_actividad2, container, false);
         Componentes(root);
         main = (UsuarioPrincipal) getParentFragment().getActivity();
-        Actividad2ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
+        Actividad2ViewModel.getText().observe(getViewLifecycleOwner(), s -> {
         });
         return root;
     }
