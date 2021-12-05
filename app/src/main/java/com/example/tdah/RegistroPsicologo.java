@@ -1,9 +1,7 @@
 package com.example.tdah;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +10,8 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,19 +19,20 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.tdah.modelos.UsuarioPsicologo;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.regex.Pattern;
+import io.card.payment.i18n.locales.LocalizedStringsEN_GB;
 
 public class RegistroPsicologo extends Activity {
+
+public class RegistroPsicologo extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+
+    String estado, municipio, localidad;
 
     private EditText txt_nombre_psicologo;
     private EditText txt_apellido_paterno;
@@ -48,7 +49,6 @@ public class RegistroPsicologo extends Activity {
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
-    FirebaseUser usuario_actual;
 
     private boolean boolean_error_texto;
     private boolean boolean_error_contrasena;
@@ -57,13 +57,7 @@ public class RegistroPsicologo extends Activity {
     private boolean boolean_error_telefono;
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
-    private boolean boolean_pago;
-    private boolean boolean_pdf=false;
-
-    private Button btn_curriculum;
-    private Uri uri_pdf = null;
-    private ProgressDialog pd_dialogo;
-    private String string_url_curriculum;
+        private boolean boolean_pago;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -73,7 +67,6 @@ public class RegistroPsicologo extends Activity {
         setContentView(R.layout.activity_registro_psicologo);
 
         inicializa_firebase();
-
 
         txt_nombre_psicologo = findViewById(R.id.txt_nombre_psicologo);
         txt_apellido_paterno = findViewById(R.id.txt_apellido_paterno);
@@ -101,6 +94,28 @@ public class RegistroPsicologo extends Activity {
             galleryIntent.setType("application/pdf");
             startActivityForResult(galleryIntent, 1);
         });
+
+
+
+        ArrayAdapter<CharSequence> estadoAdapter, municipioAdapter, localidadAdapter;
+
+        estadoAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.estado, android.R.layout.simple_spinner_item);
+        municipioAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.municipio, android.R.layout.simple_spinner_item);
+        localidadAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.localidad, android. R.layout.simple_spinner_item);
+
+        sp_estado = findViewById(R.id.sp_estado);
+        sp_estado.setAdapter(estadoAdapter);
+
+        sp_municipio = findViewById(R.id.sp_municipio);
+        sp_municipio.setAdapter(municipioAdapter);
+
+        sp_localidad = findViewById(R.id.sp_localidad);
+        sp_localidad.setAdapter(localidadAdapter);
+
+        sp_estado.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        sp_municipio.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        sp_localidad.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
 
         txt_nombre_psicologo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -306,13 +321,12 @@ public class RegistroPsicologo extends Activity {
             }
         });
 
-        if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
-                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp
-                || boolean_error_telefono || boolean_pago||boolean_pdf) {
+        if(boolean_error_cedula||boolean_error_correo||!boolean_error_contrasena
+                ||boolean_error_texto||boolean_error_numero_exterior||boolean_error_cp||boolean_error_telefono||boolean_pago){
 
             Toast.makeText(RegistroPsicologo.this, "Llene correctamente los campos", Toast.LENGTH_LONG).show();
 
-        } else {
+        }else{
             ingresa_base_datos();
         }
 
@@ -641,7 +655,7 @@ public class RegistroPsicologo extends Activity {
 
             if (task.isSuccessful()) {
 
-                 usuario_actual = mAuth.getCurrentUser();
+                FirebaseUser usuario_actual = mAuth.getCurrentUser();
 
                 assert usuario_actual != null;
 
@@ -654,8 +668,7 @@ public class RegistroPsicologo extends Activity {
                 usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
                 usuarioPsicologo.setString_especialidad("Por verificar");
-                usuarioPsicologo.setString_perfilProfesional(string_url_curriculum);
-                usuarioPsicologo.setBoolean_validado(false);
+                usuarioPsicologo.setString_perfilProfesional("Por verificar");
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
 
@@ -667,7 +680,6 @@ public class RegistroPsicologo extends Activity {
 
                             if (task2.isSuccessful()) {
 
-                                Toast.makeText(RegistroPsicologo.this, "Se realizó el registro con éxito", Toast.LENGTH_LONG).show();
 
                             } else {
 
@@ -757,4 +769,9 @@ public class RegistroPsicologo extends Activity {
 
     }
 
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }

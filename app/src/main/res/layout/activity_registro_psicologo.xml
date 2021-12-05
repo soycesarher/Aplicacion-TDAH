@@ -118,24 +118,33 @@
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <EditText
-                android:id="@+id/txt_municipio"
+            <Spinner
+                android:id="@+id/sp_estado"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:hint="@string/estado" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/municipio"
-                android:inputType="textPassword"
-                android:textAlignment="center"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/estado"
-                android:minHeight="48dp" />
+                <Spinner
+                    android:id="@+id/sp_municipio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/estado"
+                    android:layout_weight="1"/>
+
+                <Spinner
+                    android:id="@+id/sp_localidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/estado"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/lbl_contacto"

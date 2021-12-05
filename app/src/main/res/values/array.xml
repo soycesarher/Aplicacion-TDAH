@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="municipio">
+        <item>Seleccione municipio</item>
+        <item>Metepec</item>
+    </string-array>
+
+    <string-array name="estado">
+        <item>Seleccione estado</item>
+        <item>Estado de México</item>
+    </string-array>
+
+    <string-array name="localidad">
+        <item>Seleccione localidad</item>
+        <item>Barrio Santiaguito</item>
+        <item>Barrio de la Asunción</item>
+        <item>Las Minas</item>
+        <item>Metepec</item>
+        <item>Colonia Agricola Álvaro Obregón</item>
+        <item>Rancho el Carmen Progreso</item>
+        <item>San Bartolomé Tlatelulco</item>
+        <item>San Francisco Coaxusco</item>
+        <item>San Gaspar Tlahuelilpan</item>
+        <item>San Jerónimo Chicahualco </item>
+        <item>San Jorge Pueblo Nuevo</item>
+        <item>Rancho San José Buenavista</item>
+        <item>San lorenzo Coacalco</item>
+        <item>San Lucas Tunco</item>
+        <item>San Miguel Totocuitlapilco</item>
+        <item>San Salvador Tizatlalli</item>
+        <item>San Sebastián</item>
+        <item>Santa María Magdalena Ocotitlán</item>
+        <item>Rancho San Antonio</item>
+        <item>Colonia Llano Grande</item>
+        <item>Rancho San Isidro</item>
+        <item>Residencial Campestre Metepec</item>
+        <item>El Arenal</item>
+        <item>San Lucas</item>
+        <item>Residencial Foresta</item>
+    </string-array>
+
+
+
+
+</resources>

@@ -30,6 +30,8 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
     private TextView suma_l;
     private TextView suma_r;
     private TextView suma_b;
+    private TextView str_puntos;
+    private TextView num_puntos;
     private Button comprobar;
 
     UsuarioPrincipal main;
@@ -65,6 +67,8 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
         suma_l = (TextView) root.findViewById(R.id.triangulo_puntos_izq);
         suma_r = (TextView) root.findViewById(R.id.triangulo_puntos_der);
         suma_b = (TextView) root.findViewById(R.id.triangulo_puntos_bas);
+        str_puntos = (TextView) root.findViewById(R.id.puntos_actv2);
+        num_puntos = (TextView) root.findViewById(R.id.numero_puntos_actv2);
     }
 
     private void Botones(View root) {
@@ -79,7 +83,6 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
 
     //Este método realiza la suma
     private void sumarTriangulo () {
-        //Toast.makeText(main.getApplicationContext(), "En reparacion ...", Toast.LENGTH_SHORT).show();
         try{
             String niv1_a = triangulo_nv1_a.getText().toString();
             int valor_niv1_a = Integer.parseInt(niv1_a);
@@ -110,24 +113,34 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
                                             int suma_lado_izq = valor_niv3_a+valor_niv2_a+valor_niv1_a;
                                             int suma_lado_der = valor_niv3_c+valor_niv2_b+valor_niv1_a;
                                             int suma_lado_base = valor_niv3_a+valor_niv3_b+valor_niv3_c;
+                                            int suma_puntos_total = 0;
                                             suma_l.setText(""+suma_lado_izq);
                                             suma_r.setText(""+suma_lado_der);
                                             suma_b.setText(""+suma_lado_base);
-                                            if(suma_lado_izq == 10){
-                                                Toast.makeText(main.getApplicationContext(), "El lado izquierdo es Correcto!", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado izquierdo!", Toast.LENGTH_SHORT).show();
+                                            if(suma_lado_izq == 10 && suma_lado_der == 10 && suma_lado_base == 10){
+                                                Toast.makeText(main.getApplicationContext(), "Es Correcto. Lo lograste! Felicidades!!", Toast.LENGTH_SHORT).show();
+                                                suma_puntos_total = 30;
+                                            }else{
+                                                if(suma_lado_izq == 10){
+                                                    suma_puntos_total+=10;
+                                                    Toast.makeText(main.getApplicationContext(), "El lado izquierdo es Correcto!", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado izquierdo!", Toast.LENGTH_SHORT).show();
+                                                }
+                                                if(suma_lado_der == 10){
+                                                    suma_puntos_total+=10;
+                                                    Toast.makeText(main.getApplicationContext(), "El lado derecho es Correcto!", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado derecho!", Toast.LENGTH_SHORT).show();
+                                                }
+                                                if(suma_lado_base == 10){
+                                                    suma_puntos_total+=10;
+                                                    Toast.makeText(main.getApplicationContext(), "El lado base es Correcto!", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado base!", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
-                                            if(suma_lado_der == 10){
-                                                Toast.makeText(main.getApplicationContext(), "El lado derecho es Correcto!", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado derecho!", Toast.LENGTH_SHORT).show();
-                                            }
-                                            if(suma_lado_base == 10){
-                                                Toast.makeText(main.getApplicationContext(), "El lado base es Correcto!", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado base!", Toast.LENGTH_SHORT).show();
-                                            }
+                                            num_puntos.setText(""+suma_puntos_total);
                                         } else {msm_dato_rep();}
                                     } else {msm_dato_rep();}
                                 } else {msm_dato_rep();}
