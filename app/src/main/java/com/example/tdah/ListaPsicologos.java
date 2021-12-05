@@ -34,7 +34,7 @@ public class ListaPsicologos extends AppCompatActivity implements AdaptadorPdf.O
     public void cargaListaPsicologos() {
 
 
-        databaseReference.child("Psicologo").child("Validado").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Psicologo").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

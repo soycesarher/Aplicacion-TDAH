@@ -3,6 +3,7 @@ package com.example.tdah.pdf;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +38,10 @@ public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> 
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        //TODO: INICIALIZAR LOS ELEMENTOS DEL LAYOUT
+        TextView txt_nombre_psicologo_layout;
+        TextView txt_especialidad_psicologo_layout;
+        TextView txt_direccion_psicologo_layout;
+
         public AdaptadorPdf.OnClickListener onClickListener;
 
         public ViewHolder(View view, AdaptadorPdf.OnClickListener onClickListener) {
@@ -45,7 +49,9 @@ public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> 
             this.onClickListener = onClickListener;
             // Define click listener for the ViewHolder's View
 
-//            TODO:ELEMENTOS DE LAYOUT
+            txt_nombre_psicologo_layout = view.findViewById(R.id.txt_nombre_psicologo_layout);
+            txt_especialidad_psicologo_layout = view.findViewById(R.id.txt_especialidad_psicologo_layout);
+            txt_direccion_psicologo_layout = view.findViewById(R.id.txt_direccion_psicologo_layout);
 
             view.setClickable(true);
             view.setOnClickListener(this);
@@ -86,11 +92,14 @@ public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> 
 
         UsuarioPsicologo usuarioPsicologo = lista_psicologo_modelo.get(position);
 
-//        viewHolder.v_miniatura_layout.setImageResource(audioModelo.getInt_imagen());
-//
-//        viewHolder.txt_titulo.setText(audioModelo.getString_nombre_cancion());
-//
-//        viewHolder.txt_tipo.setText(audioModelo.getString_tipo());
+        viewHolder.txt_direccion_psicologo_layout.setText(usuarioPsicologo.getString_direccion());
+
+        viewHolder.txt_nombre_psicologo_layout.setText(usuarioPsicologo.getString_nombre()+" "
+                +usuarioPsicologo.getString_apellido_paterno()+" "
+                +usuarioPsicologo.getString_apellido_materno());
+
+        viewHolder.txt_especialidad_psicologo_layout.setText(usuarioPsicologo.getString_especialidad());
+
     }
 
     /**

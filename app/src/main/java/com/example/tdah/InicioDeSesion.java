@@ -1,6 +1,7 @@
 package com.example.tdah;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,12 +16,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Pattern;
 
 public class InicioDeSesion extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseUser fUser;
+    private DatabaseReference databaseReference;
 
     private boolean boolean_correo = false, boolean_contrasena = false;
 
@@ -36,6 +45,9 @@ public class InicioDeSesion extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_de_sesion);
 
         mAuth = FirebaseAuth.getInstance();
+
+        fUser = mAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         txt_correo = findViewById(R.id.txt_correo_inicia);
         txt_contrasena = findViewById(R.id.txt_contrasena_inicia);
@@ -220,10 +232,25 @@ public class InicioDeSesion extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(InicioDeSesion.this, UsuarioPrincipal.class));
-            finish();
-        }
+            if(mAuth.getCurrentUser()!= null){
+                databaseReference.child("Usuario").orderByKey().equalTo(fUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            startActivity(new Intent(InicioDeSesion.this, UsuarioPrincipal.class));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        startActivity(new Intent(InicioDeSesion.this, PsicologoPrincipal.class));
+
+                    }
+                });
+
+                finish();
+            }
+
     }
 
     //conexion de activities

@@ -170,6 +170,7 @@ public class CuentaFragment extends Fragment {
 
         u.setString_id(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         u.setString_correo(fUser.getEmail());
+
         databaseReference.child("Usuario").child(u.getString_id()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

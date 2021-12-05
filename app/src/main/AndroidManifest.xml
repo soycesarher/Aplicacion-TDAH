@@ -59,7 +59,13 @@
             android:name=".InicioDeSesion"
             android:exported="false" />
         <activity
+            android:name=".InicioDeSesionPsicologo"
+            android:exported="false" />
+        <activity
             android:name=".RegistroUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroPsicologo"
             android:exported="false" />
         <activity android:name=".usuario.Oro" />
         <activity android:name=".usuario.Escenario" />

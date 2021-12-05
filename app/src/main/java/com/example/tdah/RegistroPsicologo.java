@@ -288,23 +288,6 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
             }
         });
 
-        txt_municipio.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                boolean_error_texto = valida_texto(txt_municipio);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         txt_telefono.addTextChangedListener(new TextWatcher() {
             @Override
@@ -382,6 +365,158 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+
+
+
+
+
+    /**
+     * Recupera los valores obtenidos de los botones, autentica el correo y contrasenia he ingresa
+     * la información a la base de datos.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+
+    public void ingresa_base_datos() {
+
+        String string_nombre = txt_nombre_psicologo.getText().toString();
+        String string_apellido_paterno = txt_apellido_paterno.getText().toString();
+        String string_apellido_materno = txt_apellido_materno.getText().toString();
+        String string_calle = txt_calle.getText().toString();
+        String string_num_ext = txt_num_exterior.getText().toString();
+        String string_cp = txt_cp.getText().toString();
+
+        String string_telefono = txt_telefono.getText().toString();
+        String string_correo = txt_correo.getText().toString();
+        String string_contrasena = txt_contrasena.getText().toString();
+        String string_cedula = txt_celdula.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(string_correo, string_contrasena).addOnCompleteListener(task -> {
+
+            UsuarioPsicologo usuarioPsicologo = new UsuarioPsicologo();
+
+            if (task.isSuccessful()) {
+
+                FirebaseUser usuario_actual = mAuth.getCurrentUser();
+
+                assert usuario_actual != null;
+
+                usuarioPsicologo.setString_id(usuario_actual.getUid());
+                usuarioPsicologo.setString_nombre(string_nombre);
+                usuarioPsicologo.setString_apellido_paterno(string_apellido_paterno);
+                usuarioPsicologo.setString_apellido_materno(string_apellido_materno);
+                usuarioPsicologo.setString_direccion(string_calle + "," + string_num_ext + "," + string_cp +
+                        "," + localidad + "," + municipio+","+estado);
+                usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
+                usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
+                usuarioPsicologo.setString_especialidad("Por verificar");
+                usuarioPsicologo.setString_perfilProfesional(string_url_curriculum);
+
+                usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
+
+                    if (task1.isSuccessful()) {
+
+                        Toast.makeText(RegistroPsicologo.this, "Mensaje enviado", Toast.LENGTH_LONG).show();
+
+                        databaseReference.child("Psicologo").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
+
+                            if (task2.isSuccessful()) {
+
+
+                            } else {
+
+                                Toast.makeText(RegistroPsicologo.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+
+                            }
+
+                        });
+
+                    } else {
+
+                        Toast.makeText(RegistroPsicologo.this, "Mensaje no recibido", Toast.LENGTH_LONG).show();
+
+                    }
+
+                });
+
+            } else {
+
+                Toast.makeText(RegistroPsicologo.this, "Fallo de autenticación", Toast.LENGTH_LONG).show();
+
+            }
+
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+
+
+            pd_dialogo = new ProgressDialog(this);
+
+            pd_dialogo.setMessage("Cargando archivo");
+
+            pd_dialogo.show();
+
+            uri_pdf = data.getData();
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+            usuario_actual = mAuth.getCurrentUser();
+
+            Toast.makeText(RegistroPsicologo.this, uri_pdf.toString(), Toast.LENGTH_SHORT).show();
+
+            // Here we are uploading the pdf in firebase storage with the name of current time
+            final StorageReference filepath = storageReference.child(usuario_actual.getUid() + "." + "pdf");
+
+            Toast.makeText(RegistroPsicologo.this, filepath.getName(), Toast.LENGTH_SHORT).show();
+
+            filepath.putFile(uri_pdf).continueWithTask((Continuation) task -> {
+
+                if (!task.isSuccessful()) {
+
+                    throw task.getException();
+
+                }
+
+                return filepath.getDownloadUrl();
+
+            }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
+
+                if (task.isSuccessful()) {
+
+                    pd_dialogo.dismiss();
+
+                    Uri uri = task.getResult();
+
+                    string_url_curriculum = uri.toString();
+
+                    Toast.makeText(RegistroPsicologo.this, "Cargado exitosamente", Toast.LENGTH_SHORT).show();
+
+                    boolean_pdf = true;
+
+                } else {
+
+                    pd_dialogo.dismiss();
+
+                    Toast.makeText(RegistroPsicologo.this, "Error al cargar archivo", Toast.LENGTH_SHORT).show();
+
+                }
+
+            });
+        }
+
+    }
+
+
+    @Override
+    public void onClick(View view) {
 
     }
 
@@ -477,15 +612,6 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
         }
 
         return boolean_error;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(RegistroPsicologo.this, PsicologoPrincipal.class));
-            finish();
-        }
     }
 
     /**
@@ -680,152 +806,9 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
         databaseReference = firebase_database.getReference();
     }
 
-
-
-    /**
-     * Recupera los valores obtenidos de los botones, autentica el correo y contrasenia he ingresa
-     * la información a la base de datos.
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-
-    public void ingresa_base_datos() {
-
-        String string_nombre = txt_nombre_psicologo.getText().toString();
-        String string_apellido_paterno = txt_apellido_paterno.getText().toString();
-        String string_apellido_materno = txt_apellido_materno.getText().toString();
-        String string_calle = txt_calle.getText().toString();
-        String string_num_ext = txt_num_exterior.getText().toString();
-        String string_cp = txt_cp.getText().toString();
-        String string_localidad = txt_localidad.getText().toString();
-        String string_municipio = txt_municipio.getText().toString();
-        String string_telefono = txt_telefono.getText().toString();
-        String string_correo = txt_correo.getText().toString();
-        String string_contrasena = txt_contrasena.getText().toString();
-        String string_cedula = txt_celdula.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(string_correo, string_contrasena).addOnCompleteListener(task -> {
-
-            UsuarioPsicologo usuarioPsicologo = new UsuarioPsicologo();
-
-            if (task.isSuccessful()) {
-
-                FirebaseUser usuario_actual = mAuth.getCurrentUser();
-
-                assert usuario_actual != null;
-
-                usuarioPsicologo.setString_id(usuario_actual.getUid());
-                usuarioPsicologo.setString_nombre(string_nombre);
-                usuarioPsicologo.setString_apellido_paterno(string_apellido_paterno);
-                usuarioPsicologo.setString_apellido_materno(string_apellido_materno);
-                usuarioPsicologo.setString_direccion(string_calle + "," + string_num_ext + "," + string_cp +
-                        "," + string_localidad + "," + string_municipio);
-                usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
-                usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
-                usuarioPsicologo.setString_especialidad("Por verificar");
-                usuarioPsicologo.setString_perfilProfesional("Por verificar");
-
-                usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
-
-                    if (task1.isSuccessful()) {
-
-                        Toast.makeText(RegistroPsicologo.this, "Mensaje enviado", Toast.LENGTH_LONG).show();
-
-                        databaseReference.child("Psicologo").child("NoValidado").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
-
-                            if (task2.isSuccessful()) {
-
-
-                            } else {
-
-                                Toast.makeText(RegistroPsicologo.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
-
-                            }
-
-                        });
-
-                    } else {
-
-                        Toast.makeText(RegistroPsicologo.this, "Mensaje no recibido", Toast.LENGTH_LONG).show();
-
-                    }
-
-                });
-
-            } else {
-
-                Toast.makeText(RegistroPsicologo.this, "Fallo de autenticación", Toast.LENGTH_LONG).show();
-
-            }
-
-        });
-
-    }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-
-
-            pd_dialogo = new ProgressDialog(this);
-
-            pd_dialogo.setMessage("Cargando archivo");
-
-            pd_dialogo.show();
-
-            uri_pdf = data.getData();
-
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
-            usuario_actual = mAuth.getCurrentUser();
-
-            Toast.makeText(RegistroPsicologo.this, uri_pdf.toString(), Toast.LENGTH_SHORT).show();
-
-            // Here we are uploading the pdf in firebase storage with the name of current time
-            final StorageReference filepath = storageReference.child(usuario_actual.getUid() + "." + "pdf");
-
-            Toast.makeText(RegistroPsicologo.this, filepath.getName(), Toast.LENGTH_SHORT).show();
-
-            filepath.putFile(uri_pdf).continueWithTask((Continuation) task -> {
-
-                if (!task.isSuccessful()) {
-
-                    throw task.getException();
-
-                }
-
-                return filepath.getDownloadUrl();
-
-            }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
-
-                if (task.isSuccessful()) {
-
-                    pd_dialogo.dismiss();
-
-                    Uri uri = task.getResult();
-
-                    string_url_curriculum = uri.toString();
-
-                    Toast.makeText(RegistroPsicologo.this, "Cargado exitosamente", Toast.LENGTH_SHORT).show();
-
-                    boolean_pdf = true;
-
-                } else {
-
-                    pd_dialogo.dismiss();
-
-                    Toast.makeText(RegistroPsicologo.this, "Error al cargar archivo", Toast.LENGTH_SHORT).show();
-
-                }
-
-            });
-        }
-
-    }
-
-
-    @Override
-    public void onClick(View view) {
+    protected void onStart() {
+        super.onStart();
 
     }
 }
