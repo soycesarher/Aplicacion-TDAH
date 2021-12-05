@@ -200,6 +200,12 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
+                android:id="@+id/btn_curriculum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="subir CV (PDF)" />
+
+            <Button
                 android:id="@+id/btn_pagar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

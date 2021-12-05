@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    tools:context=".pdf.PerfilPsicologo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_nombre_psicologo_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/txt_direccion_consultorio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Especialidad"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dirección consultorio"
+            android:textSize="18sp"/>
+
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/visor_pdf"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="500dp">
+
+            <ProgressBar
+                android:id="@+id/pb_progreso_carga"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </com.github.barteksc.pdfviewer.PDFView>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
