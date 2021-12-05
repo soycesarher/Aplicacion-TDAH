@@ -5,265 +5,293 @@
     android:layout_height="match_parent"
     tools:context=".usuario.actividad2.Actividad2Fragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-
-        android:padding="20dp"
-        android:weightSum="4">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/instrucciones_activ2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Resuelve el siguiente triángulo mágico poniendo números del 1-6 sin repetirlos en cada casilla. (Cada lado del triángulo debe sumar 10 unidades)"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/instrucciones_activ2_b"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Debes juntar 30 puntos para terminar esta actividad."
-                android:textAlignment="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/puntos_actv2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Puntos:  " />
-
-                <TextView
-                    android:id="@+id/numero_puntos_actv2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/triangulo_niv1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="0"
-                    android:inputType="numberSigned"
-                    android:maxLength="1" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/triangulo_niv2_a"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/instrucciones_activ2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="0"
-                    android:inputType="numberSigned"
-                    android:maxLength="1" />
+                    android:text="Resuelve el siguiente triángulo mágico poniendo números del 1-6 sin repetirlos en cada casilla. (Cada lado del triángulo debe sumar 10 unidades)"
+                    android:textAlignment="center" />
 
-                <EditText
-                    android:id="@+id/triangulo_niv2_b"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/instrucciones_activ2_b"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="0"
-                    android:inputType="numberSigned"
-                    android:maxLength="1" />
+                    android:text="Debes juntar 30 puntos para terminar esta actividad."
+                    android:textAlignment="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/triangulo_niv3_a"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="0"
-                    android:inputType="numberSigned"
-                    android:maxLength="1" />
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/triangulo_niv3_b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="0"
-                    android:inputType="numberSigned"
-                    android:maxLength="1" />
+                    <TextView
+                        android:id="@+id/puntos_actv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="Puntos:  " />
 
-                <EditText
-                    android:id="@+id/triangulo_niv3_c"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/numero_puntos_actv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:ems="10"
                     android:gravity="center"
-                    android:hint="0"
-                    android:inputType="numberSigned"
-                    android:maxLength="1" />
+
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/triangulo_niv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="numberSigned"
+                        android:maxLength="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/triangulo_niv2_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="numberSigned"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/triangulo_niv2_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="numberSigned"
+                        android:maxLength="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/triangulo_niv3_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="numberSigned"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/triangulo_niv3_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="numberSigned"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/triangulo_niv3_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:inputType="numberSigned"
+                        android:maxLength="1" />
+                </LinearLayout>
+
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="40dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/triangulo_izq"
+                        android:layout_width="30px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="Suma del lado izquierdo:" />
+
+                    <TextView
+                        android:id="@+id/triangulo_puntos_izq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/triangulo_der"
+                        android:layout_width="30px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="Suma del lado derecho:" />
+
+                    <TextView
+                        android:id="@+id/triangulo_puntos_der"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/triangulo_bas"
+                        android:layout_width="30px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="Suma del lado base:" />
+
+                    <TextView
+                        android:id="@+id/triangulo_puntos_bas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="0" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_comprobar_triangulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/boton_personalizado"
+                    android:text="comprobar" />
+
+                <Button
+                    android:id="@+id/btn_reiniciar_triangulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/boton_personalizado"
+                    android:text="Reiniciar" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/triangulo_izq"
-                    android:layout_width="30px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Lado izquierdo:" />
-
-                <TextView
-                    android:id="@+id/triangulo_puntos_izq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="0" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/triangulo_der"
-                    android:layout_width="30px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Lado derecho:" />
-
-                <TextView
-                    android:id="@+id/triangulo_puntos_der"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="0" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/triangulo_bas"
-                    android:layout_width="30px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="Lado Base:" />
-
-                <TextView
-                    android:id="@+id/triangulo_puntos_bas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="0" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_comprobar_triangulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/boton_personalizado"
-            android:text="comprobar" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
