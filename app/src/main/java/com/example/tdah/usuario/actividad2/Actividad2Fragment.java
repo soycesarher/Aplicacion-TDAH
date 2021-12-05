@@ -82,6 +82,56 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
 
     //Este método realiza la suma
     private void sumarTriangulo () {
-        Toast.makeText(main.getApplicationContext(), "En reparacion ...", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(main.getApplicationContext(), "En reparacion ...", Toast.LENGTH_SHORT).show();
+        try{
+            String niv1_a = triangulo_nv1_a.getText().toString();
+            int valor_niv1_a = Integer.parseInt(niv1_a);
+
+            String niv2_a = triangulo_nv2_a.getText().toString();
+            int valor_niv2_a = Integer.parseInt(niv2_a);
+
+            String niv2_b = triangulo_nv2_b.getText().toString();
+            int valor_niv2_b = Integer.parseInt(niv2_b);
+
+            String niv3_a = triangulo_nv3_a.getText().toString();
+            int valor_niv3_a = Integer.parseInt(niv3_a);
+
+            String niv3_b = triangulo_nv3_b.getText().toString();
+            int valor_niv3_b = Integer.parseInt(niv3_b);
+
+            String niv3_c = triangulo_nv3_c.getText().toString();
+            int valor_niv3_c = Integer.parseInt(niv3_c);
+
+            if (valor_niv1_a<7&&valor_niv2_a<7&&valor_niv2_b<7&&valor_niv3_a<7&&valor_niv3_b<7&&valor_niv3_c<7){
+                if (valor_niv1_a>0&&valor_niv2_a>0&&valor_niv2_b>0&&valor_niv3_a>0&&valor_niv3_b>0&&valor_niv3_c>0) {
+
+                    int suma_lado_izq = valor_niv3_a+valor_niv2_a+valor_niv1_a;
+                    int suma_lado_der = valor_niv3_c+valor_niv2_b+valor_niv1_a;
+                    int suma_lado_base = valor_niv3_a+valor_niv3_b+valor_niv3_c;
+
+                    if(suma_lado_izq == 10){
+                        Toast.makeText(main.getApplicationContext(), "El lado izquierdo es Correcto!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado izquierdo!", Toast.LENGTH_SHORT).show();
+                    }
+                    if(suma_lado_der == 10){
+                        Toast.makeText(main.getApplicationContext(), "El lado derecho es Correcto!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado derecho!", Toast.LENGTH_SHORT).show();
+                    }
+                    if(suma_lado_base == 10){
+                        Toast.makeText(main.getApplicationContext(), "El lado base es Correcto!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado base!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(main.getApplicationContext(), "Solo debes ocupar números del 1 al 6", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(main.getApplicationContext(), "Solo debes ocupar números del 1 al 6", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(main.getApplicationContext(), "Primero debes llenar todo el triangulo", Toast.LENGTH_SHORT).show();
+        }
     }
 }
