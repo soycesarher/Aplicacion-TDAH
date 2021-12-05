@@ -81,7 +81,6 @@ public class PadresFragment extends Fragment{
         btn_padres_nip.setOnClickListener(v -> {
             if(!autentica_nip(txt_nip)){
 
-
                 startActivity(new Intent(getContext(), PadrePrincipal.class));
 
             }else{
