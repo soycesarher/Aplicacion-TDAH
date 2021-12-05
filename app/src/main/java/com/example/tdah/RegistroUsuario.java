@@ -215,7 +215,7 @@ public class RegistroUsuario extends AppCompatActivity {
         btn_Paypal.setOnClickListener(v -> Metodo_Paypal());
     }
     public void Terminos(View view){
-    Intent termino = new Intent(this, TerminosCondiciones.class);
+    Intent termino = new Intent(this, TerminosyCondiciones.class);
     startActivity(termino);
     }
     /**
