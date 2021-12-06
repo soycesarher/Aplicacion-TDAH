@@ -1,9 +1,6 @@
 package com.example.tdah;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,7 +8,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -20,24 +16,33 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tdah.modelos.UsuarioPsicologo;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.paypal.checkout.PayPalCheckout;
+import com.paypal.checkout.config.CheckoutConfig;
+import com.paypal.checkout.config.Environment;
+import com.paypal.checkout.config.SettingsConfig;
+import com.paypal.checkout.createorder.CreateOrderActions;
+import com.paypal.checkout.createorder.CurrencyCode;
+import com.paypal.checkout.createorder.OrderIntent;
+import com.paypal.checkout.createorder.UserAction;
+import com.paypal.checkout.order.Amount;
+import com.paypal.checkout.order.AppContext;
+import com.paypal.checkout.order.Order;
+import com.paypal.checkout.order.PurchaseUnit;
+import com.paypal.checkout.paymentbutton.PaymentButton;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
-import io.card.payment.i18n.locales.LocalizedStringsEN_GB;
 
 
-
-public class RegistroPsicologo extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class RegistroPsicologo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     String estado, municipio, localidad;
 
@@ -69,14 +74,19 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
     private boolean boolean_error_telefono;
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
-        private boolean boolean_pago;
+    private boolean boolean_pago;
 
-    private boolean boolean_pdf=false;
+    private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
+/*    private static final int PAYPAL_CODIGO = 1717;
 
-    private Button btn_curriculum;
-    private Uri uri_pdf = null;
-    private ProgressDialog pd_dialogo;
-    private String string_url_curriculum="";
+    private final PayPalConfiguration paypalConfig = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(ID_CLIENT_PAYPAL);*/
+
+
+    private PaymentButton payPalButton;
+
+    private final String string_url_curriculum = "-1";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -85,7 +95,40 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
         setContentView(R.layout.activity_registro_psicologo);
 
+        //Paypal
+        payPalButton = findViewById(R.id.payPalButton);
+        configuraPaypal();
 
+        payPalButton.setup(
+                createOrderActions -> {
+                    ArrayList purchaseUnits = new ArrayList<>();
+                    purchaseUnits.add(
+                            new PurchaseUnit.Builder()
+                                    .amount(
+                                            new Amount.Builder()
+                                                    .currencyCode(CurrencyCode.USD)
+                                                    .value("5.00")
+                                                    .build()
+                                    )
+                                    .build()
+                    );
+                    Order order = new Order(OrderIntent.CAPTURE,
+                            new AppContext.Builder()
+                                    .userAction(UserAction.PAY_NOW)
+                                    .build(),
+                            purchaseUnits);
+
+                    createOrderActions.create(order, (CreateOrderActions.OnOrderCreated) null);
+                },
+                approval -> approval.getOrderActions().capture(result -> {
+                    Toast.makeText(RegistroPsicologo.this, "Compra exitosa", Toast.LENGTH_LONG).show();
+                    boolean_pago = false;
+                }),
+                () -> Toast.makeText(RegistroPsicologo.this, "Compra cancelada", Toast.LENGTH_LONG).show()
+        );
+
+
+        // Fin PayPal
 
         inicializa_firebase();
         mAuth = FirebaseAuth.getInstance();
@@ -108,12 +151,11 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
         // redirected to choose pdf
 
 
-
         ArrayAdapter<CharSequence> estadoAdapter, municipioAdapter, localidadAdapter;
 
         estadoAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.estado, android.R.layout.simple_spinner_item);
         municipioAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.municipio, android.R.layout.simple_spinner_item);
-        localidadAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.localidad, android. R.layout.simple_spinner_item);
+        localidadAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.localidad, android.R.layout.simple_spinner_item);
 
         sp_estado = findViewById(R.id.sp_estado);
         sp_estado.setAdapter(estadoAdapter);
@@ -300,12 +342,13 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
             }
         });
 
-        if(boolean_error_cedula||boolean_error_correo||!boolean_error_contrasena
-                ||boolean_error_texto||boolean_error_numero_exterior||boolean_error_cp||boolean_error_telefono||boolean_pdf){
+
+        if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
+                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono || boolean_pago) {
 
             Toast.makeText(RegistroPsicologo.this, "Llene correctamente los campos", Toast.LENGTH_LONG).show();
 
-        }else{
+        } else {
             ingresa_base_datos();
         }
 
@@ -314,25 +357,25 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        switch (parent.getId()){
+        switch (parent.getId()) {
             case R.id.sp_estado:
-                if (position!=0){
+                if (position != 0) {
                     estado = parent.getItemAtPosition(position).toString();
-                }else{
-                    estado="";
+                } else {
+                    estado = "";
                 }
                 break;
             case R.id.sp_municipio:
-                if (position!=0){
+                if (position != 0) {
                     municipio = parent.getItemAtPosition(position).toString();
-                }else{
-                    municipio="";
+                } else {
+                    municipio = "";
                 }
                 break;
             case R.id.sp_localidad:
-                if (position!=0){
+                if (position != 0) {
                     localidad = parent.getItemAtPosition(position).toString();
-                }else{
+                } else {
                     localidad = "";
                 }
                 break;
@@ -373,7 +416,6 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
             if (task.isSuccessful()) {
 
 
-
                 assert usuario_actual != null;
 
                 usuarioPsicologo.setString_id(usuario_actual.getUid());
@@ -381,7 +423,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
                 usuarioPsicologo.setString_apellido_paterno(string_apellido_paterno);
                 usuarioPsicologo.setString_apellido_materno(string_apellido_materno);
                 usuarioPsicologo.setString_direccion(string_calle + "," + string_num_ext + "," + string_cp +
-                        "," + localidad + "," + municipio+","+estado);
+                        "," + localidad + "," + municipio + "," + estado);
                 usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
                 usuarioPsicologo.setString_especialidad("Por verificar");
@@ -424,9 +466,42 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
     }
 
+    public void Terminos(View view) {
+        Intent termino = new Intent(this, TerminosyCondiciones.class);
+        startActivity(termino);
+    }
+
+    /**
+     * Este método asigna el monto a pagar por la suscripción
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void configuraPaypal() {
+        CheckoutConfig config;
+        config = new CheckoutConfig(
+                getApplication(),
+                ID_CLIENT_PAYPAL,
+                Environment.SANDBOX,
+                String.format("%s://paypalpay", "com.example.tdah"),
+                CurrencyCode.MXN,
+                UserAction.PAY_NOW,
+                new SettingsConfig(
+                        true,
+                        false
+                )
+        );
+        PayPalCheckout.setConfig(config);
 
 
+    }
 
+    /**
+     *
+     */
+//    @Override
+//    protected void onDestroy() {
+//        stopService(new Intent(this, PayPalService.class));
+//        super.onDestroy();
+//    }
     @Override
     public void onClick(View view) {
 
@@ -693,7 +768,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
             editText_telefono.setError(getString(R.string.error_campo_requerido));
             focusView = editText_telefono;
             boolean_error = false;
-        } else if (!pattern.matcher(telefono).matches()) {
+        } else if (!telefono.matches(".{10}")) {
             editText_telefono.setError(getString(R.string.error_telefono_invalido));
             focusView = editText_telefono;
             boolean_error = false;

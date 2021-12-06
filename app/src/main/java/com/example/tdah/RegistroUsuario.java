@@ -77,7 +77,7 @@ public class RegistroUsuario extends AppCompatActivity {
     private final int Paypal_codigo = 1717;
 
     private final PayPalConfiguration paypalConfig = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .environment(PayPalConfiguration.ENVIRONMENT_PRODUCTION)
             .clientId(ID_CLIENT_PAYPAL);
 
     private boolean boolean_contrasena;
@@ -217,6 +217,8 @@ public class RegistroUsuario extends AppCompatActivity {
                 ingresa_base_datos();
             }
         });
+
+
         btn_Paypal.setOnClickListener(v -> Metodo_Paypal());
     }
     public void Terminos(View view){
@@ -255,6 +257,7 @@ public class RegistroUsuario extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Paypal_codigo) {
             if (resultCode == Activity.RESULT_OK) {
                 assert data != null;
@@ -273,219 +276,9 @@ public class RegistroUsuario extends AppCompatActivity {
                 boolean_pago = false;
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
-
     }
 
-    /**
-     * Valida el formato de editText_nombre_paciente
-     * @param editText_nombre_paciente EditText que contiente el paciente
-     * @return boolean_nombre_paciente_v Regresa el booleano false si no es correcto el formato y true es formato
-     */
-    private boolean valida_nombre_paciente(EditText editText_nombre_paciente) {
 
-        editText_nombre_paciente.setError(null);
-
-        String nombre_paciente = editText_nombre_paciente.getText().toString().trim();
-
-        boolean boolean_nombre_paciente_v = true;
-
-        View focusView = null;
-
-        if (TextUtils.isEmpty(nombre_paciente)) {
-            editText_nombre_paciente.setError(getString((R.string.error_campo_requerido)));
-            focusView = editText_nombre_paciente;
-            boolean_nombre_paciente_v = false;
-        }
-
-        if (!nombre_paciente.matches(".{2,20}")) {
-            editText_nombre_paciente.setError(getString(R.string.error_formato_no_valido));
-            focusView = editText_nombre_paciente;
-            boolean_nombre_paciente_v = false;
-        }
-
-        if (!boolean_nombre_paciente_v) {
-
-            focusView.requestFocus();
-
-        }
-
-        return boolean_nombre_paciente_v;
-    }
-
-    private boolean valida_curp(EditText editText_curp) {
-
-        editText_curp.setError(null);
-
-        String curp = editText_curp.getText().toString().trim();
-
-        boolean boolean_curp_v = true;
-
-        View focusView = null;
-
-        if (TextUtils.isEmpty(curp)) {
-            editText_curp.setError(getString(R.string.error_campo_requerido));
-            focusView = editText_curp;
-            boolean_curp_v = false;
-        }
-
-        if (!curp.matches("[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" +
-                "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" +
-                "[HM]{1}" +
-                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" +
-                "[B-DF-HJ-NP-TV-Z]{3}" +
-                "[0-9A-Z]{1}[0-9]{1}$")) {
-            editText_curp.setError(getString(R.string.error_formato_no_valido));
-            focusView = editText_curp;
-            boolean_curp_v = false;
-        }
-
-        if (!boolean_curp_v) {
-
-            focusView.requestFocus();
-
-        }
-
-        return boolean_curp_v;
-    }
-    /**
-     * Esta funcion retorna verdadero si el nip tiene errores y  si es falso no tiene errores
-     *
-     * @param editText_nip EditText nip
-     * @return boolean_nip_v
-     */
-    private boolean valida_nip(EditText editText_nip) {
-
-        editText_nip.setError(null);
-
-        String nip = editText_nip.getText().toString().trim();
-
-        boolean boolean_nip_v = true;
-
-        View focusView = null;
-
-        if (nip.isEmpty()) {
-            editText_nip.setError(getString(R.string.error_campo_requerido));
-            focusView = editText_nip;
-            boolean_nip_v = false;
-        }
-
-        if (!nip.matches(".{4}")) {
-            editText_nip.setError(getString(R.string.error_cuatro_digitos));
-            focusView = editText_nip;
-            boolean_nip_v = false;
-        }
-
-        if (!boolean_nip_v) {
-
-            focusView.requestFocus();
-
-        }
-
-        return boolean_nip_v;
-    }
-
-    /**
-     * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
-     *
-     * @param editText_contrasena EditText contrasena
-     * @return boolean_contrasena_v
-     */
-    private boolean valida_contrasena(EditText editText_contrasena) {
-
-        editText_contrasena.setError(null);
-
-        String Password = editText_contrasena.getText().toString().trim();
-
-        boolean boolean_contrasena_v = false;
-
-        View focusView = null;
-
-        if (TextUtils.isEmpty(Password)) {
-            editText_contrasena.setError(getString(R.string.error_campo_requerido));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (!Password.matches(".*[!@#$%^&*+=?-].*")) {
-            editText_contrasena.setError(getString(R.string.error_caracter_especial_requerido));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (!Password.matches(".*\\d.*")) {
-            editText_contrasena.setError(getString(R.string.error_numero_requerido));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (!Password.matches(".*[a-z].*")) {
-            editText_contrasena.setError(getString(R.string.error_no_se_encontraron_minusculas));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (!Password.matches(".*[A-Z].*")) {
-            editText_contrasena.setError(getString(R.string.error_no_se_encontraron_mayusculas));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (!Password.matches(".{8,15}")) {
-            editText_contrasena.setError(getString(R.string.error_contrasena_muy_corta));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (Password.matches(".*\\s.*")) {
-            editText_contrasena.setError(getString(R.string.error_sin_espacios));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (boolean_contrasena_v) {
-
-            focusView.requestFocus();
-
-        }
-        return boolean_contrasena_v;
-    }
-
-    /**
-     * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
-     *
-     * @param editText_correo EditText correo
-     * @return boolean_error
-     */
-    private boolean valida_correo(EditText editText_correo) {
-
-        editText_correo.setError(null);
-
-        boolean boolean_correo_v = true;
-
-        View focusView = null;
-
-        Pattern pattern = Patterns.EMAIL_ADDRESS;
-
-        String Email = editText_correo.getText().toString().trim();
-
-        if (TextUtils.isEmpty(Email)) {
-            editText_correo.setError(getString(R.string.error_campo_requerido));
-            focusView = editText_correo;
-            boolean_correo_v = false;
-        } else if (!pattern.matcher(Email).matches()) {
-            editText_correo.setError(getString(R.string.error_correo_no_valido));
-            focusView = editText_correo;
-            boolean_correo_v = false;
-        }
-        if (!boolean_correo_v) {
-
-            focusView.requestFocus();
-
-        }
-        return boolean_correo_v;
-
-    }
 
     /**
      * Crea he inicializa las instancias de Firebase Authentication y obtiene la referencia de
@@ -705,6 +498,216 @@ public class RegistroUsuario extends AppCompatActivity {
                 this::valida_datos_curp,
                 error -> Toast.makeText(RegistroUsuario.this, "INTENTE DE NUEVO.", Toast.LENGTH_LONG).show());
         rq.add(requerimiento);
+    }
+
+    /**
+     * Valida el formato de editText_nombre_paciente
+     * @param editText_nombre_paciente EditText que contiente el paciente
+     * @return boolean_nombre_paciente_v Regresa el booleano false si no es correcto el formato y true es formato
+     */
+    private boolean valida_nombre_paciente(EditText editText_nombre_paciente) {
+
+        editText_nombre_paciente.setError(null);
+
+        String nombre_paciente = editText_nombre_paciente.getText().toString().trim();
+
+        boolean boolean_nombre_paciente_v = true;
+
+        View focusView = null;
+
+        if (TextUtils.isEmpty(nombre_paciente)) {
+            editText_nombre_paciente.setError(getString((R.string.error_campo_requerido)));
+            focusView = editText_nombre_paciente;
+            boolean_nombre_paciente_v = false;
+        }
+
+        if (!nombre_paciente.matches(".{2,20}")) {
+            editText_nombre_paciente.setError(getString(R.string.error_formato_no_valido));
+            focusView = editText_nombre_paciente;
+            boolean_nombre_paciente_v = false;
+        }
+
+        if (!boolean_nombre_paciente_v) {
+
+            focusView.requestFocus();
+
+        }
+
+        return boolean_nombre_paciente_v;
+    }
+
+    private boolean valida_curp(EditText editText_curp) {
+
+        editText_curp.setError(null);
+
+        String curp = editText_curp.getText().toString().trim();
+
+        boolean boolean_curp_v = true;
+
+        View focusView = null;
+
+        if (TextUtils.isEmpty(curp)) {
+            editText_curp.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_curp;
+            boolean_curp_v = false;
+        }
+
+        if (!curp.matches("[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" +
+                "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" +
+                "[HM]{1}" +
+                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" +
+                "[B-DF-HJ-NP-TV-Z]{3}" +
+                "[0-9A-Z]{1}[0-9]{1}$")) {
+            editText_curp.setError(getString(R.string.error_formato_no_valido));
+            focusView = editText_curp;
+            boolean_curp_v = false;
+        }
+
+        if (!boolean_curp_v) {
+
+            focusView.requestFocus();
+
+        }
+
+        return boolean_curp_v;
+    }
+    /**
+     * Esta funcion retorna verdadero si el nip tiene errores y  si es falso no tiene errores
+     *
+     * @param editText_nip EditText nip
+     * @return boolean_nip_v
+     */
+    private boolean valida_nip(EditText editText_nip) {
+
+        editText_nip.setError(null);
+
+        String nip = editText_nip.getText().toString().trim();
+
+        boolean boolean_nip_v = true;
+
+        View focusView = null;
+
+        if (nip.isEmpty()) {
+            editText_nip.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_nip;
+            boolean_nip_v = false;
+        }
+
+        if (!nip.matches(".{4}")) {
+            editText_nip.setError(getString(R.string.error_cuatro_digitos));
+            focusView = editText_nip;
+            boolean_nip_v = false;
+        }
+
+        if (!boolean_nip_v) {
+
+            focusView.requestFocus();
+
+        }
+
+        return boolean_nip_v;
+    }
+
+    /**
+     * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
+     *
+     * @param editText_contrasena EditText contrasena
+     * @return boolean_contrasena_v
+     */
+    private boolean valida_contrasena(EditText editText_contrasena) {
+
+        editText_contrasena.setError(null);
+
+        String Password = editText_contrasena.getText().toString().trim();
+
+        boolean boolean_contrasena_v = false;
+
+        View focusView = null;
+
+        if (TextUtils.isEmpty(Password)) {
+            editText_contrasena.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_contrasena;
+            boolean_contrasena_v = true;
+        }
+
+        if (!Password.matches(".*[!@#$%^&*+=?-].*")) {
+            editText_contrasena.setError(getString(R.string.error_caracter_especial_requerido));
+            focusView = editText_contrasena;
+            boolean_contrasena_v = true;
+        }
+
+        if (!Password.matches(".*\\d.*")) {
+            editText_contrasena.setError(getString(R.string.error_numero_requerido));
+            focusView = editText_contrasena;
+            boolean_contrasena_v = true;
+        }
+
+        if (!Password.matches(".*[a-z].*")) {
+            editText_contrasena.setError(getString(R.string.error_no_se_encontraron_minusculas));
+            focusView = editText_contrasena;
+            boolean_contrasena_v = true;
+        }
+
+        if (!Password.matches(".*[A-Z].*")) {
+            editText_contrasena.setError(getString(R.string.error_no_se_encontraron_mayusculas));
+            focusView = editText_contrasena;
+            boolean_contrasena_v = true;
+        }
+
+        if (!Password.matches(".{8,15}")) {
+            editText_contrasena.setError(getString(R.string.error_contrasena_muy_corta));
+            focusView = editText_contrasena;
+            boolean_contrasena_v = true;
+        }
+
+        if (Password.matches(".*\\s.*")) {
+            editText_contrasena.setError(getString(R.string.error_sin_espacios));
+            focusView = editText_contrasena;
+            boolean_contrasena_v = true;
+        }
+
+        if (boolean_contrasena_v) {
+
+            focusView.requestFocus();
+
+        }
+        return boolean_contrasena_v;
+    }
+
+    /**
+     * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
+     *
+     * @param editText_correo EditText correo
+     * @return boolean_error
+     */
+    private boolean valida_correo(EditText editText_correo) {
+
+        editText_correo.setError(null);
+
+        boolean boolean_correo_v = true;
+
+        View focusView = null;
+
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+
+        String Email = editText_correo.getText().toString().trim();
+
+        if (TextUtils.isEmpty(Email)) {
+            editText_correo.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_correo;
+            boolean_correo_v = false;
+        } else if (!pattern.matcher(Email).matches()) {
+            editText_correo.setError(getString(R.string.error_correo_no_valido));
+            focusView = editText_correo;
+            boolean_correo_v = false;
+        }
+        if (!boolean_correo_v) {
+
+            focusView.requestFocus();
+
+        }
+        return boolean_correo_v;
+
     }
 
 }

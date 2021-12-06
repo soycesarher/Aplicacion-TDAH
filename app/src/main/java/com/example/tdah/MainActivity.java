@@ -42,17 +42,24 @@ private DatabaseReference databaseReference;
     protected void onStart() {
         super.onStart();
             if(mAuth.getCurrentUser()!= null){
-                databaseReference.child("Usuario").orderByKey().equalTo(fUser.getUid()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("Psicologo").orderByKey().equalTo(fUser.getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
-                            startActivity(new Intent(MainActivity.this, UsuarioPrincipal.class));
+                            String string_url_pdf = snapshot.child("string_perfilProfesional").getValue().toString();
+                            if(string_url_pdf.equalsIgnoreCase("-1")){
+                                startActivity(new Intent(MainActivity.this, CargaPdf.class));
+
+                            }else {
+                                startActivity(new Intent(MainActivity.this, PsicologoPrincipal.class));
+                            }
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        startActivity(new Intent(MainActivity.this, PsicologoPrincipal.class));
+                        startActivity(new Intent(MainActivity.this, UsuarioPrincipal.class));
+
 
                     }
                 });

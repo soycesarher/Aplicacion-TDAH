@@ -1,9 +1,9 @@
 package com.example.tdah.pdf;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tdah.R;
 import com.github.barteksc.pdfviewer.PDFView;
