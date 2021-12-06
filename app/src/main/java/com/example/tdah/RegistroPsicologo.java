@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -77,14 +78,10 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
     private boolean boolean_pago;
 
     private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
-/*    private static final int PAYPAL_CODIGO = 1717;
-
-    private final PayPalConfiguration paypalConfig = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId(ID_CLIENT_PAYPAL);*/
-
 
     private PaymentButton payPalButton;
+
+    private Button btn_registrarse;
 
     private final String string_url_curriculum = "-1";
 
@@ -95,8 +92,11 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
         setContentView(R.layout.activity_registro_psicologo);
 
+        btn_registrarse = findViewById(R.id.btn_registrarse);
+
+
         //Paypal
-        payPalButton = findViewById(R.id.payPalButton);
+        payPalButton = findViewById(R.id.payPalButton_psicologo);
         configuraPaypal();
 
         payPalButton.setup(
@@ -346,12 +346,13 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
         if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
                 || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono || boolean_pago) {
 
-            Toast.makeText(RegistroPsicologo.this, "Llene correctamente los campos", Toast.LENGTH_LONG).show();
+          btn_registrarse.setEnabled(false);
 
         } else {
-            ingresa_base_datos();
-        }
+            btn_registrarse.setEnabled(true);
 
+        }
+        btn_registrarse.setOnClickListener(v->ingresa_base_datos());
 
     }
 
@@ -481,7 +482,7 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
                 getApplication(),
                 ID_CLIENT_PAYPAL,
                 Environment.SANDBOX,
-                String.format("%s://paypalpay", "com.example.tdah"),
+                String.format("%s://paypalpay", BuildConfig.APPLICATION_ID),
                 CurrencyCode.MXN,
                 UserAction.PAY_NOW,
                 new SettingsConfig(

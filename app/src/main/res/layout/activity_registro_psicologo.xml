@@ -198,19 +198,8 @@
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
-<!--            <Button-->
-<!--                android:id="@+id/btn_pagar"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:backgroundTint="@color/teal_700"-->
-
-<!--                android:text="Pago"-->
-<!--                app:icon="@drawable/cio_paypal_logo"-->
-<!--                app:srcCompat="@drawable/cio_paypal_logo" />-->
             <com.paypal.checkout.paymentbutton.PayPalButton
-                android:id="@+id/payPalButton"
+                android:id="@+id/payPalButton_psicologo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/teal_700"

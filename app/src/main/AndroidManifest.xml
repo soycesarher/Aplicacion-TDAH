@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tdah">
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -46,9 +45,11 @@
         <activity
             android:name=".UsuarioPrincipal"
             android:label="@string/title_activity_menu_usuario"
+            android:exported="false"
             android:theme="@style/Theme.TDAH.NoActionBar" />
         <activity
             android:name=".PadrePrincipal"
+            android:exported="false"
             android:label="@string/title_activity_menu_usuario"
             android:theme="@style/Theme.TDAH.NoActionBar" />
         <activity
@@ -71,8 +72,38 @@
         <activity
             android:name=".RegistroPsicologo"
             android:exported="false" />
-        <activity android:name=".usuario.Oro" />
-        <activity android:name=".usuario.Escenario" />
+        <activity android:name=".usuario.Oro"
+            android:exported="false"/>
+        <activity android:name=".usuario.Escenario"
+            android:exported="false"/>
+        <activity
+            android:name="com.paypal.openid.RedirectUriReceiverActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/PYPLAppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="paypalpay"
+                    android:scheme="app.example.tdah" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.paypal.pyplcheckout.home.view.activities.PYPLInitiateCheckoutActivity"
+            android:exported="true"
+            android:theme="@style/AppFullScreenTheme">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="paypalxo"
+                    android:scheme="app.example.tdah" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">

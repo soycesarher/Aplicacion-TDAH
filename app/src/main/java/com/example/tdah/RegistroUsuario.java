@@ -1,12 +1,6 @@
 package com.example.tdah;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,39 +13,41 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.example.tdah.modelos.UsuarioPaciente;
 import com.example.tdah.modelos.UsuarioPadreTutor;
-
+import com.example.tdah.validaciones.DatosDeCurp;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.FirebaseUser;
-
-import com.example.tdah.validaciones.DatosDeCurp;
-
-import com.google.firebase.database.ValueEventListener;
-import com.paypal.android.sdk.payments.PayPalConfiguration;
-import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalService;
-import com.paypal.android.sdk.payments.PaymentActivity;
-import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.paypal.checkout.PayPalCheckout;
+import com.paypal.checkout.config.CheckoutConfig;
+import com.paypal.checkout.config.Environment;
+import com.paypal.checkout.config.SettingsConfig;
+import com.paypal.checkout.createorder.CreateOrderActions;
+import com.paypal.checkout.createorder.CurrencyCode;
+import com.paypal.checkout.createorder.OrderIntent;
+import com.paypal.checkout.createorder.UserAction;
+import com.paypal.checkout.order.Amount;
+import com.paypal.checkout.order.AppContext;
+import com.paypal.checkout.order.Order;
+import com.paypal.checkout.order.PurchaseUnit;
+import com.paypal.checkout.paymentbutton.PaymentButton;
 
 import java.text.ParseException;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
-
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -73,12 +69,7 @@ public class RegistroUsuario extends AppCompatActivity {
     private String fecha_nacimiento;
     private String direccion;
 
-    private static final String ID_CLIENT_PAYPAL = "AUV2kPXlL2kPxu9Y_PZUWfJTE9s67qAboJiGdxVvLutdOMuRAYVnLWVNkFJKCIvt-JbsUqPPPY5FJ_XJ";
-    private final int Paypal_codigo = 1717;
-
-    private final PayPalConfiguration paypalConfig = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_PRODUCTION)
-            .clientId(ID_CLIENT_PAYPAL);
+    private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
 
     private boolean boolean_contrasena;
     private boolean boolean_nombre_paciente;
@@ -88,8 +79,11 @@ public class RegistroUsuario extends AppCompatActivity {
     private boolean boolean_edad = false;
     private boolean boolean_pago;
 
+
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
+
+    private PaymentButton payPalButton;
 
     RequestQueue rq;
 
@@ -101,11 +95,37 @@ public class RegistroUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_registro_usuario);
 
         //Paypal
-        Button btn_Paypal = findViewById(R.id.btn_pagar);
 
-        Intent intento = new Intent(this, PayPalService.class);
-        intento.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
-        startService(intento);
+        payPalButton = findViewById(R.id.payPalButton_usuario);
+        configuraPaypal();
+
+        payPalButton.setup(
+                createOrderActions -> {
+                    ArrayList purchaseUnits = new ArrayList<>();
+                    purchaseUnits.add(
+                            new PurchaseUnit.Builder()
+                                    .amount(
+                                            new Amount.Builder()
+                                                    .currencyCode(CurrencyCode.MXN)
+                                                    .value("5.00")
+                                                    .build()
+                                    )
+                                    .build()
+                    );
+                    Order order = new Order(OrderIntent.CAPTURE,
+                            new AppContext.Builder()
+                                    .userAction(UserAction.PAY_NOW)
+                                    .build(),
+                            purchaseUnits);
+
+                    createOrderActions.create(order, (CreateOrderActions.OnOrderCreated) null);
+                },
+                approval -> approval.getOrderActions().capture(result -> {
+                    Toast.makeText(RegistroUsuario.this, "Compra exitosa", Toast.LENGTH_LONG).show();
+                    boolean_pago = false;
+                }),
+                () -> Toast.makeText(RegistroUsuario.this, "Compra cancelada", Toast.LENGTH_LONG).show()
+        );
         // Fin PayPal
 
         inicializa_firebase();
@@ -218,65 +238,35 @@ public class RegistroUsuario extends AppCompatActivity {
             }
         });
 
-
-        btn_Paypal.setOnClickListener(v -> Metodo_Paypal());
-    }
-    public void Terminos(View view){
-    Intent termino = new Intent(this, TerminosyCondiciones.class);
-    startActivity(termino);
     }
     /**
      * Este método asigna el monto a pagar por la suscripción
      */
-    private void Metodo_Paypal() {
-        PayPalPayment Payment = new PayPalPayment(new BigDecimal('5'), "USD", "Test pago"
-                , PayPalPayment.PAYMENT_INTENT_SALE);
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void configuraPaypal() {
+        CheckoutConfig config;
+        config = new CheckoutConfig(
+                getApplication(),
+                ID_CLIENT_PAYPAL,
+                Environment.SANDBOX,
+                String.format("%s://paypalpay", BuildConfig.APPLICATION_ID),
+                CurrencyCode.MXN,
+                UserAction.PAY_NOW,
+                new SettingsConfig(
+                        true,
+                        false
+                )
+        );
+        PayPalCheckout.setConfig(config);
 
-        Intent intento = new Intent(this, PaymentActivity.class);
-        intento.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
-        intento.putExtra(PaymentActivity.EXTRA_PAYMENT, Payment);
 
-        startActivityForResult(intento, Paypal_codigo);
     }
 
-    /**
-     *
-     */
-    @Override
-    protected void onDestroy() {
-        stopService(new Intent(this, PayPalService.class));
-        super.onDestroy();
+    public void Terminos(View view){
+    Intent termino = new Intent(this, TerminosyCondiciones.class);
+    startActivity(termino);
     }
 
-    /**
-     * Si requestCode y resultCode son correctos realiza el pago y se muestra en pantalla
-     *
-     * @param requestCode codigo para que se acepte el pago
-     * @param resultCode  codigo para pagar
-     * @param data        Intent para abrir la actividad de PayPal
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Paypal_codigo) {
-            if (resultCode == Activity.RESULT_OK) {
-                assert data != null;
-                PaymentConfirmation paymentConfirmation_confirmacion = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                if (paymentConfirmation_confirmacion != null) {
-
-
-                    Toast.makeText(this, "Pago procesado", Toast.LENGTH_LONG).show();
-                    boolean_pago = true;
-
-                }
-
-
-            } else {
-                Toast.makeText(this, "Pago no procesado", Toast.LENGTH_LONG).show();
-                boolean_pago = false;
-            }
-        }
-    }
 
 
 

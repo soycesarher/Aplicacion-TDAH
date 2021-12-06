@@ -24,6 +24,6 @@
         android:name="com.example.tdah.psicologo.ayudaPsicologo.ayudaPsicologoFragment"
         android:label="@string/nav_menu_configuracion"
         tools:layout="@layout/fragment_ayuda_psicologo" />
-    >>>>>>> origin/psicologo
+
 
 </navigation>
