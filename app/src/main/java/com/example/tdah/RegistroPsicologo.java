@@ -59,7 +59,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
     private EditText txt_celdula;
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     FirebaseUser usuario_actual;
 
     private boolean boolean_error_texto;
@@ -76,7 +76,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
     private Button btn_curriculum;
     private Uri uri_pdf = null;
     private ProgressDialog pd_dialogo;
-    private String string_url_curriculum;
+    private String string_url_curriculum="";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -85,7 +85,11 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
         setContentView(R.layout.activity_registro_psicologo);
 
+
+
         inicializa_firebase();
+        mAuth = FirebaseAuth.getInstance();
+        usuario_actual = mAuth.getCurrentUser();
 
         txt_nombre_psicologo = findViewById(R.id.txt_nombre_psicologo);
         txt_apellido_paterno = findViewById(R.id.txt_apellido_paterno);
@@ -93,26 +97,15 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
         txt_calle = findViewById(R.id.txt_calle);
         txt_num_exterior = findViewById(R.id.txt_num_exterior);
         txt_cp = findViewById(R.id.txt_cp);
-        txt_localidad = findViewById(R.id.txt_localidad);
+
 //        txt_municipio = findViewById(R.id.txt_municipio);
         txt_telefono = findViewById(R.id.txt_telefono);
         txt_correo = findViewById(R.id.txt_correo_psicologo);
         txt_contrasena = findViewById(R.id.txt_contrasena_psicologo);
         txt_celdula = findViewById(R.id.txt_cedula_psicologo);
 
-
-        btn_curriculum = findViewById(R.id.btn_curriculum);
-
         // After Clicking on this we will be
         // redirected to choose pdf
-        btn_curriculum.setOnClickListener(v -> {
-            Intent galleryIntent = new Intent();
-            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-            // We will be redirected to choose pdf
-            galleryIntent.setType("application/pdf");
-            startActivityForResult(galleryIntent, 1);
-        });
 
 
 
@@ -202,22 +195,6 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
             }
         });
 
-        txt_localidad.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_error_texto = valida_texto(txt_localidad);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         txt_correo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -324,7 +301,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
         });
 
         if(boolean_error_cedula||boolean_error_correo||!boolean_error_contrasena
-                ||boolean_error_texto||boolean_error_numero_exterior||boolean_error_cp||boolean_error_telefono||boolean_pago){
+                ||boolean_error_texto||boolean_error_numero_exterior||boolean_error_cp||boolean_error_telefono||boolean_pdf){
 
             Toast.makeText(RegistroPsicologo.this, "Llene correctamente los campos", Toast.LENGTH_LONG).show();
 
@@ -369,11 +346,6 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
     }
 
 
-
-
-
-
-
     /**
      * Recupera los valores obtenidos de los botones, autentica el correo y contrasenia he ingresa
      * la información a la base de datos.
@@ -400,7 +372,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
             if (task.isSuccessful()) {
 
-                FirebaseUser usuario_actual = mAuth.getCurrentUser();
+
 
                 assert usuario_actual != null;
 
@@ -424,7 +396,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
                         databaseReference.child("Psicologo").child(usuarioPsicologo.getString_id()).setValue(usuarioPsicologo).addOnCompleteListener(task2 -> {
 
                             if (task2.isSuccessful()) {
-
+                                startActivity(new Intent(this, CargaPdf.class));
 
                             } else {
 
@@ -452,67 +424,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
 
-
-            pd_dialogo = new ProgressDialog(this);
-
-            pd_dialogo.setMessage("Cargando archivo");
-
-            pd_dialogo.show();
-
-            uri_pdf = data.getData();
-
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
-            usuario_actual = mAuth.getCurrentUser();
-
-            Toast.makeText(RegistroPsicologo.this, uri_pdf.toString(), Toast.LENGTH_SHORT).show();
-
-            // Here we are uploading the pdf in firebase storage with the name of current time
-            final StorageReference filepath = storageReference.child(usuario_actual.getUid() + "." + "pdf");
-
-            Toast.makeText(RegistroPsicologo.this, filepath.getName(), Toast.LENGTH_SHORT).show();
-
-            filepath.putFile(uri_pdf).continueWithTask((Continuation) task -> {
-
-                if (!task.isSuccessful()) {
-
-                    throw task.getException();
-
-                }
-
-                return filepath.getDownloadUrl();
-
-            }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
-
-                if (task.isSuccessful()) {
-
-                    pd_dialogo.dismiss();
-
-                    Uri uri = task.getResult();
-
-                    string_url_curriculum = uri.toString();
-
-                    Toast.makeText(RegistroPsicologo.this, "Cargado exitosamente", Toast.LENGTH_SHORT).show();
-
-                    boolean_pdf = true;
-
-                } else {
-
-                    pd_dialogo.dismiss();
-
-                    Toast.makeText(RegistroPsicologo.this, "Error al cargar archivo", Toast.LENGTH_SHORT).show();
-
-                }
-
-            });
-        }
-
-    }
 
 
     @Override
@@ -801,7 +713,7 @@ public class RegistroPsicologo extends Activity implements View.OnClickListener,
      */
     private void inicializa_firebase() {
         FirebaseApp.initializeApp(this);
-        mAuth = FirebaseAuth.getInstance();
+
         FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
         databaseReference = firebase_database.getReference();
     }

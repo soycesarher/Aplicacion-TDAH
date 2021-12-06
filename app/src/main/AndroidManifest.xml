@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TDAH">
         <activity
+            android:name=".CargaPdf"
+            android:exported="false" />
+        <activity
             android:name=".pdf.PerfilPsicologo"
             android:exported="false" />
         <activity
