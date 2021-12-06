@@ -40,7 +40,7 @@
 
                 <EditText
                     android:id="@+id/txt_curp"
-                    android:layout_width="245dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:ems="10"
@@ -51,7 +51,7 @@
 
                 <Button
                     android:id="@+id/btn_verifica_curp"
-                    android:layout_width="120dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/teal_700"
                     android:text="Verifica curp"
@@ -165,24 +165,24 @@
                 android:paddingBottom="5dp">
 
                 <Button
-                    android:id="@+id/btn_registrarse"
-                    android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="@string/btn_registrarse"
-                    android:textAlignment="center" />
-
-                <Button
                     android:id="@+id/btn_cancelar"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="72dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
                     android:backgroundTint="@color/teal_700"
                     android:onClick="ir_main"
                     android:text="Cancelar"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/btn_registrarse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/btn_registrarse"
                     android:textAlignment="center" />
 
             </LinearLayout>
