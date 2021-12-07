@@ -9,22 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tdah.PadrePrincipal;
 import com.example.tdah.R;
-import com.example.tdah.RegistroUsuario;
 import com.example.tdah.UsuarioPrincipal;
 import com.example.tdah.modelos.UsuarioPadreTutor;
-import com.example.tdah.usuario.cuenta.CuentaViewModel;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

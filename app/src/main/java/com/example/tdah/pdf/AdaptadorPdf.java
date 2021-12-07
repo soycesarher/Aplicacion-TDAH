@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> implements Serializable {
 
-    private ArrayList<UsuarioPsicologo> lista_psicologo_modelo;
+    private final ArrayList<UsuarioPsicologo> lista_psicologo_modelo;
     private final AdaptadorPdf.OnClickListener mOnClickListener;
 
     public interface OnClickListener{

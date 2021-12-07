@@ -34,7 +34,6 @@
                 android:backgroundTint="#72BEC3"
                 android:clickable="true"
                 android:textColor="@color/white" />
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

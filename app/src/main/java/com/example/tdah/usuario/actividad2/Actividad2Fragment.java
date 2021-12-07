@@ -154,18 +154,21 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
                                             }else{
                                                 if(suma_lado_izq == 10){
                                                     suma_puntos_total+=10;
+                                                    guardaProgreso(suma_puntos_total);
                                                     Toast.makeText(main.getApplicationContext(), "El lado izquierdo es Correcto!", Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado izquierdo!", Toast.LENGTH_SHORT).show();
                                                 }
                                                 if(suma_lado_der == 10){
                                                     suma_puntos_total+=10;
+                                                    guardaProgreso(suma_puntos_total);
                                                     Toast.makeText(main.getApplicationContext(), "El lado derecho es Correcto!", Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado derecho!", Toast.LENGTH_SHORT).show();
                                                 }
                                                 if(suma_lado_base == 10){
                                                     suma_puntos_total+=10;
+                                                    guardaProgreso(suma_puntos_total);
                                                     Toast.makeText(main.getApplicationContext(), "El lado base es Correcto!", Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Toast.makeText(main.getApplicationContext(), "Te equivocaste en el lado base!", Toast.LENGTH_SHORT).show();

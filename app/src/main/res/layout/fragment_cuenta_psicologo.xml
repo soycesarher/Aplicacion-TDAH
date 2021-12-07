@@ -68,6 +68,18 @@
                 android:textColor="#5E5D5D" />
 
             <EditText
+                android:id="@+id/txt_Cedula"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:text="@string/txt_Cedula"
+                android:textColor="#5E5D5D" />
+
+            <EditText
                 android:id="@+id/txt_Direccion_Consultorio"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
@@ -77,18 +89,6 @@
                 android:inputType="textPostalAddress"
                 android:minHeight="48dp"
                 android:text="@string/txt_Direccion_Consultorio"
-                android:textColor="#5E5D5D" />
-
-            <EditText
-                android:id="@+id/txt_CorreoContacto_Psicologo"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp"
-                android:text="@string/txt_CorreoContacto_Psicologo"
                 android:textColor="#5E5D5D" />
 
             <EditText
@@ -104,16 +104,28 @@
                 android:textColor="#5E5D5D" />
 
             <EditText
-                android:id="@+id/txt_Cedula"
+                android:id="@+id/txt_CorreoContacto_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:minHeight="48dp"
-                android:text="@string/txt_Cedula"
+                android:text="@string/txt_CorreoContacto_Psicologo"
                 android:textColor="#5E5D5D" />
+            <EditText
+                android:id="@+id/txt_CorreoConfirmacion_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:text="@string/txt_CorreoContacto_Psicologo"
+                android:textColor="#5E5D5D" />
+
 
                 <com.github.barteksc.pdfviewer.PDFView
                     android:id="@+id/pdf_view_cuenta_psicologo"

@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tdah.PadrePrincipal;
 import com.example.tdah.R;
 import com.example.tdah.UsuarioPrincipal;
 import com.example.tdah.modelos.UsuarioPadreTutor;
@@ -41,6 +40,7 @@ public class CuentaFragment extends Fragment {
     private CuentaViewModel cuentaViewModel;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
+    private DatabaseReference databaseReference;
     private Button btn_editar;
     private Button btn_guardar;
     private EditText txt_nombre;
@@ -49,10 +49,9 @@ public class CuentaFragment extends Fragment {
     private EditText txt_contrasena;
     private EditText txt_confirma_contrasena;
     private EditText txt_correo;
-    private DatabaseReference databaseReference;
     private boolean boolean_correo;
     private boolean boolean_contrasena;
-    private FirebaseUser firebaseUser;
+
 
     public CuentaFragment() {
         super(R.layout.fragment_cuenta);
@@ -61,7 +60,7 @@ public class CuentaFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+         fUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 
@@ -329,10 +328,10 @@ public class CuentaFragment extends Fragment {
 
     public void actualizaCorreo(String string_correo) {
         Toast.makeText(getContext(), "Actualizando correo", Toast.LENGTH_SHORT).show();
-        firebaseUser.updateEmail(string_correo)
+        fUser.updateEmail(string_correo)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        databaseReference.child("Usuario").child(firebaseUser.getUid()).child("string_correo").setValue(string_correo);
+                        databaseReference.child("Usuario").child(fUser.getUid()).child("string_correo").setValue(string_correo);
                         Toast.makeText(getContext(), "El correo se actualizó con éxito", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(getContext(), UsuarioPrincipal.class));
 
@@ -345,7 +344,7 @@ public class CuentaFragment extends Fragment {
     public void actualizaContrasena(String string_contrasena) {
 
         Toast.makeText(getContext(), "Actualizando contraseña", Toast.LENGTH_SHORT).show();
-        firebaseUser.updatePassword(string_contrasena)
+        fUser.updatePassword(string_contrasena)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "La contraseña se actualizó con éxito", Toast.LENGTH_LONG).show();
