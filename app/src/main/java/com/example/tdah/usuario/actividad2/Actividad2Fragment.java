@@ -10,15 +10,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tdah.R;
 import com.example.tdah.UsuarioPrincipal;
+import com.example.tdah.modelos.UsuarioPaciente;
+import com.example.tdah.modelos.UsuarioPadreTutor;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Actividad2Fragment extends Fragment implements View.OnClickListener {
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
+    private FirebaseDatabase firebase_database;
+    private DatabaseReference databaseReference;
+    private UsuarioPaciente usuarioPaciente;
+    private UsuarioPadreTutor usuarioPadreTutor;
 
     private Actividad2ViewModel Actividad2ViewModel;
     private EditText triangulo_nv1_a;
@@ -137,6 +150,7 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
                                             if(suma_lado_izq == 10 && suma_lado_der == 10 && suma_lado_base == 10){
                                                 Toast.makeText(main.getApplicationContext(), "Es Correcto. Lo lograste! Felicidades!!", Toast.LENGTH_SHORT).show();
                                                 suma_puntos_total = 30;
+                                                guardaProgreso(suma_puntos_total);
                                             }else{
                                                 if(suma_lado_izq == 10){
                                                     suma_puntos_total+=10;
@@ -177,4 +191,55 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
     private void msm_dato_rep(){
         Toast.makeText(main.getApplicationContext(), "No se pueden repetir los numeros!", Toast.LENGTH_SHORT).show();
     }
+
+
+    public void guardaProgreso(int puntuacion) {
+
+        usuarioPadreTutor.setString_id(firebaseUser.getUid());
+
+        usuarioPaciente.setInt_puntuacion_actividad_2(puntuacion);
+
+        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_actividad_2").setValue(usuarioPaciente.getInt_puntuacion_actividad_2());
+
+        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    usuarioPaciente.setInt_puntuacion_alta_actividad_2(Integer.parseInt(snapshot.child("int_puntuacion_alta_actividad_2").getValue().toString()));
+                    usuarioPaciente.setInt_contador_actividad_2(Integer.parseInt(snapshot.child("int_contador_actividad_2").getValue().toString()));
+                    usuarioPaciente.setInt_suma_puntuacion_actividad_2(Integer.parseInt(snapshot.child("int_suma_actividad_2").getValue().toString()));
+                    usuarioPaciente.setFloat_promedio_actividad_2(Float.parseFloat(snapshot.child("float_promedio_actividad_2").getValue().toString()));
+
+                    int puntuacion_actual = usuarioPaciente.getInt_puntuacion_actividad_2(), puntuacion_actual_alta = usuarioPaciente.getInt_puntuacion_alta_actividad_2(),
+                            contador = usuarioPaciente.getInt_contador_actividad_2(), suma = usuarioPaciente.getInt_suma_puntuacion_actividad_2();
+
+                    float promedio;
+
+                    contador++;
+                    suma += usuarioPaciente.getInt_suma_puntuacion_actividad_2();
+                    promedio = suma / contador;
+
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_contador_actividad_2").setValue(contador);
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_suma_actividad_2").setValue(suma);
+                    databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("float_promedio_actividad_2").setValue(promedio);
+
+                    if (puntuacion_actual > puntuacion_actual_alta) {
+
+                        databaseReference.child("Usuario").child(usuarioPadreTutor.getString_id()).child("Paciente").child("int_puntuacion_alta_actividad_2").setValue(puntuacion_actual);
+
+                        Toast.makeText(getContext(), "Nueva puntuación alta: " + puntuacion_actual, Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }
