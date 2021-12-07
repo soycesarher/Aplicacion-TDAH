@@ -25,24 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.paypal.checkout.PayPalCheckout;
-import com.paypal.checkout.config.CheckoutConfig;
-import com.paypal.checkout.config.Environment;
-import com.paypal.checkout.config.SettingsConfig;
-import com.paypal.checkout.createorder.CreateOrderActions;
-import com.paypal.checkout.createorder.CurrencyCode;
-import com.paypal.checkout.createorder.OrderIntent;
-import com.paypal.checkout.createorder.UserAction;
-import com.paypal.checkout.order.Amount;
-import com.paypal.checkout.order.AppContext;
-import com.paypal.checkout.order.Order;
-import com.paypal.checkout.order.PurchaseUnit;
 import com.paypal.checkout.paymentbutton.PaymentButton;
 
-import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -60,21 +44,20 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
     private EditText txt_calle;
     private EditText txt_num_exterior;
     private EditText txt_cp;
-    private EditText txt_localidad;
-    private EditText txt_municipio;
+
     private EditText txt_telefono;
     private EditText txt_correo;
     private EditText txt_contrasena;
     private EditText txt_celdula;
 
     private DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
     FirebaseUser usuario_actual;
+    FirebaseAuth mAuth;
 
-    private boolean boolean_error_texto;
     private boolean boolean_error_contrasena;
-    private boolean boolean_error_numero_exterior;
     private boolean boolean_error_correo;
+    private boolean boolean_error_numero_exterior;
+    private boolean boolean_error_texto;
     private boolean boolean_error_telefono;
     private boolean boolean_error_cedula;
     private boolean boolean_error_cp;
@@ -99,67 +82,6 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
         btn_registrarse = findViewById(R.id.btn_registrarse);
 
 
-        //Paypal
-        payPalButton = findViewById(R.id.payPalButton_psicologo);
-        configuraPaypal();
-
-        payPalButton.setup(
-                createOrderActions -> {
-                    ArrayList purchaseUnits = new ArrayList<>();
-                    purchaseUnits.add(
-                            new PurchaseUnit.Builder()
-                                    .amount(
-                                            new Amount.Builder()
-                                                    .currencyCode(CurrencyCode.USD)
-                                                    .value("5.00")
-                                                    .build()
-                                    )
-                                    .build()
-                    );
-                    Order order = new Order(OrderIntent.CAPTURE,
-                            new AppContext.Builder()
-                                    .userAction(UserAction.PAY_NOW)
-                                    .build(),
-                            purchaseUnits);
-
-                    createOrderActions.create(order, (CreateOrderActions.OnOrderCreated) null);
-                },
-                approval -> approval.getOrderActions().capture(result -> {
-                    Toast.makeText(RegistroPsicologo.this, "Compra exitosa", Toast.LENGTH_LONG).show();
-                    boolean_pago = false;
-                }),
-                () -> Toast.makeText(RegistroPsicologo.this, "Compra cancelada", Toast.LENGTH_LONG).show()
-        );
-        payPalButton = findViewById(R.id.payPalButton_psicologo);
-        configuraPaypal();
-
-        payPalButton.setup(
-                createOrderActions -> {
-                    ArrayList purchaseUnits = new ArrayList<>();
-                    purchaseUnits.add(
-                            new PurchaseUnit.Builder()
-                                    .amount(
-                                            new Amount.Builder()
-                                                    .currencyCode(CurrencyCode.USD)
-                                                    .value("5.00")
-                                                    .build()
-                                    )
-                                    .build()
-                    );
-                    Order order = new Order(OrderIntent.CAPTURE,
-                            new AppContext.Builder()
-                                    .userAction(UserAction.PAY_NOW)
-                                    .build(),
-                            purchaseUnits);
-
-                    createOrderActions.create(order, (CreateOrderActions.OnOrderCreated) null);
-                },
-                approval -> approval.getOrderActions().capture(result -> {
-                    Toast.makeText(RegistroPsicologo.this, "Compra exitosa", Toast.LENGTH_LONG).show();
-                    boolean_pago = false;
-                }),
-                () -> Toast.makeText(RegistroPsicologo.this, "Compra cancelada", Toast.LENGTH_LONG).show()
-        );
 
 
         // Fin PayPal
@@ -204,72 +126,6 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
         sp_municipio.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
         sp_localidad.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
-
-        txt_nombre_psicologo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_error_texto = valida_texto(txt_nombre_psicologo);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        txt_apellido_paterno.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_error_texto = valida_texto(txt_apellido_paterno);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        txt_apellido_materno.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_error_texto = valida_texto(txt_apellido_materno);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        txt_calle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_error_texto = valida_texto(txt_calle);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
 
         txt_correo.addTextChangedListener(new TextWatcher() {
@@ -341,6 +197,22 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
             }
         });
 
+        txt_calle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_texto = valida_texto(txt_calle);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         txt_telefono.addTextChangedListener(new TextWatcher() {
             @Override
@@ -375,10 +247,60 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
             }
         });
+        txt_nombre_psicologo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_texto = valida_texto(txt_nombre_psicologo);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        txt_apellido_paterno.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_texto = valida_texto(txt_apellido_paterno);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_apellido_materno.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean_error_texto = valida_texto(txt_apellido_materno);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
 
 
         if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
-                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono || !boolean_pago) {
+                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono ) {
 
           btn_registrarse.setEnabled(false);
 
@@ -463,12 +385,10 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
                 usuarioPsicologo.setString_especialidad("Por verificar");
                 usuarioPsicologo.setString_perfilProfesional(string_url_curriculum);
-                try {
-                    usuarioPsicologo.setString_fecha_pago(fecha_pago()[0]);
-                    usuarioPsicologo.setString_fecha_fin_suscripcion(fecha_pago()[1]);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+
+                    usuarioPsicologo.setString_fecha_pago("-1");
+                    usuarioPsicologo.setString_fecha_fin_suscripcion("-1");
+
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
 
@@ -512,55 +432,48 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
         startActivity(termino);
     }
 
-    /**
-     * Este método asigna el monto a pagar por la suscripción
-     */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void configuraPaypal() {
-        CheckoutConfig config;
-        config = new CheckoutConfig(
-                getApplication(),
-                ID_CLIENT_PAYPAL,
-                Environment.SANDBOX,
-                String.format("%s://paypalpay", BuildConfig.APPLICATION_ID),
-                CurrencyCode.MXN,
-                UserAction.PAY_NOW,
-                new SettingsConfig(
-                        true,
-                        false
-                )
-        );
-        PayPalCheckout.setConfig(config);
 
-
-    }
-    /**
-     * Regresa el tipo de cuenta
-     *
-     * @return string_cuenta
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private String[] fecha_pago() throws ParseException {
-        String[] strings_fecha = new String[2];
-        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        String string_fecha_pago = LocalDateTime.now().format(dateTimeFormatter_formato);
-        String string_fecha_termino_suscripcion = LocalDateTime.now().plusDays(30).format(dateTimeFormatter_formato);
-        if (!boolean_pago) {
-            Toast.makeText(RegistroPsicologo.this, "Cuenta pago", Toast.LENGTH_SHORT).show();
-            strings_fecha[0] = string_fecha_pago;
-            strings_fecha[1] = string_fecha_termino_suscripcion;
-        } else {
-            Toast.makeText(RegistroPsicologo.this, "Cuenta gratuita", Toast.LENGTH_SHORT).show();
-            strings_fecha[0] = "-1";
-            strings_fecha[1] = "-1";
-        }
-        return strings_fecha;
-    }
 
     @Override
     public void onClick(View view) {
 
     }
+    /**
+     * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
+     *
+     * @param editText_telefono EditText correo
+     * @return boolean_error
+     */
+    private boolean valida_telefono(EditText editText_telefono) {
+
+        editText_telefono.setError(null);
+
+        boolean boolean_error = true;
+
+        View focusView = null;
+
+        Pattern pattern = Patterns.PHONE;
+
+        String telefono = editText_telefono.getText().toString().trim();
+
+        if (TextUtils.isEmpty(telefono)) {
+            editText_telefono.setError(getString(R.string.error_campo_requerido));
+            focusView = editText_telefono;
+            boolean_error = false;
+        } else if (!telefono.matches(".{10}")) {
+            editText_telefono.setError(getString(R.string.error_telefono_invalido));
+            focusView = editText_telefono;
+            boolean_error = false;
+        }
+        if (!boolean_error) {
+
+            focusView.requestFocus();
+
+        }
+        return boolean_error;
+
+    }
+
 
     private boolean valida_cedula(EditText editText_cedula) {
 
@@ -801,41 +714,6 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
     }
 
-    /**
-     * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
-     *
-     * @param editText_telefono EditText correo
-     * @return boolean_error
-     */
-    private boolean valida_telefono(EditText editText_telefono) {
-
-        editText_telefono.setError(null);
-
-        boolean boolean_error = true;
-
-        View focusView = null;
-
-        Pattern pattern = Patterns.PHONE;
-
-        String telefono = editText_telefono.getText().toString().trim();
-
-        if (TextUtils.isEmpty(telefono)) {
-            editText_telefono.setError(getString(R.string.error_campo_requerido));
-            focusView = editText_telefono;
-            boolean_error = false;
-        } else if (!telefono.matches(".{10}")) {
-            editText_telefono.setError(getString(R.string.error_telefono_invalido));
-            focusView = editText_telefono;
-            boolean_error = false;
-        }
-        if (!boolean_error) {
-
-            focusView.requestFocus();
-
-        }
-        return boolean_error;
-
-    }
 
     /**
      * Crea he inicializa las instancias de Firebase Authentication y obtiene la referencia de

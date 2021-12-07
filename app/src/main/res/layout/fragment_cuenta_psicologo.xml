@@ -41,6 +41,7 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/txt_NombrePsicologo"
+                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
             <EditText
@@ -53,6 +54,7 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/txt_ApellidoP_Psicologo"
+                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
             <EditText
@@ -65,6 +67,7 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/txt_ApellidoM_Psicologo"
+                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
             <EditText
@@ -77,6 +80,7 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/txt_Cedula"
+                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
             <EditText
@@ -89,7 +93,75 @@
                 android:inputType="textPostalAddress"
                 android:minHeight="48dp"
                 android:text="@string/txt_Direccion_Consultorio"
+                android:enabled="false"
                 android:textColor="#5E5D5D" />
+            <EditText
+                android:id="@+id/txt_calle_cuenta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/calle"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:visibility="gone"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_num_exterior_cuenta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/num_exterior"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:visibility="gone"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/txt_cp_cuenta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/codigopostal"
+                android:inputType="text|number"
+                android:textAlignment="center"
+                android:visibility="gone"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Spinner
+                android:id="@+id/sp_estado_cuenta"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="@string/estado"
+                android:visibility="gone"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/sp_municipio_cuenta"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:hint="@string/estado" />
+
+                <Spinner
+                    android:id="@+id/sp_localidad_cuenta"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:hint="@string/estado" />
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/txt_Telefono_Psicologo"
@@ -114,8 +186,9 @@
                 android:minHeight="48dp"
                 android:text="@string/txt_CorreoContacto_Psicologo"
                 android:textColor="#5E5D5D" />
+
             <EditText
-                android:id="@+id/txt_CorreoConfirmacion_Psicologo"
+                android:id="@+id/txt_Contrasena_Psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -123,9 +196,21 @@
                 android:gravity="center"
                 android:inputType="textEmailAddress"
                 android:minHeight="48dp"
-                android:text="@string/txt_CorreoContacto_Psicologo"
+                android:text="Nueva contaseña"
                 android:textColor="#5E5D5D" />
-
+            <EditText
+                android:id="@+id/txt_ContrasenaConfirmacion_Psicologo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:text="Confirma contraseña"
+                android:visibility="gone"
+                android:enabled="false"
+                android:textColor="#5E5D5D" />
 
                 <com.github.barteksc.pdfviewer.PDFView
                     android:id="@+id/pdf_view_cuenta_psicologo"

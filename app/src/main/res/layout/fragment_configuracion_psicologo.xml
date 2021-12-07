@@ -26,8 +26,11 @@
                 android:textColor="@color/white" />
 
             <com.paypal.checkout.paymentbutton.PayPalButton
+                android:id="@+id/payPalButton_psicologo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/teal_700"
+                />
 
 
         </LinearLayout>

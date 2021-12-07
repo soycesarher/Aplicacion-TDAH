@@ -312,7 +312,8 @@ public class CuentaFragment extends Fragment {
             editText_correo.setError(getString(R.string.error_campo_requerido));
             focusView = editText_correo;
             boolean_correo_v = false;
-        } else if (!pattern.matcher(Email).matches()) {
+        }
+        if (!pattern.matcher(Email).matches()) {
             editText_correo.setError(getString(R.string.error_correo_no_valido));
             focusView = editText_correo;
             boolean_correo_v = false;
