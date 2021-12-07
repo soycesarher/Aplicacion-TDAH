@@ -1,20 +1,17 @@
 package com.example.tdah;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -91,15 +88,14 @@ public class CargaPdf extends AppCompatActivity {
                     Uri uri = task.getResult();
 
                     string_url_curriculum = uri.toString();
-                    databaseReference.child("Psicologo").child(usuario_actual.getUid()).child("string_perfilProfesional").setValue(string_url_curriculum).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
+                    FirebaseUser usuario_actual = mAuth.getCurrentUser();
+                    databaseReference.child("Psicologo").child(usuario_actual.getUid()).child("string_perfilProfesional").setValue(string_url_curriculum).addOnCompleteListener(task1 -> {
+                        if(task1.isSuccessful()){
 
-                                Toast.makeText(CargaPdf.this, "Cargado exitosamente", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CargaPdf.this, "Cargado exitosamente", Toast.LENGTH_SHORT).show();
 
-                                startActivity(new Intent(CargaPdf.this,PsicologoPrincipal.class));
-                            }
+                            startActivity(new Intent(CargaPdf.this,PsicologoPrincipal.class));
+                            finish();
                         }
                     });
 
@@ -124,5 +120,6 @@ public class CargaPdf extends AppCompatActivity {
 
         FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
         databaseReference = firebase_database.getReference();
+        mAuth = FirebaseAuth.getInstance();
     }
 }

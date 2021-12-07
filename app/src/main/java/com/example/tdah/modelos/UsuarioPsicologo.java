@@ -4,7 +4,16 @@ import java.io.Serializable;
 
 public class UsuarioPsicologo extends Usuario implements Serializable {
     private int int_cedula;
-    private int int_telefono;
+
+    public long getLong_telefono() {
+        return long_telefono;
+    }
+
+    public void setLong_telefono(long long_telefono) {
+        this.long_telefono = long_telefono;
+    }
+
+    private long long_telefono;
     private String string_especialidad,string_perfilProfesional;
     private boolean boolean_validado;
 
@@ -35,13 +44,7 @@ public class UsuarioPsicologo extends Usuario implements Serializable {
         this.string_perfilProfesional = string_perfilProfesional;
     }
 
-    public int getInt_telefono() {
-        return int_telefono;
-    }
 
-    public void setInt_telefono(int int_telefono) {
-        this.int_telefono = int_telefono;
-    }
 
     public boolean isBoolean_validado() {
         return boolean_validado;

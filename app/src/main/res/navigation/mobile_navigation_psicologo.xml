@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation_psicologo"
 
-    app:startDestination="@+id/nav_inicio_psicologo">
+    app:startDestination="@+id/nav_host_fragment_content_psicologo_principal">
 
     <fragment
         android:id="@+id/nav_menu_ayuda"

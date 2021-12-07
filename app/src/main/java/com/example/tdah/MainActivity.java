@@ -1,10 +1,11 @@
 package com.example.tdah;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,30 +42,38 @@ private DatabaseReference databaseReference;
     @Override
     protected void onStart() {
         super.onStart();
+        fUser = mAuth.getCurrentUser();
             if(mAuth.getCurrentUser()!= null){
-                databaseReference.child("Psicologo").orderByKey().equalTo(fUser.getUid()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("Psicologo").orderByKey().equalTo(fUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            String string_url_pdf = snapshot.child("string_perfilProfesional").getValue().toString();
-                            if(string_url_pdf.equalsIgnoreCase("-1")){
-                                startActivity(new Intent(MainActivity.this, CargaPdf.class));
+                        if (snapshot.getChildrenCount()>0) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                            }else {
-                                startActivity(new Intent(MainActivity.this, PsicologoPrincipal.class));
+                                String string_url_pdf =dataSnapshot.child("string_perfilProfesional").getValue().toString();
+
+                                if (string_url_pdf.equalsIgnoreCase("-1")) {
+                                    startActivity(new Intent(MainActivity.this, CargaPdf.class));
+                                    finish();
+
+                                } else {
+                                    startActivity(new Intent(MainActivity.this, PsicologoPrincipal.class));
+                                    finish();
+                                }
+
                             }
+                        }else{
+                            startActivity(new Intent(MainActivity.this,UsuarioPrincipal.class));
+                            finish();
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        startActivity(new Intent(MainActivity.this, UsuarioPrincipal.class));
-
 
                     }
                 });
 
-                finish();
             }
     }
 }

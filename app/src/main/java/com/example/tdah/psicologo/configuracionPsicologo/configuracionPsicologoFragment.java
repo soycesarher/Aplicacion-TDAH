@@ -10,16 +10,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tdah.BuildConfig;
 import com.example.tdah.MainActivity;
 import com.example.tdah.R;
-import com.example.tdah.databinding.FragmentConfiguracionPsicologoBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +44,6 @@ public class configuracionPsicologoFragment extends Fragment {
     private Button btn_cerrar_sesion;
     private FirebaseAuth mAuth;
     private configuracionPsicologoViewModel configuracionPsicologoViewModel;
-    private FragmentConfiguracionPsicologoBinding binding;
 
     private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
 
@@ -69,11 +65,7 @@ public class configuracionPsicologoFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         btn_cerrar_sesion = (Button) root.findViewById(R.id.btn_cerrar_sesion_psico);
 
-        configuracionPsicologoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
-        });
+
         payPalButton = root.findViewById(R.id.payPalButton_psicologo);
         configuraPaypal(root);
 
@@ -154,7 +146,7 @@ public class configuracionPsicologoFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String[] fecha_pago() throws ParseException {
         String[] strings_fecha = new String[2];
-        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String string_fecha_pago = LocalDateTime.now().format(dateTimeFormatter_formato);
         String string_fecha_termino_suscripcion = LocalDateTime.now().plusDays(30).format(dateTimeFormatter_formato);
         if (!boolean_pago) {
@@ -173,7 +165,7 @@ public class configuracionPsicologoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+
     }
     private void ir_a_main(LayoutInflater inflater, ViewGroup container) {
         AjustesViewModel =

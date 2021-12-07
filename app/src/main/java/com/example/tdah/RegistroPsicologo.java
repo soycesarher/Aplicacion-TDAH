@@ -55,19 +55,19 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
     FirebaseAuth mAuth;
 
     private boolean boolean_error_contrasena;
-    private boolean boolean_error_correo;
-    private boolean boolean_error_numero_exterior;
-    private boolean boolean_error_texto;
-    private boolean boolean_error_telefono;
-    private boolean boolean_error_cedula;
-    private boolean boolean_error_cp;
+    private boolean boolean_error_correo=false;
+    private boolean boolean_error_numero_exterior=false;
+    private boolean boolean_error_texto=false;
+    private boolean boolean_error_telefono=false;
+    private boolean boolean_error_cedula=false;
+    private boolean boolean_error_cp=false;
     private boolean boolean_pago;
 
     private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
 
     private PaymentButton payPalButton;
 
-    private Button btn_registrarse;
+    private Button btn_registrarse,btn_cancelar;
 
     private final String string_url_curriculum = "-1";
 
@@ -80,6 +80,7 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_registro_psicologo);
 
         btn_registrarse = findViewById(R.id.btn_registrarse);
+        btn_cancelar = findViewById(R.id.btn_cancelar);
 
 
 
@@ -298,17 +299,21 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
 
 
+        btn_registrarse.setOnClickListener(v-> {
+            if (!boolean_error_cedula || !boolean_error_correo || boolean_error_contrasena
+                    || !boolean_error_texto || !boolean_error_numero_exterior || !boolean_error_cp || !boolean_error_telefono) {
 
-        if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
-                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono ) {
+                Toast.makeText(RegistroPsicologo.this, "Verifique los datos de nuevo", Toast.LENGTH_SHORT).show();
 
-          btn_registrarse.setEnabled(false);
+            } else {
+                ingresa_base_datos();
+            }
+        });
 
-        } else {
-            btn_registrarse.setEnabled(true);
-
-        }
-        btn_registrarse.setOnClickListener(v->ingresa_base_datos());
+        btn_cancelar.setOnClickListener(v->{
+            startActivity(new Intent(RegistroPsicologo.this,InicioDeSesionPsicologo.class));
+            finish();
+        });
 
     }
 
@@ -361,28 +366,29 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
         String string_num_ext = txt_num_exterior.getText().toString();
         String string_cp = txt_cp.getText().toString();
 
-        String string_telefono = txt_telefono.getText().toString();
+        String string_telefono = txt_telefono.getText().toString().trim();
         String string_correo = txt_correo.getText().toString();
         String string_contrasena = txt_contrasena.getText().toString();
-        String string_cedula = txt_celdula.getText().toString();
+        String string_cedula = txt_celdula.getText().toString().trim();
+        long long_telefono = Long.decode(string_telefono);
+        int int_cedula = Integer.parseInt(string_cedula);
 
         mAuth.createUserWithEmailAndPassword(string_correo, string_contrasena).addOnCompleteListener(task -> {
 
             UsuarioPsicologo usuarioPsicologo = new UsuarioPsicologo();
 
             if (task.isSuccessful()) {
-
-
-                assert usuario_actual != null;
+                FirebaseUser usuario_actual = mAuth.getCurrentUser();
 
                 usuarioPsicologo.setString_id(usuario_actual.getUid());
+                usuarioPsicologo.setString_correo(string_correo);
                 usuarioPsicologo.setString_nombre(string_nombre);
                 usuarioPsicologo.setString_apellido_paterno(string_apellido_paterno);
                 usuarioPsicologo.setString_apellido_materno(string_apellido_materno);
                 usuarioPsicologo.setString_direccion(string_calle + "," + string_num_ext + "," + string_cp +
                         "," + localidad + "," + municipio + "," + estado);
-                usuarioPsicologo.setInt_telefono(Integer.parseInt(string_telefono));
-                usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
+                usuarioPsicologo.setLong_telefono(long_telefono);
+                usuarioPsicologo.setInt_cedula(int_cedula);
                 usuarioPsicologo.setString_especialidad("Por verificar");
                 usuarioPsicologo.setString_perfilProfesional(string_url_curriculum);
 
@@ -400,6 +406,7 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
                             if (task2.isSuccessful()) {
                                 startActivity(new Intent(this, CargaPdf.class));
+                                finish();
 
                             } else {
 
@@ -452,7 +459,6 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
         View focusView = null;
 
-        Pattern pattern = Patterns.PHONE;
 
         String telefono = editText_telefono.getText().toString().trim();
 
@@ -688,13 +694,15 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
         editText_correo.setError(null);
 
+        String Email = editText_correo.getText().toString().trim();
+
         boolean boolean_correo_v = true;
 
         View focusView = null;
 
         Pattern pattern = Patterns.EMAIL_ADDRESS;
 
-        String Email = editText_correo.getText().toString().trim();
+
 
         if (TextUtils.isEmpty(Email)) {
             editText_correo.setError(getString(R.string.error_campo_requerido));

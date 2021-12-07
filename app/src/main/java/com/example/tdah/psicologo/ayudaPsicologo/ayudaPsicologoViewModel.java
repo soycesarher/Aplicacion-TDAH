@@ -10,7 +10,7 @@ public class ayudaPsicologoViewModel extends ViewModel {
 
     public ayudaPsicologoViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("Ayuda");
     }
 
     public LiveData<String> getText() {

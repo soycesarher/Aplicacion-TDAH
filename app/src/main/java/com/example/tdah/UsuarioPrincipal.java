@@ -1,13 +1,21 @@
 package com.example.tdah;
 
 
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.android.material.navigation.NavigationView;
@@ -19,21 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import java.time.LocalDate;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class UsuarioPrincipal extends AppCompatActivity {
@@ -144,19 +139,19 @@ public class UsuarioPrincipal extends AppCompatActivity {
 
         u.setString_id(firebaseUser.getUid());
 
-        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        LocalDate  localDate_fecha_actual = LocalDate.parse(LocalDate.now().format(dateTimeFormatter_formato), dateTimeFormatter_formato);
+        LocalDateTime  localDate_fecha_actual = LocalDateTime.parse(LocalDateTime.now().format(dateTimeFormatter_formato), dateTimeFormatter_formato);
 
-        LocalDate  localDate_fecha_termino_suscripcion = LocalDate.parse(fecha_termino_suscripcion, dateTimeFormatter_formato);
+        LocalDateTime  localDate_fecha_termino_suscripcion = LocalDateTime.parse(fecha_termino_suscripcion, dateTimeFormatter_formato);
 
-        Period period_edad = Period.between(localDate_fecha_actual, localDate_fecha_termino_suscripcion);
+        Duration duration_dias = Duration.between(localDate_fecha_actual, localDate_fecha_termino_suscripcion);
 
-        if(period_edad.getDays() == 2){
+        if(duration_dias.toDays() == 2){
 
-            Log.e(TAG,"LE QUEDAN: "+period_edad.getDays()+" DE SUSCRIPCION");
+            Log.e(TAG,"LE QUEDAN: "+duration_dias.toDays()+" DE SUSCRIPCION");
 
-        }else if(period_edad.isZero()){
+        }else if(duration_dias.isZero()){
 
             Log.e(TAG,"SU SUSCRIPCIÓN HA TERMINADO");
 

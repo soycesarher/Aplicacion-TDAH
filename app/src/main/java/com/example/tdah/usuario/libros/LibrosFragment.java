@@ -1,12 +1,7 @@
 package com.example.tdah.usuario.libros;
 
-import androidx.fragment.app.Fragment;
-
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.media.MediaPlayer;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -20,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tdah.R;
 import com.example.tdah.audio.Adaptador;
 import com.example.tdah.audio.AudioModelo;
+import com.example.tdah.modelos.UsuarioPadreTutor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -185,16 +182,25 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
 
     public void cargaListaCanciones() {
 
+        UsuarioPadreTutor u = new UsuarioPadreTutor();
 
         databaseReference.child("Usuario").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    String string_pago = snapshot.child("string_fecha_fin_suscripcion").getValue().toString();
 
-                    if(!string_pago.equalsIgnoreCase("-1")){
+                    u.setString_fecha_fin_suscripcion(snapshot.child("string_fecha_fin_suscripcion").getValue().toString());
+                    if(!u.getString_fecha_fin_suscripcion().equalsIgnoreCase("-1")){
                         int_numero_canciones[0] = INTS_CANCIONES.length;
                     }
+                    for (int e = 0; e < int_numero_canciones[0]; e++) {
+
+                        lista_audio_modelo.add(new AudioModelo(INTS_CANCIONES[e], STRINGS_NOMBRES_CANCION[e], INTS_IMAGENES[e], STRINGS_TIPO[e]));
+
+                    }
+
+                    adapter = new Adaptador(lista_audio_modelo, LibrosFragment.this);
+                    recyclerView.setAdapter(adapter);
                 }
             }
 
@@ -204,15 +210,7 @@ public class LibrosFragment extends Fragment implements Adaptador.OnClickListene
             }
         });
 
-        for (int e = 0; e < int_numero_canciones[0]; e++) {
 
-            lista_audio_modelo.add(new AudioModelo(INTS_CANCIONES[e], STRINGS_NOMBRES_CANCION[e], INTS_IMAGENES[e], STRINGS_TIPO[e]));
-
-        }
-
-        adapter = new Adaptador(lista_audio_modelo, this);
-
-        recyclerView.setAdapter(adapter);
 
     }
 

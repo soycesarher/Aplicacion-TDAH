@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -24,10 +24,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class PsicologoPrincipal extends AppCompatActivity {
@@ -48,26 +49,36 @@ public class PsicologoPrincipal extends AppCompatActivity {
 
         binding = ActivityPsicologoPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        inicializa_firebase();
 
         setSupportActionBar(binding.appBarPsicologoPrincipal.toolbar);
-        binding.appBarPsicologoPrincipal.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        binding.appBarPsicologoPrincipal.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_psicologo_principal);
+        NavController navController = navHostFragment.getNavController();
+
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_menu_ayuda, R.id.nav_menu_cuenta, R.id.nav_menu_configuracion)
-                .setOpenableLayout(drawer)
+                navController.getGraph())
+                .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_psicologo_principal);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(navigationView,navController);
+    }
+    private void inicializa_firebase() {
+
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
+
+        databaseReference = firebase_database.getReference();
+
+        firebaseUser = mAuth.getCurrentUser();
+
     }
     @Override
     protected void onStart() {
@@ -115,17 +126,17 @@ public class PsicologoPrincipal extends AppCompatActivity {
 
         usuarioPsicologo.setString_id(firebaseUser.getUid());
 
-        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        LocalDate localDate_fecha_actual = LocalDate.parse(LocalDate.now().format(dateTimeFormatter_formato), dateTimeFormatter_formato);
+        LocalDateTime localDate_fecha_actual = LocalDateTime.parse(LocalDateTime.now().format(dateTimeFormatter_formato), dateTimeFormatter_formato);
 
-        LocalDate  localDate_fecha_termino_suscripcion = LocalDate.parse(fecha_termino_suscripcion, dateTimeFormatter_formato);
+        LocalDateTime  localDate_fecha_termino_suscripcion = LocalDateTime.parse(fecha_termino_suscripcion, dateTimeFormatter_formato);
 
-        Period period_edad = Period.between(localDate_fecha_actual, localDate_fecha_termino_suscripcion);
+        Duration period_edad = Duration.between(localDate_fecha_actual, localDate_fecha_termino_suscripcion);
 
-        if(period_edad.getDays() == 2){
+        if(period_edad.toDays() == 2){
 
-            Log.e(TAG,"LE QUEDAN: "+period_edad.getDays()+" DE SUSCRIPCION");
+            Log.e(TAG,"LE QUEDAN: "+period_edad.toDays()+" DE SUSCRIPCION");
 
         }else if(period_edad.isZero()){
 

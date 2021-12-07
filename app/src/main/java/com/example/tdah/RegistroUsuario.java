@@ -391,7 +391,7 @@ public class RegistroUsuario extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String[] fecha_pago() throws ParseException {
         String[] strings_fecha = new String[2];
-        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String string_fecha_pago = LocalDateTime.now().format(dateTimeFormatter_formato);
         String string_fecha_termino_suscripcion = LocalDateTime.now().plusDays(30).format(dateTimeFormatter_formato);
         if (!boolean_pago) {
@@ -461,7 +461,7 @@ public class RegistroUsuario extends AppCompatActivity {
     private boolean valida_edad(String fecha_nacimiento_v) {
         boolean edad = false;
         String[] string_fecha = fecha_nacimiento_v.split("-");
-        fecha_nacimiento = string_fecha[0] + "/" + string_fecha[1] + "/" + string_fecha[2].substring(0, 2);
+        fecha_nacimiento = string_fecha[0] + "-" + string_fecha[1] + "-" + string_fecha[2].substring(0, 2);
         int anio = Integer.parseInt(string_fecha[0]);
         int mes = Integer.parseInt(string_fecha[1]);
         int dia = Integer.parseInt(string_fecha[2].substring(0, 2));

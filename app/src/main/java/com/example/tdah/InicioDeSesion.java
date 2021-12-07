@@ -1,9 +1,6 @@
 package com.example.tdah;
 
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,13 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Pattern;
 
@@ -232,32 +228,6 @@ public class InicioDeSesion extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-            if(mAuth.getCurrentUser()!= null){
-                databaseReference.child("Psicologo").orderByKey().equalTo(fUser.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            String string_url_pdf = snapshot.child("string_perfilProfesional").getValue().toString();
-                            if(string_url_pdf.equalsIgnoreCase("-1")){
-                                startActivity(new Intent(InicioDeSesion.this, CargaPdf.class));
-
-                            }else {
-                                startActivity(new Intent(InicioDeSesion.this, PsicologoPrincipal.class));
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        startActivity(new Intent(InicioDeSesion.this, UsuarioPrincipal.class));
-
-
-                    }
-                });
-
-
-                finish();
-            }
 
     }
 

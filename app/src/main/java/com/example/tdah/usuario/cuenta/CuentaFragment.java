@@ -49,7 +49,7 @@ public class CuentaFragment extends Fragment {
     private EditText txt_contrasena;
     private EditText txt_confirma_contrasena;
     private EditText txt_correo;
-    private boolean boolean_correo;
+    private boolean boolean_correo=false;
     private boolean boolean_contrasena;
 
 

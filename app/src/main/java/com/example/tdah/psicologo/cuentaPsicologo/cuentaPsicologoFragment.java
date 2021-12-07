@@ -89,7 +89,7 @@ public class cuentaPsicologoFragment extends Fragment implements View.OnClickLis
                 new ViewModelProvider(this).get(cuentaPsicologoViewModel.class);
 
         binding = FragmentCuentaPsicologoBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View root = inflater.inflate(R.layout.fragment_cuenta_psicologo, container,false);
 
         final TextView textView = binding.txtNombrePsicologo;
 
@@ -324,7 +324,7 @@ public class cuentaPsicologoFragment extends Fragment implements View.OnClickLis
 
     private void actualizaTelefono(EditText txt_telefono_psicologo_cuenta) {
         String string_telefono = txt_telefono_psicologo_cuenta.getText().toString();
-        databaseReference.child("Psicologo").child(fUser.getUid()).child("int_telefono").setValue(string_telefono);
+        databaseReference.child("Psicologo").child(fUser.getUid()).child("long_telefono").setValue(string_telefono);
         Toast.makeText(getContext(), "El telefono se actualizó con éxito", Toast.LENGTH_LONG).show();
         startActivity(new Intent(getContext(), PsicologoPrincipal.class));
     }
@@ -436,7 +436,7 @@ public class cuentaPsicologoFragment extends Fragment implements View.OnClickLis
                     p.setString_apellido_paterno(Objects.requireNonNull(snapshot.child("string_apellido_paterno").getValue()).toString());
                     p.setString_apellido_materno(Objects.requireNonNull(snapshot.child("string_apellido_materno").getValue()).toString());
                     p.setInt_cedula(Integer.parseInt(snapshot.child("int_cedula").getValue().toString()));
-                    p.setInt_telefono(Integer.parseInt(snapshot.child("int_telefono").getValue().toString()));
+                    p.setLong_telefono(Integer.parseInt(snapshot.child("int_telefono").getValue().toString()));
                     p.setString_direccion(snapshot.child("string_direccion").getValue().toString());
                     p.setString_perfilProfesional(snapshot.child("string_perfilProfesional").getValue().toString());
                     p.setString_fecha_fin_suscripcion(snapshot.child("string_fecha_fin_suscripcion").getValue().toString());
@@ -447,7 +447,7 @@ public class cuentaPsicologoFragment extends Fragment implements View.OnClickLis
                     txt_apellido_paterno_psicologo_cuenta.setText(p.getString_apellido_paterno());
                     txt_apellido_materno_psicologo_cuenta.setText(p.getString_apellido_materno());
                     txt_cedula_psicologo_cuenta.setText(String.valueOf(p.getInt_cedula()));
-                    txt_telefono_psicologo_cuenta.setText(String.valueOf(p.getInt_telefono()));
+                    txt_telefono_psicologo_cuenta.setText(String.valueOf(p.getLong_telefono()));
                     txt_direccion_consultorio_psicologo_cuenta.setText(p.getString_direccion());
 
 

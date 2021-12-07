@@ -10,7 +10,7 @@ public class configuracionPsicologoViewModel extends ViewModel {
 
     public configuracionPsicologoViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("Configuracion");
     }
 
     public LiveData<String> getText() {
