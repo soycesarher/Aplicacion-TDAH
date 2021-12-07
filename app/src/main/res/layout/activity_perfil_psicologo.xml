@@ -20,14 +20,14 @@
             android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/txt_direccion_consultorio"
+            android:id="@+id/txt_direccion_consultorio_psicologo_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Especialidad"
             android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/txt_especialidad_psicologo_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dirección consultorio"

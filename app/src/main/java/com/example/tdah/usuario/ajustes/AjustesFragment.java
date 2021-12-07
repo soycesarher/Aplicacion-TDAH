@@ -9,16 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tdah.MainActivity;
 import com.example.tdah.R;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Objects;
 
 public class AjustesFragment extends Fragment {
     private AjustesViewModel AjustesViewModel;
@@ -46,6 +42,6 @@ public class AjustesFragment extends Fragment {
                 new ViewModelProvider(this).get(AjustesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_ajustes, container, false);
         startActivity(new Intent(root.getContext(),MainActivity.class));
-        Objects.requireNonNull(getActivity()).finish();
+        requireActivity().finish();
     }
 }

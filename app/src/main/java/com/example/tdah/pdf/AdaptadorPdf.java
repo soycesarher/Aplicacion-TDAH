@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tdah.R;
 import com.example.tdah.modelos.UsuarioPsicologo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> {
+public class AdaptadorPdf extends RecyclerView.Adapter<AdaptadorPdf.ViewHolder> implements Serializable {
 
     private ArrayList<UsuarioPsicologo> lista_psicologo_modelo;
     private final AdaptadorPdf.OnClickListener mOnClickListener;

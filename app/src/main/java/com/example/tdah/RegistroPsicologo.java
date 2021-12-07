@@ -39,6 +39,9 @@ import com.paypal.checkout.order.Order;
 import com.paypal.checkout.order.PurchaseUnit;
 import com.paypal.checkout.paymentbutton.PaymentButton;
 
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -85,6 +88,7 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
     private final String string_url_curriculum = "-1";
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +100,36 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
 
         //Paypal
+        payPalButton = findViewById(R.id.payPalButton_psicologo);
+        configuraPaypal();
+
+        payPalButton.setup(
+                createOrderActions -> {
+                    ArrayList purchaseUnits = new ArrayList<>();
+                    purchaseUnits.add(
+                            new PurchaseUnit.Builder()
+                                    .amount(
+                                            new Amount.Builder()
+                                                    .currencyCode(CurrencyCode.USD)
+                                                    .value("5.00")
+                                                    .build()
+                                    )
+                                    .build()
+                    );
+                    Order order = new Order(OrderIntent.CAPTURE,
+                            new AppContext.Builder()
+                                    .userAction(UserAction.PAY_NOW)
+                                    .build(),
+                            purchaseUnits);
+
+                    createOrderActions.create(order, (CreateOrderActions.OnOrderCreated) null);
+                },
+                approval -> approval.getOrderActions().capture(result -> {
+                    Toast.makeText(RegistroPsicologo.this, "Compra exitosa", Toast.LENGTH_LONG).show();
+                    boolean_pago = false;
+                }),
+                () -> Toast.makeText(RegistroPsicologo.this, "Compra cancelada", Toast.LENGTH_LONG).show()
+        );
         payPalButton = findViewById(R.id.payPalButton_psicologo);
         configuraPaypal();
 
@@ -344,7 +378,7 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
 
         if (boolean_error_cedula || boolean_error_correo || !boolean_error_contrasena
-                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono || boolean_pago) {
+                || boolean_error_texto || boolean_error_numero_exterior || boolean_error_cp || boolean_error_telefono || !boolean_pago) {
 
           btn_registrarse.setEnabled(false);
 
@@ -429,6 +463,12 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
                 usuarioPsicologo.setInt_cedula(Integer.parseInt(string_cedula));
                 usuarioPsicologo.setString_especialidad("Por verificar");
                 usuarioPsicologo.setString_perfilProfesional(string_url_curriculum);
+                try {
+                    usuarioPsicologo.setString_fecha_pago(fecha_pago()[0]);
+                    usuarioPsicologo.setString_fecha_fin_suscripcion(fecha_pago()[1]);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 usuario_actual.sendEmailVerification().addOnCompleteListener(task1 -> {
 
@@ -494,15 +534,29 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
 
 
     }
-
     /**
+     * Regresa el tipo de cuenta
      *
+     * @return string_cuenta
      */
-//    @Override
-//    protected void onDestroy() {
-//        stopService(new Intent(this, PayPalService.class));
-//        super.onDestroy();
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String[] fecha_pago() throws ParseException {
+        String[] strings_fecha = new String[2];
+        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        String string_fecha_pago = LocalDateTime.now().format(dateTimeFormatter_formato);
+        String string_fecha_termino_suscripcion = LocalDateTime.now().plusDays(30).format(dateTimeFormatter_formato);
+        if (!boolean_pago) {
+            Toast.makeText(RegistroPsicologo.this, "Cuenta pago", Toast.LENGTH_SHORT).show();
+            strings_fecha[0] = string_fecha_pago;
+            strings_fecha[1] = string_fecha_termino_suscripcion;
+        } else {
+            Toast.makeText(RegistroPsicologo.this, "Cuenta gratuita", Toast.LENGTH_SHORT).show();
+            strings_fecha[0] = "-1";
+            strings_fecha[1] = "-1";
+        }
+        return strings_fecha;
+    }
+
     @Override
     public void onClick(View view) {
 

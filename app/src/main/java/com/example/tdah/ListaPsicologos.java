@@ -1,13 +1,15 @@
 package com.example.tdah;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-
 import com.example.tdah.modelos.UsuarioPsicologo;
 import com.example.tdah.pdf.AdaptadorPdf;
+import com.example.tdah.pdf.PerfilPsicologo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ListaPsicologos extends AppCompatActivity implements AdaptadorPdf.OnClickListener{
+public class ListaPsicologos extends AppCompatActivity implements AdaptadorPdf.OnClickListener {
 
     private final ArrayList<UsuarioPsicologo> lista_psicologo_modelo = new ArrayList<>();
     private AdaptadorPdf adaptadorPdf;
@@ -40,7 +42,7 @@ public class ListaPsicologos extends AppCompatActivity implements AdaptadorPdf.O
 
                 lista_psicologo_modelo.clear();
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     UsuarioPsicologo usuarioPsicologo = dataSnapshot.getValue(UsuarioPsicologo.class);
 
@@ -64,6 +66,14 @@ public class ListaPsicologos extends AppCompatActivity implements AdaptadorPdf.O
 
     @Override
     public void onClick(int position) {
-
+        startActivity(
+                new Intent(
+                        ListaPsicologos.this,
+                        PerfilPsicologo.class).
+                        putExtra(
+                                "Psicologo",
+                                lista_psicologo_modelo
+                        ).putExtra("Index",position)
+        );
     }
 }

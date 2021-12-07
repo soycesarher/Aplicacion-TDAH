@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TDAH">
         <activity
+            android:name=".psicologo.RenovacionPagoPsicologo"
+            android:exported="false" />
+        <activity
             android:name=".CargaPdf"
             android:exported="false" />
         <activity
@@ -44,8 +47,8 @@
             android:label="@string/title_activity_mapa_centros" />
         <activity
             android:name=".UsuarioPrincipal"
-            android:label="@string/title_activity_menu_usuario"
             android:exported="false"
+            android:label="@string/title_activity_menu_usuario"
             android:theme="@style/Theme.TDAH.NoActionBar" />
         <activity
             android:name=".PadrePrincipal"
@@ -72,10 +75,12 @@
         <activity
             android:name=".RegistroPsicologo"
             android:exported="false" />
-        <activity android:name=".usuario.Oro"
-            android:exported="false"/>
-        <activity android:name=".usuario.Escenario"
-            android:exported="false"/>
+        <activity
+            android:name=".usuario.Oro"
+            android:exported="false" />
+        <activity
+            android:name=".usuario.Escenario"
+            android:exported="false" />
         <activity
             android:name="com.paypal.openid.RedirectUriReceiverActivity"
             android:excludeFromRecents="true"
@@ -83,22 +88,25 @@
             android:theme="@style/PYPLAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="paypalpay"
                     android:scheme="app.example.tdah" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.paypal.pyplcheckout.home.view.activities.PYPLInitiateCheckoutActivity"
             android:exported="true"
             android:theme="@style/AppFullScreenTheme">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="paypalxo"
                     android:scheme="app.example.tdah" />

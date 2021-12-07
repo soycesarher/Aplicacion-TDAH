@@ -114,19 +114,23 @@
                 android:minHeight="48dp"
                 android:text="@string/txt_Cedula"
                 android:textColor="#5E5D5D" />
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txt_perfil_profesional"
-                android:layout_width="350dp"
-                android:layout_gravity="center"
-                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/boton_personalizado"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/txt_descripcion" />
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.github.barteksc.pdfviewer.PDFView
+                    android:id="@+id/pdf_view_cuenta_psicologo"
+                    android:layout_width="350dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center">
+
+                    <ProgressBar
+                        android:id="@+id/pb_progreso_pdf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:progressDrawable="@color/purple_500" />
+
+                </com.github.barteksc.pdfviewer.PDFView>
+
+
 
             <Button
                 android:id="@+id/btn_Verificar_Cedula"

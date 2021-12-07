@@ -394,7 +394,7 @@ public class RegistroUsuario extends AppCompatActivity {
         DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String string_fecha_pago = LocalDateTime.now().format(dateTimeFormatter_formato);
         String string_fecha_termino_suscripcion = LocalDateTime.now().plusDays(30).format(dateTimeFormatter_formato);
-        if (boolean_pago) {
+        if (!boolean_pago) {
             Toast.makeText(RegistroUsuario.this, "Cuenta pago", Toast.LENGTH_SHORT).show();
             strings_fecha[0] = string_fecha_pago;
             strings_fecha[1] = string_fecha_termino_suscripcion;
