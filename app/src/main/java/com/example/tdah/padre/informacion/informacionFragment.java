@@ -23,4 +23,5 @@ public class informacionFragment extends Fragment {
         return root;
     }
 
+    public informacionFragment(){super(R.layout.fragment_informacion);}
 }

@@ -18,7 +18,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.tdah.databinding.ActivityPsicologoPrincipalBinding;
 import com.example.tdah.modelos.UsuarioPsicologo;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,14 +45,12 @@ public class PsicologoPrincipal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_psicologo_principal);
         binding = ActivityPsicologoPrincipalBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
         inicializa_firebase();
 
-        setSupportActionBar(binding.appBarPsicologoPrincipal.toolbar);
-        binding.appBarPsicologoPrincipal.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_psicologo_principal);

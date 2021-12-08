@@ -39,11 +39,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class configuracionPsicologoFragment extends Fragment {
+public class ConfiguracionPsicologoFragment extends Fragment {
     private com.example.tdah.usuario.ajustes.AjustesViewModel AjustesViewModel;
     private Button btn_cerrar_sesion;
     private FirebaseAuth mAuth;
-    private configuracionPsicologoViewModel configuracionPsicologoViewModel;
+    private ConfiguracionPsicologoViewModel configuracionPsicologoViewModel;
 
     private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
 
@@ -59,7 +59,7 @@ public class configuracionPsicologoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         configuracionPsicologoViewModel =
-                new ViewModelProvider(this).get(configuracionPsicologoViewModel.class);
+                new ViewModelProvider(this).get(ConfiguracionPsicologoViewModel.class);
         View root = inflater.inflate(R.layout.fragment_configuracion_psicologo, container,false);
 
         mAuth = FirebaseAuth.getInstance();

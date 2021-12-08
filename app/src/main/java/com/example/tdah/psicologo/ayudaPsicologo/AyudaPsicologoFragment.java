@@ -12,15 +12,15 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tdah.R;
 import com.example.tdah.databinding.FragmentAyudaPsicologoBinding;
 
-public class ayudaPsicologoFragment extends Fragment {
+public class AyudaPsicologoFragment extends Fragment {
 
-    private ayudaPsicologoViewModel ayudaPsicologoViewModel;
+    private AyudaPsicologoViewModel ayudaPsicologoViewModel;
     private FragmentAyudaPsicologoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ayudaPsicologoViewModel =
-                new ViewModelProvider(this).get(ayudaPsicologoViewModel.class);
+                new ViewModelProvider(this).get(AyudaPsicologoViewModel.class);
         View root = inflater.inflate(R.layout.fragment_ayuda_psicologo, container,false);
         ayudaPsicologoViewModel.getText().observe(getViewLifecycleOwner(), s -> {
         });

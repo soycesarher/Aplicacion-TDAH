@@ -38,7 +38,7 @@ public class PadresFragment extends Fragment{
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private  UsuarioPadreTutor u;
-    private boolean boolean_nip;
+    protected boolean boolean_nip;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -75,10 +75,11 @@ public class PadresFragment extends Fragment{
         btn_padres_nip.setOnClickListener(v -> {
             if(!autentica_nip(txt_nip)){
 
-                startActivity(new Intent(getContext(), PadrePrincipal.class));
+                Toast.makeText(getContext(), "Verifique el nip", Toast.LENGTH_SHORT).show();
 
             }else{
-                Toast.makeText(getContext(), "Verifique el nip", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(getContext(), PadrePrincipal.class));
             }
         });
 
@@ -102,9 +103,11 @@ public class PadresFragment extends Fragment{
         databaseReference.child("Usuario").child(u.getString_id()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PadresFragment p = new PadresFragment();
                 if (snapshot.exists()) {
 
                     u.setInt_nip(Integer.parseInt(Objects.requireNonNull(snapshot.child("int_nip").getValue()).toString()));
+
                 }
             }
 

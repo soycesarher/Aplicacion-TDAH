@@ -18,9 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TDAH">
         <activity
-            android:name=".psicologo.RenovacionPagoPsicologo"
-            android:exported="false" />
-        <activity
             android:name=".CargaPdf"
             android:exported="false" />
         <activity

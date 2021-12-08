@@ -1,5 +1,6 @@
 package com.example.tdah.usuario.actividad2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class Actividad2Fragment extends Fragment implements View.OnClickListener {
+
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private FirebaseDatabase firebase_database;
@@ -52,14 +54,51 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         Actividad2ViewModel =
                 new ViewModelProvider(this).get(Actividad2ViewModel.class);
         View root = inflater.inflate(R.layout.fragment_actividad2, container, false);
+        inicializaFirebase();
+        validaCuenta();
         Componentes(root);
         main = (UsuarioPrincipal) getParentFragment().getActivity();
         Actividad2ViewModel.getText().observe(getViewLifecycleOwner(), s -> {
         });
         return root;
+    }
+
+    private void inicializaFirebase() {
+
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
+
+        databaseReference = firebase_database.getReference();
+
+        firebaseUser = mAuth.getCurrentUser();
+
+    }
+
+    private void validaCuenta() {
+        databaseReference.child("Usuario").child(firebaseUser.getUid()).child("string_fecha_pago").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                String string_fecha_pago = snapshot.getValue().toString();
+                if(string_fecha_pago.equals("-1")){
+                    Toast.makeText( getContext(), "Actividad de pago", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getContext(),UsuarioPrincipal.class));
+
+                }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void Componentes(View root) {
@@ -244,5 +283,7 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
             }
         });
     }
+
+
 
 }

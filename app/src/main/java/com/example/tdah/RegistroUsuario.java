@@ -28,26 +28,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.paypal.checkout.PayPalCheckout;
-import com.paypal.checkout.config.CheckoutConfig;
-import com.paypal.checkout.config.Environment;
-import com.paypal.checkout.config.SettingsConfig;
-import com.paypal.checkout.createorder.CreateOrderActions;
-import com.paypal.checkout.createorder.CurrencyCode;
-import com.paypal.checkout.createorder.OrderIntent;
-import com.paypal.checkout.createorder.UserAction;
-import com.paypal.checkout.order.Amount;
-import com.paypal.checkout.order.AppContext;
-import com.paypal.checkout.order.Order;
-import com.paypal.checkout.order.PurchaseUnit;
 import com.paypal.checkout.paymentbutton.PaymentButton;
 
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -71,13 +55,13 @@ public class RegistroUsuario extends AppCompatActivity {
 
     private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
 
-    private boolean boolean_contrasena;
-    private boolean boolean_nombre_paciente;
-    private boolean boolean_correo;
-    private boolean boolean_curp;
-    private boolean boolean_nip;
+    private boolean boolean_contrasena=true;
+    private boolean boolean_nombre_paciente=false;
+    private boolean boolean_correo=false;
+    private boolean boolean_curp=false;
+    private boolean boolean_nip=false;
     private boolean boolean_edad = false;
-    private boolean boolean_pago;
+    private boolean boolean_pago=true;
 
 
     private FirebaseAuth mAuth;
@@ -96,36 +80,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
         //Paypal
 
-        payPalButton = findViewById(R.id.payPalButton_usuario);
-        configuraPaypal();
 
-        payPalButton.setup(
-                createOrderActions -> {
-                    ArrayList purchaseUnits = new ArrayList<>();
-                    purchaseUnits.add(
-                            new PurchaseUnit.Builder()
-                                    .amount(
-                                            new Amount.Builder()
-                                                    .currencyCode(CurrencyCode.MXN)
-                                                    .value("5.00")
-                                                    .build()
-                                    )
-                                    .build()
-                    );
-                    Order order = new Order(OrderIntent.CAPTURE,
-                            new AppContext.Builder()
-                                    .userAction(UserAction.PAY_NOW)
-                                    .build(),
-                            purchaseUnits);
-
-                    createOrderActions.create(order, (CreateOrderActions.OnOrderCreated) null);
-                },
-                approval -> approval.getOrderActions().capture(result -> {
-                    Toast.makeText(RegistroUsuario.this, "Compra exitosa", Toast.LENGTH_LONG).show();
-                    boolean_pago = false;
-                }),
-                () -> Toast.makeText(RegistroUsuario.this, "Compra cancelada", Toast.LENGTH_LONG).show()
-        );
         // Fin PayPal
 
         inicializa_firebase();
@@ -230,6 +185,7 @@ public class RegistroUsuario extends AppCompatActivity {
                 Toast.makeText(RegistroUsuario.this, "La CURP no fue encontrada", Toast.LENGTH_LONG).show();
             }
         });
+
         btn_registrarse.setOnClickListener(v -> {
             if (boolean_contrasena || !boolean_correo || !boolean_curp || !boolean_nip || !boolean_nombre_paciente) {
                 Toast.makeText(RegistroUsuario.this, "Faltan datos", Toast.LENGTH_SHORT).show();
@@ -237,28 +193,6 @@ public class RegistroUsuario extends AppCompatActivity {
                 ingresa_base_datos();
             }
         });
-
-    }
-    /**
-     * Este método asigna el monto a pagar por la suscripción
-     */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void configuraPaypal() {
-        CheckoutConfig config;
-        config = new CheckoutConfig(
-                getApplication(),
-                ID_CLIENT_PAYPAL,
-                Environment.SANDBOX,
-                String.format("%s://paypalpay", BuildConfig.APPLICATION_ID),
-                CurrencyCode.MXN,
-                UserAction.PAY_NOW,
-                new SettingsConfig(
-                        true,
-                        false
-                )
-        );
-        PayPalCheckout.setConfig(config);
-
 
     }
 
@@ -331,14 +265,12 @@ public class RegistroUsuario extends AppCompatActivity {
                 usuarioPadreTutor.setString_direccion(direccion);
                 usuarioPadreTutor.setString_fecha_nacimiento(fecha_nacimiento);
 
-                try {
 
-                    usuarioPadreTutor.setString_fecha_pago(fecha_pago()[0]);
-                    usuarioPadreTutor.setString_fecha_fin_suscripcion(fecha_pago()[1]);
 
-                } catch (ParseException e) {
-                    Toast.makeText(RegistroUsuario.this, "Error: formato de fecha, " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                    usuarioPadreTutor.setString_fecha_pago("-1");
+                    usuarioPadreTutor.setString_fecha_fin_suscripcion("-1");
+
+
                 usuarioPaciente.setString_nombre_paciente(nombre_paciente);
                 usuarioPaciente.setInt_puntuacion_alta_actividad_1(0);
                 usuarioPaciente.setInt_puntuacion_alta_actividad_2(0);
@@ -383,28 +315,6 @@ public class RegistroUsuario extends AppCompatActivity {
 
     }
 
-    /**
-     * Regresa el tipo de cuenta
-     *
-     * @return string_cuenta
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private String[] fecha_pago() throws ParseException {
-        String[] strings_fecha = new String[2];
-        DateTimeFormatter dateTimeFormatter_formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String string_fecha_pago = LocalDateTime.now().format(dateTimeFormatter_formato);
-        String string_fecha_termino_suscripcion = LocalDateTime.now().plusDays(30).format(dateTimeFormatter_formato);
-        if (!boolean_pago) {
-            Toast.makeText(RegistroUsuario.this, "Cuenta pago", Toast.LENGTH_SHORT).show();
-            strings_fecha[0] = string_fecha_pago;
-            strings_fecha[1] = string_fecha_termino_suscripcion;
-        } else {
-            Toast.makeText(RegistroUsuario.this, "Cuenta gratuita", Toast.LENGTH_SHORT).show();
-            strings_fecha[0] = "-1";
-            strings_fecha[1] = "-1";
-        }
-        return strings_fecha;
-    }
 
 
     /**

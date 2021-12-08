@@ -49,7 +49,7 @@ public class UsuarioPrincipal extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        inicializa_firebase();
+        inicializaFirebase();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -83,7 +83,7 @@ public class UsuarioPrincipal extends AppCompatActivity {
                 if(snapshot.exists()){
                     String string_fecha_termino_suscripcion = snapshot.child("string_fecha_fin_suscripcion").getValue().toString();
                     if(!string_fecha_termino_suscripcion.equalsIgnoreCase("-1"))
-                    valida_fecha_suscripcion(string_fecha_termino_suscripcion);
+                    validaFechaSuscripcion(string_fecha_termino_suscripcion);
 
                 }
             }
@@ -101,7 +101,7 @@ public class UsuarioPrincipal extends AppCompatActivity {
      * Crea he inicializa las instancias de Firebase Authentication y obtiene la referencia de
      * Firebase Database
      */
-    private void inicializa_firebase() {
+    private void inicializaFirebase() {
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -112,6 +112,7 @@ public class UsuarioPrincipal extends AppCompatActivity {
         firebaseUser = mAuth.getCurrentUser();
 
     }
+
 
 
     @Override
@@ -133,7 +134,7 @@ public class UsuarioPrincipal extends AppCompatActivity {
      * @return string_cuenta
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void valida_fecha_suscripcion (String fecha_termino_suscripcion){
+    private void validaFechaSuscripcion(String fecha_termino_suscripcion){
 
         UsuarioPadreTutor u = new UsuarioPadreTutor();
 

@@ -41,7 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class cuentaPsicologoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class CuentaPsicologoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
@@ -70,7 +70,7 @@ public class cuentaPsicologoFragment extends Fragment implements View.OnClickLis
     private ProgressBar pb_progreso_carga;
     private PDFView pdf_view_cuenta_psicologo;
 
-    private cuentaPsicologoViewModel cuentaPsicologoViewModel;
+    private CuentaPsicologoViewModel cuentaPsicologoViewModel;
     private FragmentCuentaPsicologoBinding binding;
 
     private boolean boolean_correo;
@@ -86,7 +86,7 @@ public class cuentaPsicologoFragment extends Fragment implements View.OnClickLis
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         cuentaPsicologoViewModel =
-                new ViewModelProvider(this).get(cuentaPsicologoViewModel.class);
+                new ViewModelProvider(this).get(CuentaPsicologoViewModel.class);
 
         binding = FragmentCuentaPsicologoBinding.inflate(inflater, container, false);
         View root = inflater.inflate(R.layout.fragment_cuenta_psicologo, container,false);

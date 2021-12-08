@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.paypal.checkout.paymentbutton.PaymentButton;
 
 import java.util.regex.Pattern;
 
@@ -54,18 +53,15 @@ public class RegistroPsicologo extends AppCompatActivity implements View.OnClick
     FirebaseUser usuario_actual;
     FirebaseAuth mAuth;
 
-    private boolean boolean_error_contrasena;
+    private boolean boolean_error_contrasena=true;
     private boolean boolean_error_correo=false;
     private boolean boolean_error_numero_exterior=false;
     private boolean boolean_error_texto=false;
     private boolean boolean_error_telefono=false;
     private boolean boolean_error_cedula=false;
     private boolean boolean_error_cp=false;
-    private boolean boolean_pago;
 
-    private static final String ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
 
-    private PaymentButton payPalButton;
 
     private Button btn_registrarse,btn_cancelar;
 
