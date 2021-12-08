@@ -117,31 +117,7 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="listaPsicologos">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="191" />
-                            <option name="y" value="366" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="mapaCentros">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="198" />
-                            <option name="y" value="15" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="nav_menu_informacion">
+                  <entry key="home_padre">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -153,13 +129,37 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_menu_psicologos">
+                  <entry key="informacion_menu_padre">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="368" />
+                            <option name="x" value="256" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="listaPsicologos">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="174" />
+                            <option name="y" value="365" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="mapas_menu_padre">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-42" />
+                            <option name="y" value="359" />
                           </Point>
                         </option>
                       </LayoutPositions>

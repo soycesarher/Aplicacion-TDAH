@@ -51,9 +51,9 @@ public class PsicologoPrincipal extends AppCompatActivity {
         setContentView(binding.getRoot());
         inicializa_firebase();
 
-        setSupportActionBar(binding.appBarPsicologoPrincipal.toolbar);
-        binding.appBarPsicologoPrincipal.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+       // setSupportActionBar(binding.appBarPsicologoPrincipal.toolbar);
+        //binding.appBarPsicologoPrincipal.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+               // .setAction("Action", null).show());
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_psicologo_principal);

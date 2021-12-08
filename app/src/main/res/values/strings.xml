@@ -149,6 +149,8 @@
     <string name="tipo">tipo</string>
     <string name="error_nip_incorrecto">nip incorrecto</string>
     <string name="title_activity_mapa_centros">MapaCentros</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

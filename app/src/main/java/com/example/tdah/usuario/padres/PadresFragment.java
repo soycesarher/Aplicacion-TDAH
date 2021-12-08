@@ -73,13 +73,16 @@ public class PadresFragment extends Fragment{
         if(!boolean_nip) btn_padres_nip.setEnabled(true);
 
         btn_padres_nip.setOnClickListener(v -> {
-            if(!autentica_nip(txt_nip)){
+            
+                if(!autentica_nip(txt_nip)){
 
-                startActivity(new Intent(getContext(), PadrePrincipal.class));
+                    startActivity(new Intent(getContext(), PadrePrincipal.class));
 
-            }else{
-                Toast.makeText(getContext(), "Verifique el nip", Toast.LENGTH_SHORT).show();
-            }
+                }else{
+                    Toast.makeText(getContext(), "Verifique el nipA", Toast.LENGTH_SHORT).show();
+                }
+
+
         });
 
         btn_padres_regresar.setOnClickListener(v -> ir_a_usuario_principal());
