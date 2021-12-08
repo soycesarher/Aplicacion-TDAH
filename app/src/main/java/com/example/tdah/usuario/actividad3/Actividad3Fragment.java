@@ -48,11 +48,23 @@ public class Actividad3Fragment extends Fragment{
                 new ViewModelProvider(this).get(Actividad3ViewModel.class);
         View root = inflater.inflate(R.layout.fragment_actividad3, container, false);
         main = (UsuarioPrincipal) getParentFragment().getActivity();
+        inicializaFirebase();
         validaCuenta();
 
         imagenSetup(root);
 
         return root;
+    }
+    private void inicializaFirebase() {
+
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
+
+        databaseReference = firebase_database.getReference();
+
+        firebaseUser = mAuth.getCurrentUser();
+
     }
     private void validaCuenta() {
         databaseReference.child("Usuario").child(firebaseUser.getUid()).child("string_fecha_pago").addValueEventListener(new ValueEventListener() {

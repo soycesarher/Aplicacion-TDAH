@@ -97,7 +97,6 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena = true;
                 boolean_contrasena = valida_contrasena(txt_contrasena_actual);
 
             }
@@ -115,7 +114,7 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena = true;
+
                 boolean_contrasena = valida_contrasena(txt_contrasena_nueva);
             }
 
@@ -132,7 +131,7 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_correo = false;
+
                 boolean_correo = valida_correo(txt_correo);
             }
 
@@ -147,12 +146,13 @@ public class CuentaFragment extends Fragment {
             txt_contrasena_actual.setEnabled(true);
             txt_contrasena_nueva.setEnabled(true);
             txt_correo.setEnabled(true);
+            boolean_correo=false;
+            boolean_contrasena=true;
         });
 
-        if (!boolean_correo || boolean_contrasena) {
-            btn_guardar.setEnabled(true);
+        if (boolean_correo || !boolean_contrasena) btn_guardar.setEnabled(true);
 
-        }
+
         btn_guardar.setOnClickListener(v -> {
 
             if (boolean_correo)
@@ -270,29 +270,7 @@ public class CuentaFragment extends Fragment {
         return boolean_contrasena_v;
     }
 
-    private boolean valida_confirma_contrasena(EditText editText_contrasena, EditText editText_confirma) {
 
-        editText_contrasena.setError(null);
-
-        String Password = editText_contrasena.getText().toString().trim();
-
-        boolean boolean_contrasena_v = false;
-
-        View focusView = null;
-
-        if (!editText_contrasena.getText().toString().equals(editText_confirma.getText().toString())) {
-            editText_contrasena.setError(getString(R.string.error_contrasena_diferente));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (boolean_contrasena_v) {
-
-            focusView.requestFocus();
-
-        }
-        return boolean_contrasena_v;
-    }
 
     /**
      * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
