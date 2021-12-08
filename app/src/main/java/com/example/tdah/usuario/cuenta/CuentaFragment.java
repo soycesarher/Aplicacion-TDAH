@@ -24,6 +24,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tdah.R;
 import com.example.tdah.UsuarioPrincipal;
 import com.example.tdah.modelos.UsuarioPadreTutor;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,11 +48,13 @@ public class CuentaFragment extends Fragment {
     private EditText txt_nombre;
     private EditText txt_apellido_paterno;
     private EditText txt_apellido_materno;
-    private EditText txt_contrasena;
-    private EditText txt_confirma_contrasena;
+    private EditText txt_contrasena_actual;
+    private EditText txt_contrasena_nueva;
     private EditText txt_correo;
     private boolean boolean_correo=false;
-    private boolean boolean_contrasena;
+    private boolean boolean_contrasena=true;
+
+    private String string_correo_cf;
 
 
     public CuentaFragment() {
@@ -75,8 +79,8 @@ public class CuentaFragment extends Fragment {
         txt_apellido_paterno = root.findViewById(R.id.txt_cuenta_apellido_paterno);
         txt_apellido_materno = root.findViewById(R.id.txt_cuenta_apellido_materno);
 
-        txt_contrasena = root.findViewById(R.id.txt_cuenta_contrasenia);
-        txt_confirma_contrasena = root.findViewById(R.id.txt_cuenta_confirma_contrasenia);
+        txt_contrasena_actual = root.findViewById(R.id.txt_cuenta_contrasenia_actual);
+        txt_contrasena_nueva = root.findViewById(R.id.txt_cuenta_contrasenia_nueva);
 
         txt_correo = root.findViewById(R.id.txt_cuenta_correo);
         btn_editar = root.findViewById(R.id.btn_cuenta_editar);
@@ -85,7 +89,7 @@ public class CuentaFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         fUser = mAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        txt_contrasena.addTextChangedListener(new TextWatcher() {
+        txt_contrasena_actual.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -93,8 +97,7 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena = true;
-                boolean_contrasena = valida_contrasena(txt_contrasena);
+                boolean_contrasena = valida_contrasena(txt_contrasena_actual);
 
             }
 
@@ -103,7 +106,7 @@ public class CuentaFragment extends Fragment {
 
             }
         });
-        txt_confirma_contrasena.addTextChangedListener(new TextWatcher() {
+        txt_contrasena_nueva.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -111,8 +114,8 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena = true;
-                boolean_contrasena = valida_confirma_contrasena(txt_confirma_contrasena, txt_contrasena);
+
+                boolean_contrasena = valida_contrasena(txt_contrasena_nueva);
             }
 
             @Override
@@ -128,7 +131,7 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_correo = false;
+
                 boolean_correo = valida_correo(txt_correo);
             }
 
@@ -140,22 +143,23 @@ public class CuentaFragment extends Fragment {
 
 
         btn_editar.setOnClickListener(v -> {
-            txt_contrasena.setEnabled(true);
-            txt_confirma_contrasena.setEnabled(true);
+            txt_contrasena_actual.setEnabled(true);
+            txt_contrasena_nueva.setEnabled(true);
             txt_correo.setEnabled(true);
+            boolean_correo=false;
+            boolean_contrasena=true;
         });
 
-        if (!boolean_correo || boolean_contrasena) {
-            btn_guardar.setEnabled(true);
+        if (boolean_correo || !boolean_contrasena) btn_guardar.setEnabled(true);
 
-        }
+
         btn_guardar.setOnClickListener(v -> {
 
             if (boolean_correo)
-                actualizaCorreo(txt_correo.getText().toString());
+                actualizaCorreo(txt_correo.getText().toString(),txt_contrasena_actual.getText().toString());
 
-            if (!boolean_contrasena && !txt_confirma_contrasena.getText().toString().isEmpty())
-                actualizaContrasena(txt_confirma_contrasena.getText().toString());
+            if (!boolean_contrasena)
+                actualizaContrasena(txt_correo.getText().toString(),txt_contrasena_actual.getText().toString(),txt_contrasena_nueva.getText().toString());
 
         });
 
@@ -266,29 +270,7 @@ public class CuentaFragment extends Fragment {
         return boolean_contrasena_v;
     }
 
-    private boolean valida_confirma_contrasena(EditText editText_contrasena, EditText editText_confirma) {
 
-        editText_contrasena.setError(null);
-
-        String Password = editText_contrasena.getText().toString().trim();
-
-        boolean boolean_contrasena_v = false;
-
-        View focusView = null;
-
-        if (!editText_contrasena.getText().toString().equals(editText_confirma.getText().toString())) {
-            editText_contrasena.setError(getString(R.string.error_contrasena_diferente));
-            focusView = editText_contrasena;
-            boolean_contrasena_v = true;
-        }
-
-        if (boolean_contrasena_v) {
-
-            focusView.requestFocus();
-
-        }
-        return boolean_contrasena_v;
-    }
 
     /**
      * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
@@ -327,32 +309,49 @@ public class CuentaFragment extends Fragment {
 
     }
 
-    public void actualizaCorreo(String string_correo) {
+    public void actualizaCorreo(String string_correo,String string_contrasena) {
         Toast.makeText(getContext(), "Actualizando correo", Toast.LENGTH_SHORT).show();
-        fUser.updateEmail(string_correo)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        databaseReference.child("Usuario").child(fUser.getUid()).child("string_correo").setValue(string_correo);
-                        Toast.makeText(getContext(), "El correo se actualizó con éxito", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getContext(), UsuarioPrincipal.class));
+        AuthCredential credential = EmailAuthProvider.getCredential(string_correo,string_contrasena);
+        fUser.reauthenticate(credential).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                fUser.updateEmail(string_correo)
+                        .addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                databaseReference.child("Usuario").child(fUser.getUid()).child("string_correo").setValue(string_correo);
+                                Toast.makeText(getContext(), "El correo se actualizó con éxito", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getContext(), UsuarioPrincipal.class));
 
-                    }else{
-                        Toast.makeText(getContext(), "ERROR: No se actualizó el correo"+task.getResult().toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                            }else{
+                                Toast.makeText(getContext(), "ERROR: No se actualizó el correo"+task1.getResult().toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }else{
+                Toast.makeText(getContext(), "ERROR: Correo y/o contraseña actuales incorrectos",Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
-    public void actualizaContrasena(String string_contrasena) {
+    public void actualizaContrasena(String string_correo,String string_contrasena_actual,String string_contrasena_nueva) {
 
         Toast.makeText(getContext(), "Actualizando contraseña", Toast.LENGTH_SHORT).show();
-        fUser.updatePassword(string_contrasena)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "La contraseña se actualizó con éxito", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getContext(), "ERROR: No se actualizó la contraseña"+task.getResult().toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+        AuthCredential credential = EmailAuthProvider.getCredential(string_correo,string_contrasena_actual);
+        fUser.reauthenticate(credential).addOnCompleteListener(task1 -> {
+            if(task1.isSuccessful()){
+                fUser.updatePassword(string_contrasena_nueva)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "La contraseña se actualizó con éxito", Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(getContext(), "ERROR: No se actualizó la contraseña"+task.getResult().toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }else{
+                Toast.makeText(getContext(), "ERROR: Correo y/o contraseña actuales incorrectos",Toast.LENGTH_LONG).show();
+            }
+
+        });
+
 
     }
 }

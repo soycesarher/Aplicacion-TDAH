@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class cuentaPsicologoViewModel extends ViewModel {
+public class CuentaPsicologoViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public cuentaPsicologoViewModel() {
+    public CuentaPsicologoViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("Cuenta");
     }

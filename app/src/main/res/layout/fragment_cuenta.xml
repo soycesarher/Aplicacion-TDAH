@@ -85,7 +85,7 @@
                 android:enabled="false"
                 android:hint="@string/etx_correo" />
             <EditText
-                android:id="@+id/txt_cuenta_contrasenia"
+                android:id="@+id/txt_cuenta_contrasenia_actual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -94,10 +94,10 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="textPersonName"
-                android:hint="@string/contrase_a_nueva" />
+                android:hint="Contraseña actual" />
 
             <EditText
-                android:id="@+id/txt_cuenta_confirma_contrasenia"
+                android:id="@+id/txt_cuenta_contrasenia_nueva"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -106,7 +106,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:enabled="false"
-                android:hint="@string/confirma_contrase_a" />
+                android:hint="Contraseña nueva" />
 
             <Button
                 android:id="@+id/btn_cuenta_editar"

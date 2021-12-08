@@ -20,6 +20,7 @@ import com.example.tdah.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.paypal.checkout.PayPalCheckout;
 import com.paypal.checkout.config.CheckoutConfig;
 import com.paypal.checkout.config.Environment;
@@ -58,7 +59,7 @@ public class AjustesFragment extends Fragment {
         AjustesViewModel =
                 new ViewModelProvider(this).get(AjustesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_ajustes, container, false);
-
+        inicializaFirebase();
         mAuth = FirebaseAuth.getInstance();
         btn_cerrar_sesion = (Button) root.findViewById(R.id.btn_cerrar_sesion);
 
@@ -103,6 +104,17 @@ public class AjustesFragment extends Fragment {
         });
 
         return root;
+    }
+    private void inicializaFirebase() {
+
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase firebase_database = FirebaseDatabase.getInstance();
+
+        databaseReference = firebase_database.getReference();
+
+        usuario_actual = mAuth.getCurrentUser();
+
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void actualizaPago() throws ParseException {
