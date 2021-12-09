@@ -46,7 +46,7 @@ public class CuentaFragment extends Fragment {
     private FirebaseUser fUser;
     private DatabaseReference databaseReference;
 
-    private Button btn_guardar_correo,btn_guardar_contrasena;
+    private Button btn_guardar_correo, btn_guardar_contrasena;
 
     private Switch sw_correo;
     private Switch sw_contrasena;
@@ -67,7 +67,7 @@ public class CuentaFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-         fUser = FirebaseAuth.getInstance().getCurrentUser();
+        fUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 
@@ -89,33 +89,17 @@ public class CuentaFragment extends Fragment {
         btn_guardar_contrasena = root.findViewById(R.id.btn_cuenta_guardar_contrasena);
 
         sw_correo = root.findViewById(R.id.sw_correo_usuario);
+        sw_contrasena = root.findViewById(R.id.sw_contrasena_usuario);
 
         mAuth = FirebaseAuth.getInstance();
         fUser = mAuth.getCurrentUser();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        txt_contrasena_nueva.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                valida_contrasena(txt_contrasena_nueva);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
 
         sw_correo.setOnCheckedChangeListener((compoundButton, b) -> {
-            if(b){
+            if (b) {
+                btn_guardar_correo.setVisibility(View.VISIBLE);
                 txt_correo.setVisibility(View.VISIBLE);
                 txt_correo.setEnabled(true);
                 txt_correo.addTextChangedListener(new TextWatcher() {
@@ -136,30 +120,50 @@ public class CuentaFragment extends Fragment {
                     }
                 });
 
-            }else{
+            } else {
                 txt_correo.setText("");
                 txt_correo.setVisibility(View.GONE);
+                btn_guardar_correo.setVisibility(View.GONE);
 
             }
         });
 
         sw_contrasena.setOnCheckedChangeListener((compoundButton, b) -> {
-            if(b){
+            if (b) {
+                btn_guardar_contrasena.setVisibility(View.VISIBLE);
+                txt_contrasena_nueva.setVisibility(View.VISIBLE);
+                txt_contrasena_nueva.setEnabled(true);
+                txt_contrasena_nueva.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }else{
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        valida_contrasena(txt_contrasena_nueva);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+            } else {
+                txt_contrasena_nueva.setText("");
+                btn_guardar_contrasena.setVisibility(View.GONE);
+                txt_contrasena_nueva.setVisibility(View.GONE);
 
             }
         });
 
 
-
-
-
-
-
-
-
         datosUsuario();
+        btn_guardar_correo.setOnClickListener(view -> mostrar(root));
+
+        btn_guardar_contrasena.setOnClickListener(view -> mostrar(root));
 
         return root;
     }
@@ -255,10 +259,11 @@ public class CuentaFragment extends Fragment {
         if (boolean_contrasena) {
 
             focusView.requestFocus();
+            btn_guardar_contrasena.setEnabled(false);
 
 
-        }else{
-
+        } else {
+            btn_guardar_contrasena.setEnabled(true);
         }
 
     }
@@ -268,7 +273,7 @@ public class CuentaFragment extends Fragment {
 
         editText_correo.setError(null);
 
-         boolean_correo = false;
+        boolean_correo = false;
 
         View focusView = null;
 
@@ -289,77 +294,89 @@ public class CuentaFragment extends Fragment {
         if (boolean_correo) {
 
             focusView.requestFocus();
+            btn_guardar_correo.setEnabled(false);
 
-
-        }else{
-
+        } else {
+            btn_guardar_correo.setEnabled(true);
         }
     }
 
-    public void actualizaCorreo(String string_correo,String string_contrasena) {
-        Toast.makeText(getContext(), "Actualizando correo", Toast.LENGTH_SHORT).show();
-        AuthCredential credential = EmailAuthProvider.getCredential(fUser.getEmail(),string_contrasena);
-        fUser.reauthenticate(credential).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                fUser.updateEmail(string_correo)
-                        .addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                databaseReference.child("Usuario").child(fUser.getUid()).child("string_correo").setValue(string_correo);
-                                Toast.makeText(getContext(), "El correo se actualizó con éxito", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getContext(), UsuarioPrincipal.class));
+    public void actualizaCorreo(String string_correo) {
 
-                            }else{
-                                Toast.makeText(getContext(), "ERROR: No se actualizó el correo"+task1.getResult().toString(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-            }else{
-                Toast.makeText(getContext(), "ERROR: Contraseña actual incorrecta",Toast.LENGTH_LONG).show();
-            }
-        });
+        fUser.updateEmail(string_correo)
+                .addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        databaseReference.child("Usuario").child(fUser.getUid()).child("string_correo").setValue(string_correo);
+                        Toast.makeText(getContext(), "El correo se actualizó con éxito", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getContext(), UsuarioPrincipal.class));
+
+                    } else {
+                        Toast.makeText(getContext(), "ERROR: No se actualizó el correo" + task1.getResult().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
     }
 
-    public void actualizaContrasena(String string_contrasena_actual,String string_contrasena_nueva) {
+    public void actualizaContrasena(String string_contrasena_nueva) {
 
         Toast.makeText(getContext(), "Actualizando contraseña", Toast.LENGTH_SHORT).show();
-        AuthCredential credential = EmailAuthProvider.getCredential(fUser.getEmail(),string_contrasena_actual);
-        fUser.reauthenticate(credential).addOnCompleteListener(task1 -> {
-            if(task1.isSuccessful()){
-                fUser.updatePassword(string_contrasena_nueva)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "La contraseña se actualizó con éxito", Toast.LENGTH_LONG).show();
-                            }else{
-                                Toast.makeText(getContext(), "ERROR: No se actualizó la contraseña"+task.getResult().toString(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-            }else{
-                Toast.makeText(getContext(), "ERROR: Contraseña actual incorrecta",Toast.LENGTH_LONG).show();
-            }
 
-        });
+        fUser.updatePassword(string_contrasena_nueva)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), "La contraseña se actualizó con éxito", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getContext(), "ERROR: No se actualizó la contraseña" + task.getResult().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
 
     }
 
     Dialog customDialog = null;
 
-    public void mostrar(View view)
-    {
+    public void mostrar(View view) {
 
-        customDialog = new Dialog(getContext(),R.style.Theme_AppCompat_Dialog);
+        customDialog = new Dialog(getContext(), R.style.Theme_AppCompat_Dialog);
 
         customDialog.setCancelable(false);
 
         customDialog.setContentView(R.layout.layout_reautentica);
 
-        ((Button) customDialog.findViewById(R.id.btn_iniciar_dialog)).setOnClickListener(view1 -> customDialog.dismiss());
+        String string_correo_dialog = ((EditText) customDialog.findViewById(R.id.txt_correo_dialog)).getText().toString();
+
+
+        String string_contrasena_dialog = ((EditText) customDialog.findViewById(R.id.txt_contrasena_dialog)).getText().toString();
+
+        ((Button) customDialog.findViewById(R.id.btn_iniciar_dialog)).setOnClickListener(view1 -> {
+                    reauthenticate(string_correo_dialog, string_contrasena_dialog);
+                    customDialog.dismiss();
+                }
+        );
 
         ((Button) customDialog.findViewById(R.id.btn_cancelar_dialog)).setOnClickListener(view12 -> customDialog.dismiss());
 
         customDialog.show();
     }
 
+    private void reauthenticate(String string_correo_dialog, String string_contrasena_dialog) {
 
+        AuthCredential credential = EmailAuthProvider.getCredential(string_correo_dialog, string_contrasena_dialog);
+
+        fUser.reauthenticate(credential).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(task.isComplete()){
+                    if(sw_contrasena.isChecked())
+                        actualizaContrasena(txt_contrasena_nueva.getText().toString());
+
+                    if(sw_correo.isChecked()) actualizaCorreo(txt_correo.getText().toString());
+                }
+            }else{
+                Toast.makeText(getContext(),"Error de autenticacion",Toast.LENGTH_LONG).show();
+            }
+
+        });
+    }
 
 
 }

@@ -95,73 +95,7 @@
                 android:text="@string/txt_Direccion_Consultorio"
                 android:enabled="false"
                 android:textColor="#5E5D5D" />
-            <EditText
-                android:id="@+id/txt_calle_cuenta"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/calle"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                android:visibility="gone"
-                tools:ignore="TouchTargetSizeCheck" />
 
-            <EditText
-                android:id="@+id/txt_num_exterior_cuenta"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/num_exterior"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                android:visibility="gone"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <EditText
-                android:id="@+id/txt_cp_cuenta"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/codigopostal"
-                android:inputType="text|number"
-                android:textAlignment="center"
-                android:visibility="gone"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <Spinner
-                android:id="@+id/sp_estado_cuenta"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:hint="@string/estado"
-                android:visibility="gone"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/sp_municipio_cuenta"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:hint="@string/estado" />
-
-                <Spinner
-                    android:id="@+id/sp_localidad_cuenta"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:hint="@string/estado" />
-
-            </LinearLayout>
 
             <EditText
                 android:id="@+id/txt_Telefono_Psicologo"
@@ -174,45 +108,71 @@
                 android:minHeight="48dp"
                 android:text="@string/txt_Telefono_Psicologo"
                 android:textColor="#5E5D5D" />
+            <Switch
+                android:id="@+id/sw_correo_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:text="Actualizar correo" />
 
             <EditText
-                android:id="@+id/txt_CorreoContacto_Psicologo"
-                android:layout_width="350dp"
+                android:id="@+id/txt_cuenta_correo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
                 android:ems="10"
-                android:gravity="center"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp"
-                android:text="@string/txt_CorreoContacto_Psicologo"
-                android:textColor="#5E5D5D" />
-
-            <EditText
-                android:id="@+id/txt_Contrasena_Psicologo"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp"
-                android:text="Nueva contaseña"
-                android:textColor="#5E5D5D" />
-            <EditText
-                android:id="@+id/txt_ContrasenaConfirmacion_Psicologo"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp"
-                android:text="Confirma contraseña"
-                android:visibility="gone"
+                android:inputType="textPersonName"
                 android:enabled="false"
-                android:textColor="#5E5D5D" />
+                android:hint="@string/etx_correo"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/btn_cuenta_guardar_correo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:enabled="false"
+                android:text="Actualizar correo" />
 
-                <com.github.barteksc.pdfviewer.PDFView
+            <Switch
+                android:id="@+id/sw_contrasena_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:text="Actualizar contraseña" />
+
+            <EditText
+                android:id="@+id/txt_cuenta_contrasenia_nueva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:enabled="false"
+                android:hint="Contraseña nueva"
+                android:visibility="gone"/>
+
+
+            <Button
+                android:id="@+id/btn_cuenta_guardar_contrasena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:enabled="false"
+                android:text="Actualiza contraseña" />
+
+            <com.github.barteksc.pdfviewer.PDFView
                     android:id="@+id/pdf_view_cuenta_psicologo"
                     android:layout_width="350dp"
                     android:layout_height="300dp"
@@ -226,26 +186,6 @@
                         android:progressDrawable="@color/purple_500" />
 
                 </com.github.barteksc.pdfviewer.PDFView>
-
-
-
-            <Button
-                android:id="@+id/btn_Verificar_Cedula"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/btn_Verificar_Cedula" />
-
-
-
-
-            <Button
-                android:id="@+id/btn_Editar_Psicologo"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/btn_Editar_Psicologo" />
-
 
 
             <Button
