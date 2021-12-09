@@ -62,7 +62,6 @@
                 android:hint="@string/etx_amaterno"/>
 
 
-
             <EditText
                 android:id="@+id/txt_cuenta_correo"
                 android:layout_width="match_parent"
@@ -74,6 +73,7 @@
                 android:inputType="textPersonName"
                 android:enabled="false"
                 android:hint="@string/etx_correo" />
+
             <EditText
                 android:id="@+id/txt_cuenta_contrasenia_actual"
                 android:layout_width="match_parent"
@@ -127,7 +127,6 @@
                 android:text="@string/regresar" />
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
