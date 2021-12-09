@@ -173,6 +173,27 @@ A veces  se muestra como ausente, como si no escuchara lo que se le está dicien
                 android:text="El niño manifiesta los síntomas de los dos tipos anteriores es decir, de hiperactividad-impulsividad y de falta de atención."
                 />
 
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Para checar las politicas de provacidad visita nuestra pagina de politicas"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="https://tdah-terminosycondiciones.web.app/Politicas.html"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
 
 
 
