@@ -112,6 +112,7 @@ public class ConfiguracionPsicologoFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void actualizaPago() throws ParseException {
+        usuario_actual = mAuth.getCurrentUser();
         databaseReference.child("Psicologo").child(usuario_actual.getUid()).child("string_fecha_pago").setValue(fecha_pago()[0]);
         databaseReference.child("Psicologo").child(usuario_actual.getUid()).child("string_fecha_fin_suscripcion").setValue(fecha_pago()[1]);
         Toast.makeText(getContext(), "Cuenta actualizada", Toast.LENGTH_LONG).show();

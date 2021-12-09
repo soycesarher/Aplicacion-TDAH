@@ -2,12 +2,12 @@ package com.example.tdah;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -46,7 +46,9 @@ public class PsicologoPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_psicologo_principal);
-        binding = ActivityPsicologoPrincipalBinding.inflate(getLayoutInflater());
+        /*binding = ActivityPsicologoPrincipalBinding.inflate(getLayoutInflater());*/
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         inicializa_firebase();
 
@@ -54,6 +56,7 @@ public class PsicologoPrincipal extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_psicologo_principal);
+        assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
 
 
@@ -94,11 +97,7 @@ public class PsicologoPrincipal extends AppCompatActivity {
                     String string_fecha_termino_suscripcion = snapshot.child("string_fecha_fin_suscripcion").getValue().toString();
                     if(!string_fecha_termino_suscripcion.equalsIgnoreCase("-1")){
                         valida_fecha_suscripcion(string_fecha_termino_suscripcion);
-                    }else{
-
                     }
-
-
                 }
             }
 
@@ -129,16 +128,16 @@ public class PsicologoPrincipal extends AppCompatActivity {
 
         LocalDateTime  localDate_fecha_termino_suscripcion = LocalDateTime.parse(fecha_termino_suscripcion, dateTimeFormatter_formato);
 
-        Duration period_edad = Duration.between(localDate_fecha_actual, localDate_fecha_termino_suscripcion);
+        Duration duration_dias_restantes = Duration.between(localDate_fecha_actual, localDate_fecha_termino_suscripcion);
 
-        if(period_edad.toDays() == 2){
+        if(duration_dias_restantes.toDays() < 2){
 
-            Log.e(TAG,"LE QUEDAN: "+period_edad.toDays()+" DE SUSCRIPCION");
+            Toast.makeText(PsicologoPrincipal.this, "Tu suscripción esta a punto de expirar", Toast.LENGTH_SHORT).show();
 
-        }else if(period_edad.isZero()){
 
-            Log.e(TAG,"SU SUSCRIPCIÓN HA TERMINADO");
+        }else if(duration_dias_restantes.isZero()){
 
+            Toast.makeText(PsicologoPrincipal.this, "Tu suscripción ha terminado", Toast.LENGTH_SHORT).show();
             databaseReference.child("Psicologo").child(usuarioPsicologo.getString_id()).child("string_fecha_fin_suscripcion").setValue("-1");
 
             databaseReference.child("Psicologo").child(usuarioPsicologo.getString_id()).child("string_fecha_pago").setValue("-1");
@@ -147,12 +146,12 @@ public class PsicologoPrincipal extends AppCompatActivity {
 
     }
 
-    @Override
+ /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.psicologo_principal, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {

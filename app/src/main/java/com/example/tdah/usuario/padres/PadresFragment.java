@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-public class PadresFragment extends Fragment{
+public class PadresFragment extends Fragment implements ValueEventListener{
     private PadresViewModel padresViewModel;
     private Button btn_padres_nip,btn_padres_regresar;
     private EditText txt_nip;
@@ -38,6 +38,7 @@ public class PadresFragment extends Fragment{
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private  UsuarioPadreTutor u;
+    int int_nip;
     protected boolean boolean_nip;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -73,14 +74,10 @@ public class PadresFragment extends Fragment{
         if(!boolean_nip) btn_padres_nip.setEnabled(true);
 
         btn_padres_nip.setOnClickListener(v -> {
-            if(!autentica_nip(txt_nip)){
 
-                Toast.makeText(getContext(), "Verifique el nip", Toast.LENGTH_SHORT).show();
 
-            }else{
+            autentica_nip();
 
-                startActivity(new Intent(getContext(), PadrePrincipal.class));
-            }
         });
 
         btn_padres_regresar.setOnClickListener(v -> ir_a_usuario_principal());
@@ -89,44 +86,13 @@ public class PadresFragment extends Fragment{
         return root;
     }
 
-    private boolean autentica_nip(EditText editText_nip) {
+    private void autentica_nip() {
 
         UsuarioPadreTutor u = new UsuarioPadreTutor();
 
-        editText_nip.setError(null);
-        String nip = editText_nip.getText().toString().trim();
-        boolean boolean_nip = true;
-        View focusView = null;
-
         u.setString_id(firebaseUser.getUid());
 
-        databaseReference.child("Usuario").child(u.getString_id()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                PadresFragment p = new PadresFragment();
-                if (snapshot.exists()) {
-
-                    u.setInt_nip(Integer.parseInt(Objects.requireNonNull(snapshot.child("int_nip").getValue()).toString()));
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        if (Integer.parseInt(nip) != u.getInt_nip()){
-            editText_nip.setError(getString(R.string.error_nip_incorrecto));
-            boolean_nip = false;
-            focusView = editText_nip;
-        }
-
-        if(!boolean_nip)
-        focusView.requestFocus();
-
-        return boolean_nip;
+        databaseReference.child("Usuario").child(u.getString_id()).addValueEventListener(this);
 
     }
 
@@ -180,5 +146,27 @@ public class PadresFragment extends Fragment{
     public void ir_a_usuario_principal(){
         Intent ir = new Intent(getContext(), UsuarioPrincipal.class);
         startActivity(ir);
+    }
+
+    @Override
+    public void onDataChange(@NonNull DataSnapshot snapshot) {
+        if (snapshot.exists()) {
+
+            u.setInt_nip(Integer.parseInt(Objects.requireNonNull(snapshot.child("int_nip").getValue()).toString()));
+            int_nip=u.getInt_nip();
+            if(Integer.parseInt(txt_nip.getText().toString())==u.getInt_nip()){
+                txt_nip.setText("");
+                startActivity(new Intent(getContext(), PadrePrincipal.class));
+            }else{
+                Toast.makeText(getContext(), "Nip no válido", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError error) {
+
     }
 }

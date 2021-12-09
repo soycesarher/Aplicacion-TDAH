@@ -61,17 +61,7 @@
                 android:enabled="false"
                 android:hint="@string/etx_amaterno"/>
 
-<!--            <EditText-->
-<!--                android:id="@+id/txt_cuenta_curp"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="15dp"-->
-<!--                android:layout_marginRight="25dp"-->
-<!--                android:layout_marginLeft="25dp"-->
-<!--                android:ems="10"-->
-<!--                android:enabled="false"-->
-<!--                android:inputType="textPersonName"-->
-<!--                android:hint="@string/etx_curp" />-->
+
 
             <EditText
                 android:id="@+id/txt_cuenta_correo"

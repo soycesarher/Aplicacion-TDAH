@@ -51,11 +51,8 @@ public class CuentaFragment extends Fragment {
     private EditText txt_contrasena_actual;
     private EditText txt_contrasena_nueva;
     private EditText txt_correo;
-    private boolean boolean_correo=false;
-    private boolean boolean_contrasena=true;
-
-    private String string_correo_cf;
-
+    private boolean boolean_correo;
+    private boolean boolean_contrasena;
 
     public CuentaFragment() {
         super(R.layout.fragment_cuenta);
@@ -97,7 +94,7 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean_contrasena = valida_contrasena(txt_contrasena_actual);
+                valida_contrasena(txt_contrasena_actual);
 
             }
 
@@ -115,7 +112,7 @@ public class CuentaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                boolean_contrasena = valida_contrasena(txt_contrasena_nueva);
+                valida_contrasena(txt_contrasena_nueva);
             }
 
             @Override
@@ -132,7 +129,7 @@ public class CuentaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                boolean_correo = valida_correo(txt_correo);
+                valida_correo(txt_correo);
             }
 
             @Override
@@ -144,22 +141,20 @@ public class CuentaFragment extends Fragment {
 
         btn_editar.setOnClickListener(v -> {
             txt_contrasena_actual.setEnabled(true);
+            valida_contrasena(txt_contrasena_actual);
             txt_contrasena_nueva.setEnabled(true);
             txt_correo.setEnabled(true);
-            boolean_correo=false;
-            boolean_contrasena=true;
         });
 
-        if (boolean_correo || !boolean_contrasena) btn_guardar.setEnabled(true);
 
 
         btn_guardar.setOnClickListener(v -> {
 
-            if (boolean_correo)
+            if (!boolean_correo&&!txt_correo.getText().toString().equals(fUser.getEmail()))
                 actualizaCorreo(txt_correo.getText().toString(),txt_contrasena_actual.getText().toString());
 
             if (!boolean_contrasena)
-                actualizaContrasena(txt_correo.getText().toString(),txt_contrasena_actual.getText().toString(),txt_contrasena_nueva.getText().toString());
+                actualizaContrasena(txt_contrasena_actual.getText().toString(),txt_contrasena_nueva.getText().toString());
 
         });
 
@@ -204,85 +199,75 @@ public class CuentaFragment extends Fragment {
 
     }
 
-    /**
-     * Esta funcion retorna verdadero si la contrasena tiene errores y  si es falso no tiene errores
-     *
-     * @param editText_contrasena EditText contrasena
-     * @return boolean_error
-     */
-    private boolean valida_contrasena(EditText editText_contrasena) {
+    private void valida_contrasena(EditText editText_contrasena) {
 
         editText_contrasena.setError(null);
 
         String Password = editText_contrasena.getText().toString().trim();
 
-        boolean boolean_contrasena_v = false;
+        boolean_contrasena = false;
 
         View focusView = null;
 
         if (TextUtils.isEmpty(Password)) {
             editText_contrasena.setError(getString(R.string.error_campo_requerido));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*[!@#$%^&*+=?-].*")) {
             editText_contrasena.setError(getString(R.string.error_caracter_especial_requerido));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*\\d.*")) {
             editText_contrasena.setError(getString(R.string.error_numero_requerido));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*[a-z].*")) {
             editText_contrasena.setError(getString(R.string.error_no_se_encontraron_minusculas));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*[A-Z].*")) {
             editText_contrasena.setError(getString(R.string.error_no_se_encontraron_mayusculas));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".{8,15}")) {
             editText_contrasena.setError(getString(R.string.error_contrasena_muy_corta));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (Password.matches(".*\\s.*")) {
             editText_contrasena.setError(getString(R.string.error_sin_espacios));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
-        if (boolean_contrasena_v) {
+        if (boolean_contrasena) {
 
             focusView.requestFocus();
+            btn_guardar.setEnabled(false);
 
+        }else{
+            btn_guardar.setEnabled(true);
         }
-        return boolean_contrasena_v;
+
     }
 
 
-
-    /**
-     * Esta funcion retorna verdadero si el correo tiene errores y falso si el correo no tiene errores
-     *
-     * @param editText_correo EditText correo
-     * @return boolean_error
-     */
-    private boolean valida_correo(EditText editText_correo) {
+    private void valida_correo(EditText editText_correo) {
 
         editText_correo.setError(null);
 
-        boolean boolean_correo_v = true;
+         boolean_correo = false;
 
         View focusView = null;
 
@@ -293,25 +278,26 @@ public class CuentaFragment extends Fragment {
         if (TextUtils.isEmpty(Email)) {
             editText_correo.setError(getString(R.string.error_campo_requerido));
             focusView = editText_correo;
-            boolean_correo_v = false;
+            boolean_correo = true;
         }
         if (!pattern.matcher(Email).matches()) {
             editText_correo.setError(getString(R.string.error_correo_no_valido));
             focusView = editText_correo;
-            boolean_correo_v = false;
+            boolean_correo = true;
         }
-        if (!boolean_correo_v) {
+        if (boolean_correo) {
 
             focusView.requestFocus();
+            btn_guardar.setEnabled(false);
 
+        }else{
+            btn_guardar.setEnabled(true);
         }
-        return boolean_correo_v;
-
     }
 
     public void actualizaCorreo(String string_correo,String string_contrasena) {
         Toast.makeText(getContext(), "Actualizando correo", Toast.LENGTH_SHORT).show();
-        AuthCredential credential = EmailAuthProvider.getCredential(string_correo,string_contrasena);
+        AuthCredential credential = EmailAuthProvider.getCredential(fUser.getEmail(),string_contrasena);
         fUser.reauthenticate(credential).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 fUser.updateEmail(string_correo)
@@ -326,16 +312,16 @@ public class CuentaFragment extends Fragment {
                             }
                         });
             }else{
-                Toast.makeText(getContext(), "ERROR: Correo y/o contraseña actuales incorrectos",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "ERROR: Contraseña actual incorrecta",Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
-    public void actualizaContrasena(String string_correo,String string_contrasena_actual,String string_contrasena_nueva) {
+    public void actualizaContrasena(String string_contrasena_actual,String string_contrasena_nueva) {
 
         Toast.makeText(getContext(), "Actualizando contraseña", Toast.LENGTH_SHORT).show();
-        AuthCredential credential = EmailAuthProvider.getCredential(string_correo,string_contrasena_actual);
+        AuthCredential credential = EmailAuthProvider.getCredential(fUser.getEmail(),string_contrasena_actual);
         fUser.reauthenticate(credential).addOnCompleteListener(task1 -> {
             if(task1.isSuccessful()){
                 fUser.updatePassword(string_contrasena_nueva)
@@ -347,11 +333,10 @@ public class CuentaFragment extends Fragment {
                             }
                         });
             }else{
-                Toast.makeText(getContext(), "ERROR: Correo y/o contraseña actuales incorrectos",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "ERROR: Contraseña actual incorrecta",Toast.LENGTH_LONG).show();
             }
 
         });
-
 
     }
 }

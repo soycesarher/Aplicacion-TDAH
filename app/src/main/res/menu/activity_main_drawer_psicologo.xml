@@ -5,9 +5,13 @@
 
 
     <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/inicio_menu_psicologo"
+            android:icon="@drawable/cuenta_psicologo"
+            android:title="@string/inicio_psicologo" />
     <item
         android:id="@+id/cuenta_menu_psicologo"
-        android:icon="@drawable/cuenta_psicologo"
+        android:icon="@drawable/editar_psicologo"
         android:title="@string/cuenta_menu_psicologo" />
 
     <item
