@@ -348,7 +348,7 @@ public class Actividad2Fragment extends Fragment implements View.OnClickListener
         }catch (Exception e)
         {
             //Verificación de que los EditText han sido llenados.
-            Toast.makeText(usuarioprincipal_main.getApplicationContext(), "Inténtalo de nuevo", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(usuarioprincipal_main.getApplicationContext(), "Inténtalo de nuevo", Toast.LENGTH_SHORT).show();
         }
     }
 
