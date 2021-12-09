@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -91,9 +90,6 @@ public class CuentaPsicologoFragment extends Fragment implements View.OnClickLis
         binding = FragmentCuentaPsicologoBinding.inflate(inflater, container, false);
         View root = inflater.inflate(R.layout.fragment_cuenta_psicologo, container,false);
 
-        final TextView textView = binding.txtNombrePsicologo;
-
-        cuentaPsicologoViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
 
        componentes(root);
        datosUsuario();

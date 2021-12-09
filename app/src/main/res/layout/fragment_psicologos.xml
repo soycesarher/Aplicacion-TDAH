@@ -4,5 +4,29 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".padre.psicologos.psicologosFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingTop="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_psicologos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:background="@color/white"
+                android:backgroundTint="#72BEC3"
+                android:clickable="true"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

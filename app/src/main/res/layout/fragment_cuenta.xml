@@ -62,6 +62,15 @@
                 android:hint="@string/etx_amaterno"/>
 
 
+            <Switch
+                android:id="@+id/sw_correo_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:text="Actualizar correo" />
+
             <EditText
                 android:id="@+id/txt_cuenta_correo"
                 android:layout_width="match_parent"
@@ -72,19 +81,26 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:enabled="false"
-                android:hint="@string/etx_correo" />
-
-            <EditText
-                android:id="@+id/txt_cuenta_contrasenia_actual"
+                android:hint="@string/etx_correo"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/btn_cuenta_guardar_correo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginLeft="25dp"
-                android:ems="10"
                 android:enabled="false"
-                android:inputType="textPersonName"
-                android:hint="Contraseña actual" />
+                android:text="Actualizar correo" />
+
+            <Switch
+                android:id="@+id/sw_contrasena_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:text="Actualizar contraseña" />
 
             <EditText
                 android:id="@+id/txt_cuenta_contrasenia_nueva"
@@ -96,26 +112,19 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:enabled="false"
-                android:hint="Contraseña nueva" />
+                android:hint="Contraseña nueva"
+                android:visibility="gone"/>
+
 
             <Button
-                android:id="@+id/btn_cuenta_editar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
-                android:text="@string/editar" />
-
-            <Button
-                android:id="@+id/btn_cuenta_guardar"
+                android:id="@+id/btn_cuenta_guardar_contrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginLeft="25dp"
                 android:enabled="false"
-                android:text="@string/guardar" />
+                android:text="Actualiza contraseña" />
 
             <Button
                 android:id="@+id/btn_cuenta_regresar"

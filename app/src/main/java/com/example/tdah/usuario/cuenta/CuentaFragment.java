@@ -2,6 +2,7 @@ package com.example.tdah.usuario.cuenta;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,14 +45,18 @@ public class CuentaFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
     private DatabaseReference databaseReference;
-    private Button btn_editar;
-    private Button btn_guardar;
+
+    private Button btn_guardar_correo,btn_guardar_contrasena;
+
+    private Switch sw_correo;
+    private Switch sw_contrasena;
+
     private EditText txt_nombre;
     private EditText txt_apellido_paterno;
     private EditText txt_apellido_materno;
-    private EditText txt_contrasena_actual;
     private EditText txt_contrasena_nueva;
     private EditText txt_correo;
+
     private boolean boolean_correo;
     private boolean boolean_contrasena;
 
@@ -75,34 +81,20 @@ public class CuentaFragment extends Fragment {
         txt_nombre = root.findViewById(R.id.txt_cuenta_nombre);
         txt_apellido_paterno = root.findViewById(R.id.txt_cuenta_apellido_paterno);
         txt_apellido_materno = root.findViewById(R.id.txt_cuenta_apellido_materno);
-
-        txt_contrasena_actual = root.findViewById(R.id.txt_cuenta_contrasenia_actual);
         txt_contrasena_nueva = root.findViewById(R.id.txt_cuenta_contrasenia_nueva);
 
         txt_correo = root.findViewById(R.id.txt_cuenta_correo);
-        btn_editar = root.findViewById(R.id.btn_cuenta_editar);
-        btn_guardar = root.findViewById(R.id.btn_cuenta_guardar);
+
+        btn_guardar_correo = root.findViewById(R.id.btn_cuenta_guardar_correo);
+        btn_guardar_contrasena = root.findViewById(R.id.btn_cuenta_guardar_contrasena);
+
+        sw_correo = root.findViewById(R.id.sw_correo_usuario);
 
         mAuth = FirebaseAuth.getInstance();
         fUser = mAuth.getCurrentUser();
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        txt_contrasena_actual.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                valida_contrasena(txt_contrasena_actual);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         txt_contrasena_nueva.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -120,43 +112,52 @@ public class CuentaFragment extends Fragment {
 
             }
         });
-        txt_correo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+        sw_correo.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b){
+                txt_correo.setVisibility(View.VISIBLE);
+                txt_correo.setEnabled(true);
+                txt_correo.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        valida_correo(txt_correo);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+            }else{
+                txt_correo.setText("");
+                txt_correo.setVisibility(View.GONE);
 
             }
+        });
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        sw_contrasena.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b){
 
-                valida_correo(txt_correo);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            }else{
 
             }
         });
 
 
-        btn_editar.setOnClickListener(v -> {
-            txt_contrasena_actual.setEnabled(true);
-            valida_contrasena(txt_contrasena_actual);
-            txt_contrasena_nueva.setEnabled(true);
-            txt_correo.setEnabled(true);
-        });
 
 
 
-        btn_guardar.setOnClickListener(v -> {
 
-            if (!boolean_correo&&!txt_correo.getText().toString().equals(fUser.getEmail()))
-                actualizaCorreo(txt_correo.getText().toString(),txt_contrasena_actual.getText().toString());
 
-            if (!boolean_contrasena)
-                actualizaContrasena(txt_contrasena_actual.getText().toString(),txt_contrasena_nueva.getText().toString());
 
-        });
 
         datosUsuario();
 
@@ -254,10 +255,10 @@ public class CuentaFragment extends Fragment {
         if (boolean_contrasena) {
 
             focusView.requestFocus();
-            btn_guardar.setEnabled(false);
+
 
         }else{
-            btn_guardar.setEnabled(true);
+
         }
 
     }
@@ -288,10 +289,10 @@ public class CuentaFragment extends Fragment {
         if (boolean_correo) {
 
             focusView.requestFocus();
-            btn_guardar.setEnabled(false);
+
 
         }else{
-            btn_guardar.setEnabled(true);
+
         }
     }
 
@@ -339,4 +340,26 @@ public class CuentaFragment extends Fragment {
         });
 
     }
+
+    Dialog customDialog = null;
+
+    public void mostrar(View view)
+    {
+
+        customDialog = new Dialog(getContext(),R.style.Theme_AppCompat_Dialog);
+
+        customDialog.setCancelable(false);
+
+        customDialog.setContentView(R.layout.layout_reautentica);
+
+        ((Button) customDialog.findViewById(R.id.btn_iniciar_dialog)).setOnClickListener(view1 -> customDialog.dismiss());
+
+        ((Button) customDialog.findViewById(R.id.btn_cancelar_dialog)).setOnClickListener(view12 -> customDialog.dismiss());
+
+        customDialog.show();
+    }
+
+
+
+
 }
