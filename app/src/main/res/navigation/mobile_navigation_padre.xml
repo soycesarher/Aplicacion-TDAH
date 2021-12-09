@@ -8,25 +8,26 @@
     <fragment
         android:id="@+id/home_padre"
         android:name="com.example.tdah.Home"
-        android:label="fragment_home"
+        android:label="Inicio"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/informacion_menu_padre"
         android:name="com.example.tdah.padre.informacion.informacionFragment"
-        android:label="Info"
+        android:label="Información de TDAH"
         tools:layout="@layout/fragment_informacion" />
-
-    <activity
+    <fragment
         android:id="@+id/mapas_menu_padre"
-        android:name="com.example.tdah.MapaCentros"
-        android:label="activity_mapa_centros"
-        tools:layout="@layout/activity_mapa_centros" />
+        android:name="com.example.tdah.Mapas_Centros"
+        android:label="Centros DIF"
+        tools:layout="@layout/fragment_mapas_centros" />
+
 
     <activity
         android:id="@+id/psicologos_menu_padre"
         android:name="com.example.tdah.ListaPsicologos"
         android:label="activity_lista_psicologos"
         tools:layout="@layout/activity_lista_psicologos" />
+
 
 
 </navigation>

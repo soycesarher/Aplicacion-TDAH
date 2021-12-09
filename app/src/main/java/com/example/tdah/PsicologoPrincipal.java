@@ -47,20 +47,20 @@ public class PsicologoPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_psicologo_principal);
         /*binding = ActivityPsicologoPrincipalBinding.inflate(getLayoutInflater());*/
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_psicologo);
         setSupportActionBar(toolbar);
 
         inicializa_firebase();
 
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_psicologo);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_psicologo_principal);
         assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
 
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view_psicologo);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 navController.getGraph())

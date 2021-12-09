@@ -141,25 +141,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="listaPsicologos">
+                  <entry key="mapas_Centros">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="174" />
-                            <option name="y" value="365" />
+                            <option name="x" value="22" />
+                            <option name="y" value="325" />
                           </Point>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="mapas_menu_padre">
+                  <entry key="psicologos_menu_padre">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-42" />
-                            <option name="y" value="359" />
+                            <option name="x" value="245" />
+                            <option name="y" value="350" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -175,19 +175,7 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="nav_menu_ayuda">
+                  <entry key="ayuda_menu_psicologo">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -199,7 +187,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_menu_configuracion">
+                  <entry key="configuracion_nenu_psicologo">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -211,13 +199,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_menu_cuenta">
+                  <entry key="cuenta_menu_psicologo">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="12" />
+                            <option name="x" value="255" />
+                            <option name="y" value="43" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="inicio_menu_psicologo">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="31" />
+                            <option name="y" value="51" />
                           </Point>
                         </option>
                       </LayoutPositions>
