@@ -4,11 +4,14 @@
  * @author: TDAH Móvil
  */
 package com.example.tdah.validaciones;
-        import java.util.HashMap;
+import java.util.HashMap;
 
 public class DatosDeCurp {
 
-    private final String[] STRING_PARAMETROS = {"curp", "fatherName", "motherName", "name", "gender", "birthday", "birthState"};
+    private final String[] STRING_PARAMETROS =
+            {
+                    "curp", "fatherName", "motherName", "name", "gender", "birthday", "birthState"
+            };
 
     private String string_curp;
     private String string_apellido_paterno;
@@ -24,7 +27,8 @@ public class DatosDeCurp {
      * @param string_cadena_renapo Cadena de la forma
      * {"name":"César","apellido":"Farfán"}.
      */
-    public DatosDeCurp(String string_cadena_renapo) {
+    public DatosDeCurp(String string_cadena_renapo)
+    {
 
         HashMap<String, String> hashmap_datos = separarDatos(string_cadena_renapo);
 
