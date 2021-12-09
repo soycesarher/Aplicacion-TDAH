@@ -17,11 +17,9 @@
         tools:layout="@layout/fragment_informacion" />
     <fragment
         android:id="@+id/mapas_menu_padre"
-        android:name="com.example.tdah.Mapas_Centros"
+        android:name="com.example.tdah.Centros"
         android:label="Centros DIF"
-        tools:layout="@layout/fragment_mapas_centros" />
-
-
+        tools:layout="@layout/fragment_centros" />
     <activity
         android:id="@+id/psicologos_menu_padre"
         android:name="com.example.tdah.ListaPsicologos"

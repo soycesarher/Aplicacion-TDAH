@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:scaleType="center"
-            android:background="#72BEC3#72BEC3"
+            android:background="#72BEC3"
             android:contentDescription="@string/app_name" />
 
         <TextView

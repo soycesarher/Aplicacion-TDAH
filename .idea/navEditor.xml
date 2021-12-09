@@ -141,13 +141,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="mapas_Centros">
+                  <entry key="mapas_menu_padre">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="22" />
-                            <option name="y" value="325" />
+                            <option name="x" value="5" />
+                            <option name="y" value="331" />
                           </Point>
                         </option>
                       </LayoutPositions>
