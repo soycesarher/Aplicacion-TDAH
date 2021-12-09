@@ -343,10 +343,10 @@ public class CuentaFragment extends Fragment {
 
         customDialog.setContentView(R.layout.layout_reautentica);
 
-        String string_correo_dialog = ((EditText) customDialog.findViewById(R.id.txt_correo_dialog)).getText().toString();
+        String string_correo_dialog = ((EditText) customDialog.findViewById(R.id.username)).getText().toString();
 
 
-        String string_contrasena_dialog = ((EditText) customDialog.findViewById(R.id.txt_contrasena_dialog)).getText().toString();
+        String string_contrasena_dialog = ((EditText) customDialog.findViewById(R.id.password)).getText().toString();
 
         ((Button) customDialog.findViewById(R.id.btn_iniciar_dialog)).setOnClickListener(view1 -> {
                     reauthenticate(string_correo_dialog, string_contrasena_dialog);
