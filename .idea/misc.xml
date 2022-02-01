@@ -80,6 +80,7 @@
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/gameover.xml" value="0.26875" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/layout_cancion.xml" value="0.25" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/layout_perfil_psicologo.xml" value="0.26875" />
+        <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/layout_reautentica.xml" value="0.25" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/main_activity.xml" value="0.26875" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/nav_header_main.xml" value="0.26875" />
         <entry key="..\:/Users/scr47/Desktop/APP-TDAH/Aplicacion-TDAH/app/src/main/res/layout/nav_header_padre.xml" value="0.26875" />
@@ -96,7 +97,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -32,7 +32,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.paypal.checkout.paymentbutton.PaymentButton;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -57,8 +56,6 @@ public class RegistroUsuario extends AppCompatActivity {
     private String string_fecha_nacimiento;
     private String string_direccion;
 
-    private static final String STRING_ID_CLIENT_PAYPAL = "ATWfD62z3TUeMswLbKbXRRwC0tzFiIak2A0ptBlaSjL7LOcQuunPoibBONshrWXck4KcqIgPiXHHiQRr";
-
     private boolean boolean_contrasena=true;
     private boolean boolean_nombre_paciente=false;
     private boolean boolean_correo=false;
@@ -71,8 +68,6 @@ public class RegistroUsuario extends AppCompatActivity {
     private FirebaseAuth firebaseauth_mauth;
     private FirebaseUser firebaseuser_fuser;
 
-    private PaymentButton paymentbutton_paypalbutton;
-
     RequestQueue requestqueue_rq;
 
     /**
@@ -80,7 +75,7 @@ public class RegistroUsuario extends AppCompatActivity {
      *
      * @param bundle_savedInstanceState Estado de instancia asociado.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle bundle_savedInstanceState)
     {
@@ -367,7 +362,7 @@ public class RegistroUsuario extends AppCompatActivity {
      * Recupera los valores obtenidos de los botones, autentica el correo y contrasenia he ingresa
      * la información a la base de datos.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void ingresa_base_datos()
     {
         edittext_curp = findViewById(R.id.txt_curp);
@@ -545,7 +540,7 @@ public class RegistroUsuario extends AppCompatActivity {
      * Recupera los datos de la API
      * @param edittext_curp curp para buscarlo en la api
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void recuperar(EditText edittext_curp)
     {
         StringRequest stringrequest_requerimiento = new StringRequest(Request.Method.GET,

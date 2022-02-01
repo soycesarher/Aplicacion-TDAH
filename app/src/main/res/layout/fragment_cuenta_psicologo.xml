@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".psicologo.cuentaPsicologo.CuentaPsicologoFragment"
-    android:background="#72BEC3">
+    android:background="#72BEC3"
+    tools:context=".psicologo.cuentaPsicologo.CuentaPsicologoFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-107dp">
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="42dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,11 +37,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
+                android:enabled="false"
                 android:gravity="center"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/txt_NombrePsicologo"
-                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
             <EditText
@@ -50,11 +50,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
+                android:enabled="false"
                 android:gravity="center"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/txt_ApellidoP_Psicologo"
-                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
             <EditText
@@ -63,42 +63,29 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
+                android:enabled="false"
                 android:gravity="center"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/txt_ApellidoM_Psicologo"
-                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
             <EditText
-                android:id="@+id/txt_Cedula"
+                android:id="@+id/txt_direccion_consultorio"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:text="@string/txt_Cedula"
                 android:enabled="false"
-                android:textColor="#5E5D5D" />
-
-            <EditText
-                android:id="@+id/txt_Direccion_Consultorio"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
                 android:gravity="center"
                 android:inputType="textPostalAddress"
                 android:minHeight="48dp"
                 android:text="@string/txt_Direccion_Consultorio"
-                android:enabled="false"
                 android:textColor="#5E5D5D" />
 
 
             <EditText
-                android:id="@+id/txt_Telefono_Psicologo"
+                android:id="@+id/txt_telefono_psicologo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -108,92 +95,148 @@
                 android:minHeight="48dp"
                 android:text="@string/txt_Telefono_Psicologo"
                 android:textColor="#5E5D5D" />
+
+
+            <Switch
+                android:id="@+id/sw_actualiza_cedula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:text="Actualizar cedula" />
+            <Button
+                android:id="@+id/btn_cuenta_guardar_ce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:enabled="false"
+                android:text="Actualiza datos"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/txt_Cedula"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:enabled="false"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:text="@string/txt_Cedula"
+                android:textColor="#5E5D5D" />
+
+            <Button
+                android:id="@+id/btn_cuenta_guardar_datos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:enabled="false"
+                android:text="Actualiza datos"
+                android:visibility="gone" />
+
             <Switch
                 android:id="@+id/sw_correo_usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
                 android:text="Actualizar correo" />
 
             <EditText
                 android:id="@+id/txt_cuenta_correo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:enabled="false"
                 android:hint="@string/etx_correo"
-                android:visibility="gone"/>
+                android:inputType="textPersonName"
+                android:visibility="gone" />
             <Button
-                android:id="@+id/btn_cuenta_guardar_correo"
+                android:id="@+id/btn_cuenta_guardar_co"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
                 android:enabled="false"
-                android:text="Actualizar correo" />
+                android:text="Actualiza datos"
+                android:visibility="gone" />
+
 
             <Switch
                 android:id="@+id/sw_contrasena_usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
                 android:text="Actualizar contraseña" />
 
             <EditText
                 android:id="@+id/txt_cuenta_contrasenia_nueva"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:enabled="false"
                 android:hint="Contraseña nueva"
-                android:visibility="gone"/>
+                android:inputType="textPersonName"
+                android:visibility="gone" />
 
 
             <Button
-                android:id="@+id/btn_cuenta_guardar_contrasena"
+                android:id="@+id/btn_cuenta_guardar_cc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
                 android:enabled="false"
-                android:text="Actualiza contraseña" />
+                android:text="Actualiza datos"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/lbl_cv"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:gravity="center"
+                android:text="Perfil profesional"
+                android:textSize="18sp" />
 
             <com.github.barteksc.pdfviewer.PDFView
-                    android:id="@+id/pdf_view_cuenta_psicologo"
-                    android:layout_width="350dp"
-                    android:layout_height="300dp"
-                    android:layout_gravity="center">
-
-                    <ProgressBar
-                        android:id="@+id/pb_progreso_pdf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:progressDrawable="@color/purple_500" />
-
-                </com.github.barteksc.pdfviewer.PDFView>
-
-
-            <Button
-                android:id="@+id/btn_Guardar_Psicologo"
+                android:id="@+id/pdf_view_cuenta_psicologo"
                 android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_gravity="center"
-                android:text="@string/btn_Guardar_Psicologo" />
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="15dp">
+
+                <ProgressBar
+                    android:id="@+id/pb_progreso_pdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:progressDrawable="@color/purple_500" />
+
+            </com.github.barteksc.pdfviewer.PDFView>
+
 
         </LinearLayout>
     </ScrollView>

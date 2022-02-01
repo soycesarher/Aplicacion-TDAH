@@ -137,10 +137,6 @@
                 android:textAlignment="center"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <com.paypal.checkout.paymentbutton.PayPalButton
-                android:id="@+id/payPalButton_usuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/btn_terminos"
