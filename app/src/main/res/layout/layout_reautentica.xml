@@ -21,7 +21,7 @@
             android:gravity="center"/>
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/txt_correo_dialog_paciente"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,9 +29,9 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
-            android:hint="Correo" />
+            android:hint="Correo actual" />
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/txt_contrasena_dialog_paciente"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif"
-            android:hint="Contraseña"/>
+            android:hint="Contraseña actual"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="Iniciar sesión" />
+                android:text="Aceptar" />
 
         </LinearLayout>
     </LinearLayout>

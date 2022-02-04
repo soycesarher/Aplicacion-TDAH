@@ -47,7 +47,7 @@ public class CuentaFragment extends Fragment
     private FirebaseUser fUser;
     private DatabaseReference databaseReference;
 
-    private Button btn_guardar_correo, btn_guardar_contrasena;
+    private Button btn_guardar_correo, btn_guardar_contrasena, btn_iniciar_dialog,btn_cancelar_dialog;
 
     private Switch sw_correo;
     private Switch sw_contrasena;
@@ -57,6 +57,11 @@ public class CuentaFragment extends Fragment
     private EditText txt_apellido_materno;
     private EditText txt_contrasena_nueva;
     private EditText txt_correo;
+    private EditText txt_correo_dialogo;
+    private EditText txt_contrasena_dialogo;
+    String string_correo_dialog,string_contrasena_dialog;
+
+    Dialog customDialog = null;
 
     private boolean boolean_correo;
     private boolean boolean_contrasena;
@@ -81,6 +86,9 @@ public class CuentaFragment extends Fragment
                 new ViewModelProvider(this).get(CuentaViewModel.class);
         View root = inflater.inflate(R.layout.fragment_cuenta, container, false);
 
+//                Dialogo de reauntenticación
+
+//                Fin dialogo de reauntenticación
 
         txt_nombre = root.findViewById(R.id.txt_cuenta_nombre);
         txt_apellido_paterno = root.findViewById(R.id.txt_cuenta_apellido_paterno);
@@ -120,7 +128,7 @@ public class CuentaFragment extends Fragment
                     public void onTextChanged(CharSequence s, int start, int before, int count)
                     {
 
-                        valida_correo(txt_correo);
+                        valida_correo(txt_correo,btn_guardar_correo);
                     }
 
                     @Override
@@ -158,7 +166,7 @@ public class CuentaFragment extends Fragment
                     public void onTextChanged(CharSequence s, int start, int before, int count)
                     {
 
-                        valida_contrasena(txt_contrasena_nueva);
+                        valida_contrasena(txt_contrasena_nueva,btn_guardar_contrasena  );
                     }
 
                     @Override
@@ -228,7 +236,7 @@ public class CuentaFragment extends Fragment
 
     }
 
-    private void valida_contrasena(EditText editText_contrasena)
+    private void valida_contrasena(EditText editText_contrasena, Button btn_guardar_contrasena)
     {
 
         editText_contrasena.setError(null);
@@ -303,7 +311,7 @@ public class CuentaFragment extends Fragment
     }
 
 
-    private void valida_correo(EditText editText_correo)
+    private void valida_correo(EditText editText_correo, Button btn_guardar_correo)
     {
 
         editText_correo.setError(null);
@@ -380,62 +388,105 @@ public class CuentaFragment extends Fragment
 
     }
 
-    Dialog customDialog = null;
+
 
     public void mostrar(View view)
     {
 
-        customDialog = new Dialog(getContext(), R.style.Theme_AppCompat_Dialog);
 
+        customDialog = new Dialog(getContext(), R.style.Theme_AppCompat_Dialog);
         customDialog.setCancelable(false);
 
         customDialog.setContentView(R.layout.layout_reautentica);
 
-        String string_correo_dialog = ((EditText) customDialog.findViewById(R.id.username)).getText().toString();
+        txt_correo_dialogo = (EditText) customDialog.findViewById(R.id.txt_correo_dialog_paciente);
+        txt_contrasena_dialogo = (EditText) customDialog.findViewById(R.id.txt_contrasena_dialog_paciente);
+        btn_iniciar_dialog = (Button) customDialog.findViewById(R.id.btn_iniciar_dialog);
+        btn_cancelar_dialog = (Button) customDialog.findViewById(R.id.btn_cancelar_dialog);
 
+        txt_correo_dialogo.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
-        String string_contrasena_dialog = ((EditText) customDialog.findViewById(R.id.password)).getText().toString();
+            }
 
-        ((Button) customDialog.findViewById(R.id.btn_iniciar_dialog)).setOnClickListener(view1 ->
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                valida_correo(txt_correo_dialogo,btn_iniciar_dialog);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        });
+
+        txt_contrasena_dialogo.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                valida_contrasena(txt_contrasena_dialogo,btn_iniciar_dialog);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        });
+
+        btn_iniciar_dialog.setOnClickListener(view1 ->
                 {
-                    reauthenticate(string_correo_dialog, string_contrasena_dialog);
+                    string_correo_dialog =txt_correo_dialogo.getText().toString();
+
+                    string_contrasena_dialog =txt_contrasena_dialogo.getText().toString();
+                    AuthCredential credential = EmailAuthProvider.getCredential(string_correo_dialog, string_contrasena_dialog);
+
+                    fUser.reauthenticate(credential).addOnCompleteListener(task ->
+                    {
+                        if (task.isSuccessful())
+                        {
+                            if (task.isComplete())
+                            {
+                                if (sw_contrasena.isChecked())
+                                    actualizaContrasena(txt_contrasena_nueva.getText().toString());
+
+                                if (sw_correo.isChecked()) actualizaCorreo(txt_correo.getText().toString());
+                            }
+                        } else
+                        {
+                            Toast.makeText(getContext(), "Error de autenticacion", Toast.LENGTH_LONG).show();
+                        }
+
+                    });
+
                     customDialog.dismiss();
                 }
         );
 
-        ((Button) customDialog.findViewById(R.id.btn_cancelar_dialog)).setOnClickListener(view12 ->
+        btn_cancelar_dialog.setOnClickListener(view12 ->
         {
             sw_contrasena.setChecked(false);
             sw_correo.setChecked(false);
             customDialog.dismiss();
         });
 
+
         customDialog.show();
     }
 
-    private void reauthenticate(String string_correo_dialog, String string_contrasena_dialog)
-    {
 
-        AuthCredential credential = EmailAuthProvider.getCredential(string_correo_dialog, string_contrasena_dialog);
-
-        fUser.reauthenticate(credential).addOnCompleteListener(task ->
-        {
-            if (task.isSuccessful())
-            {
-                if (task.isComplete())
-                {
-                    if (sw_contrasena.isChecked())
-                        actualizaContrasena(txt_contrasena_nueva.getText().toString());
-
-                    if (sw_correo.isChecked()) actualizaCorreo(txt_correo.getText().toString());
-                }
-            } else
-            {
-                Toast.makeText(getContext(), "Error de autenticacion", Toast.LENGTH_LONG).show();
-            }
-
-        });
-    }
 
 
 }

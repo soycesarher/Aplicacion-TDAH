@@ -62,6 +62,11 @@ public class CuentaPsicologoFragment extends Fragment
     private EditText txt_num_exterior;
     private EditText txt_cp;
 
+    private EditText txt_correo_dialogo;
+    private EditText txt_contrasena_dialogo;
+    String string_correo_dialog,string_contrasena_dialog;
+
+
     private EditText txt_contrasena_nueva;
     private EditText txt_correo;
 
@@ -72,7 +77,7 @@ public class CuentaPsicologoFragment extends Fragment
     private Spinner sp_municipio;
     private Spinner sp_localidad;
 
-    private Button btn_guardar_cedula;
+    private Button btn_guardar_cedula,btn_iniciar_dialog,btn_cancelar_dialog;
 
     private Button btn_guardar_correo, btn_guardar_contrasena;
 
@@ -124,7 +129,7 @@ public class CuentaPsicologoFragment extends Fragment
                     public void onTextChanged(CharSequence s, int start, int before, int count)
                     {
 
-                        valida_correo(txt_correo);
+                        valida_correo(txt_correo,btn_guardar_correo);
                     }
 
                     @Override
@@ -161,7 +166,7 @@ public class CuentaPsicologoFragment extends Fragment
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count)
                     {
-                        valida_contrasena(txt_contrasena_nueva);
+                        valida_contrasena(txt_contrasena_nueva,btn_guardar_contrasena);
                     }
 
                     @Override
@@ -271,7 +276,7 @@ public class CuentaPsicologoFragment extends Fragment
         p.setString_id(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         p.setString_correo(fUser.getEmail());
 
-        databaseReference.child("Usuario").child(p.getString_id()).addValueEventListener(new ValueEventListener()
+        databaseReference.child("Psicologo").child(p.getString_id()).addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
@@ -323,55 +328,98 @@ public class CuentaPsicologoFragment extends Fragment
     public void mostrar(View view)
     {
 
-        customDialog = new Dialog(getContext(), R.style.Theme_AppCompat_Dialog);
 
+
+        customDialog = new Dialog(getContext(), R.style.Theme_AppCompat_Dialog);
         customDialog.setCancelable(false);
 
         customDialog.setContentView(R.layout.layout_reautentica);
 
-        String string_correo_dialog = ((EditText) customDialog.findViewById(R.id.username)).getText().toString();
+        txt_correo_dialogo = (EditText) customDialog.findViewById(R.id.txt_correo_dialog_paciente);
+        txt_contrasena_dialogo = (EditText) customDialog.findViewById(R.id.txt_contrasena_dialog_paciente);
+        btn_iniciar_dialog = (Button) customDialog.findViewById(R.id.btn_iniciar_dialog);
+        btn_cancelar_dialog = (Button) customDialog.findViewById(R.id.btn_cancelar_dialog);
 
+        txt_correo_dialogo.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
-        String string_contrasena_dialog = ((EditText) customDialog.findViewById(R.id.password)).getText().toString();
+            }
 
-        ((Button) customDialog.findViewById(R.id.btn_iniciar_dialog)).setOnClickListener(view1 ->
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                valida_correo(txt_correo_dialogo,btn_iniciar_dialog);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        });
+
+        txt_contrasena_dialogo.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                valida_contrasena(txt_contrasena_dialogo,btn_iniciar_dialog);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        });
+
+        btn_iniciar_dialog.setOnClickListener(view1 ->
                 {
-                    reauthenticate(string_correo_dialog, string_contrasena_dialog);
+                    string_correo_dialog =txt_correo_dialogo.getText().toString();
+
+                    string_contrasena_dialog =txt_contrasena_dialogo.getText().toString();
+                    AuthCredential credential = EmailAuthProvider.getCredential(string_correo_dialog, string_contrasena_dialog);
+
+                    fUser.reauthenticate(credential).addOnCompleteListener(task ->
+                    {
+                        if (task.isSuccessful())
+                        {
+                            if (task.isComplete())
+                            {
+                                if (sw_contrasena.isChecked())
+                                    actualizaContrasena(txt_contrasena_nueva.getText().toString());
+
+                                if (sw_correo.isChecked()) actualizaCorreo(txt_correo.getText().toString());
+                            }
+                        } else
+                        {
+                            Toast.makeText(getContext(), "Error de autenticacion", Toast.LENGTH_LONG).show();
+                        }
+
+                    });
+
                     customDialog.dismiss();
                 }
         );
 
-        ((Button) customDialog.findViewById(R.id.btn_cancelar_dialog)).setOnClickListener(view12 ->
+        btn_cancelar_dialog.setOnClickListener(view12 ->
         {
             sw_contrasena.setChecked(false);
             sw_correo.setChecked(false);
             customDialog.dismiss();
         });
 
+
         customDialog.show();
-    }
-
-    private void reauthenticate(String string_correo_dialog, String string_contrasena_dialog)
-    {
-
-        AuthCredential credential = EmailAuthProvider.getCredential(string_correo_dialog, string_contrasena_dialog);
-
-        fUser.reauthenticate(credential).addOnCompleteListener(task ->
-        {
-            if (task.isSuccessful())
-            {
-                if (task.isComplete())
-                {
-                    if (sw_contrasena.isChecked()) actualizaContrasena(txt_contrasena_nueva.getText().toString());
-
-                    if (sw_correo.isChecked()) actualizaCorreo(txt_correo.getText().toString());
-                }
-            } else
-            {
-                Toast.makeText(getContext(), "Error de autenticacion", Toast.LENGTH_LONG).show();
-            }
-
-        });
     }
 
     public void actualizaCorreo(String string_correo)
@@ -418,14 +466,14 @@ public class CuentaPsicologoFragment extends Fragment
         binding = null;
     }
 
-    private void valida_contrasena(EditText editText_contrasena)
+    private void valida_contrasena(EditText editText_contrasena, Button btn_guardar_contrasena)
     {
 
         editText_contrasena.setError(null);
 
         String Password = editText_contrasena.getText().toString().trim();
 
-        boolean boolean_contrasena_v = false;
+        boolean_contrasena = false;
 
         View focusView = null;
 
@@ -433,68 +481,72 @@ public class CuentaPsicologoFragment extends Fragment
         {
             editText_contrasena.setError(getString(R.string.error_campo_requerido));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*[!@#$%^&*+=?-].*"))
         {
             editText_contrasena.setError(getString(R.string.error_caracter_especial_requerido));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*\\d.*"))
         {
             editText_contrasena.setError(getString(R.string.error_numero_requerido));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*[a-z].*"))
         {
             editText_contrasena.setError(getString(R.string.error_no_se_encontraron_minusculas));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".*[A-Z].*"))
         {
             editText_contrasena.setError(getString(R.string.error_no_se_encontraron_mayusculas));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (!Password.matches(".{8,15}"))
         {
             editText_contrasena.setError(getString(R.string.error_contrasena_muy_corta));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
         if (Password.matches(".*\\s.*"))
         {
             editText_contrasena.setError(getString(R.string.error_sin_espacios));
             focusView = editText_contrasena;
-            boolean_contrasena_v = true;
+            boolean_contrasena = true;
         }
 
-        if (boolean_contrasena_v)
+        if (boolean_contrasena)
         {
 
             focusView.requestFocus();
+            btn_guardar_contrasena.setEnabled(false);
 
 
+        } else
+        {
+            btn_guardar_contrasena.setEnabled(true);
         }
 
     }
 
 
-    private void valida_correo(EditText editText_correo)
+    private void valida_correo(EditText editText_correo, Button btn_guardar_correo)
     {
 
         editText_correo.setError(null);
 
-        boolean boolean_correo_v = true;
+        boolean_correo = false;
 
         View focusView = null;
 
@@ -506,24 +558,26 @@ public class CuentaPsicologoFragment extends Fragment
         {
             editText_correo.setError(getString(R.string.error_campo_requerido));
             focusView = editText_correo;
-            boolean_correo_v = false;
-        } else if (!pattern.matcher(Email).matches())
+            boolean_correo = true;
+        }
+        if (!pattern.matcher(Email).matches())
         {
             editText_correo.setError(getString(R.string.error_correo_no_valido));
             focusView = editText_correo;
-            boolean_correo_v = false;
+            boolean_correo = true;
         }
-        if (!boolean_correo_v)
+        if (boolean_correo)
         {
 
             focusView.requestFocus();
             btn_guardar_correo.setEnabled(false);
+
         } else
         {
             btn_guardar_correo.setEnabled(true);
         }
-
     }
+
 
 
     private boolean valida_cedula(EditText editText_cedula)
